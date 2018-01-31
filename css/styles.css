@@ -43,10 +43,11 @@ table {
 *, *::before, *::after {
   box-sizing: border-box; }
 
-html, body {
+html {
   height: 100%; }
 
 body {
+  min-height: 100%;
   display: flex;
   flex-direction: column;
   font-family: "Ubuntu Mono";
