@@ -1,3 +1,3 @@
-# Responsive Layouts
+# Pizza Fantasy
 
-[Demo](https://letushev.github.io/kottans_frontend/Task_12/)
+[Demo](https://letushev.github.io/Pizza-Fantasy/)
