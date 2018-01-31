@@ -135,19 +135,24 @@ main {
     grid-gap: 50px;
     grid-template-columns: repeat(auto-fill, minmax(200px, auto));
     margin: 50px 0;
-    text-align: left;
-    counter-reset: pizza; }
+    text-align: left; }
 
 .pizza {
   position: relative;
   background-color: #bd3c1a;
   border: 5px solid #444;
-  counter-increment: pizza;
   transition: .3s; }
   .pizza img {
     max-width: 100%; }
-  .pizza::before {
-    content: counter(pizza);
+  .pizza:hover {
+    box-shadow: 0 0 30px #444; }
+
+.order-info {
+  padding: 10px;
+  background: #bd3c1a;
+  line-height: 1.5rem;
+  overflow: auto; }
+  .order-info .order-number {
     position: absolute;
     top: 0;
     right: 0;
@@ -157,14 +162,6 @@ main {
     justify-content: center;
     align-items: center;
     background: #444; }
-  .pizza:hover {
-    box-shadow: 0 0 30px #444; }
-
-.order-info {
-  padding: 10px;
-  background: #bd3c1a;
-  line-height: 1.5rem;
-  overflow: auto; }
   .order-info .time-of-order,
   .order-info .ready-in {
     float: left;

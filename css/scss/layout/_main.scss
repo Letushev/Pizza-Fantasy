@@ -13,7 +13,6 @@ main {
     grid-template-columns: repeat(auto-fill, minmax(200px, auto));
     margin: 50px 0;
     text-align: left;
-    counter-reset: pizza;
   }
 }
 
@@ -21,24 +20,10 @@ main {
   position: relative;
   background-color: $dark-red;
   border: 5px solid $dark-gray;
-  counter-increment: pizza;
   transition: .3s;
 
   img {
     max-width: 100%;
-  }
-
-  &::before {
-    content: counter(pizza);
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: $dark-gray;
   }
 
   &:hover {
@@ -51,6 +36,18 @@ main {
   background: $dark-red;
   line-height: 1.5rem;
   overflow: auto;
+
+  .order-number {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: $dark-gray;
+  }
         
   .time-of-order,
   .ready-in {
