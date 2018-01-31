@@ -1,0 +1,183 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+*, *::before, *::after {
+  box-sizing: border-box; }
+
+body {
+  font-family: "Ubuntu Mono";
+  font-size: 1.2rem;
+  color: #fff; }
+
+button {
+  position: relative;
+  width: 230px;
+  padding: 10px 20px;
+  background: none;
+  border: none;
+  font-family: "Ubuntu Mono";
+  font-size: 1.3rem;
+  outline: none;
+  cursor: pointer; }
+  button::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 100%;
+    transition: .3s;
+    z-index: -1; }
+  button:hover::before, button:focus::before {
+    top: 0; }
+
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px 30px;
+  color: #444;
+  font-size: 1.3rem;
+  border-bottom: 3px solid #444; }
+  header button {
+    margin: 20px 0;
+    color: #bd3c1a;
+    border: 3px solid #bd3c1a; }
+    header button:hover, header button:focus {
+      color: #fff; }
+    header button::before {
+      background: #bd3c1a; }
+  header .logo {
+    width: 250px;
+    display: flex;
+    align-items: center; }
+  header h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem; }
+  header img {
+    max-width: 100px;
+    margin-right: 20px; }
+  @media screen and (min-width: 600px) {
+    header {
+      display: block; }
+      header button, header .clock {
+        float: right;
+        clear: right; } }
+  @media screen and (min-width: 850px) {
+    header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between; }
+      header button {
+        order: 1; }
+      header .clock {
+        width: 230px;
+        text-align: center; } }
+
+main {
+  padding: 30px;
+  text-align: center; }
+  main button {
+    color: #ff5023;
+    border: 3px solid #ff5023; }
+    main button:hover, main button:focus {
+      color: #fff; }
+    main button::before {
+      background: #ff5023; }
+  main .queue {
+    display: grid;
+    grid-gap: 50px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, auto));
+    margin: 50px 0;
+    text-align: left;
+    counter-reset: pizza; }
+
+.pizza {
+  position: relative;
+  background-color: #bd3c1a;
+  border: 5px solid #444;
+  counter-increment: pizza;
+  transition: .3s; }
+  .pizza img {
+    max-width: 100%; }
+  .pizza::before {
+    content: counter(pizza);
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #444; }
+  .pizza:hover {
+    box-shadow: 0 0 30px #444; }
+
+.order-info {
+  padding: 10px;
+  background: #bd3c1a;
+  line-height: 1.5rem;
+  overflow: auto; }
+  .order-info .time-of-order,
+  .order-info .ready-in {
+    float: left;
+    clear: left; }
+  .order-info .price {
+    float: right; }
+
+footer {
+  padding: 30px;
+  background: #444;
+  text-align: center; }
+  footer a {
+    color: #fff;
+    text-decoration: none;
+    outline: 0; }
+    footer a:hover, footer a:focus {
+      text-decoration: underline; }
+  @media screen and (min-width: 700px) {
+    footer {
+      display: flex;
+      justify-content: space-between; } }
+
+/*# sourceMappingURL=styles.css.map */
