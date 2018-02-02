@@ -1,12 +1,11 @@
 (function() {
-  var time = document.getElementById('time');
-  function startTime() {
-    var today = new Date();
-    var h = today.getHours().toString().padStart(2, '0');
-    var m = today.getMinutes().toString().padStart(2, '0');
-    var s = today.getSeconds().toString().padStart(2, '0');
-    time.innerHTML = `${h}:${m}:${s}`;
+  const time = document.getElementById('time');
+  const updateTime = () => {
+    const now = new Date();
+    time.innerHTML = [now.getHours(), now.getMinutes(), now.getSeconds()]
+      .map(n => `${n}`.padStart(2, '0'))
+      .join(':');
   }
-  startTime();
-  window.setInterval(() => startTime(), 500);
+  updateTime();
+  window.setInterval(updateTime, 500);
 })()
