@@ -113,11 +113,17 @@ header {
       display: flex;
       flex-direction: row;
       justify-content: space-between; }
-      header button {
-        order: 1; }
+      header .reg-wrapper {
+        order: 1;
+        display: flex;
+        width: 250px;
+        justify-content: space-between; }
       header .clock {
-        width: 230px;
+        width: 250px;
         text-align: center; } }
+
+.reg {
+  width: 120px; }
 
 main {
   flex: 1;
@@ -138,8 +144,6 @@ main {
     text-align: left; }
 
 .pizza {
-  position: relative;
-  background-color: #bd3c1a;
   border: 5px solid #444;
   transition: .3s; }
   .pizza img {
@@ -149,25 +153,16 @@ main {
 
 .order-info {
   padding: 10px;
-  background: #bd3c1a;
+  background: #444;
+  display: flex;
+  justify-content: space-between; }
+
+.time-info {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
   line-height: 1.5rem;
-  overflow: auto; }
-  .order-info .order-number {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #444; }
-  .order-info .time-of-order,
-  .order-info .ready-in {
-    float: left;
-    clear: left; }
-  .order-info .price {
-    float: right; }
+  background: #bd3c1a; }
 
 footer {
   padding: 30px;

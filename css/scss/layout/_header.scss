@@ -42,13 +42,20 @@ header {
     flex-direction: row;
     justify-content: space-between;
 
-    button {
+    .reg-wrapper {
       order: 1;
+      display: flex;
+      width: 250px;
+      justify-content: space-between;
     }
 
     .clock {
-      width: 230px;
+      width: 250px;
       text-align: center;
     }
   }
+}
+
+.reg {
+  width: 120px;
 }
