@@ -3,7 +3,7 @@ main {
   padding: 30px;
   text-align: center;
 
-  button {
+  .new-pizza-button {
     @include button_effect($red);
   }
 
@@ -12,12 +12,10 @@ main {
     grid-gap: 50px;
     grid-template-columns: repeat(auto-fill, minmax(200px, auto));
     margin: 50px 0;
-    text-align: left;
   }
 }
 
 .pizza {
-  // background-color: $dark-red;
   border: 5px solid $dark-gray;
   transition: .3s;
 
@@ -28,20 +26,20 @@ main {
   &:hover {
     box-shadow: 0 0 30px $dark-gray;
   }
-}
 
-.order-info {
-  padding: 10px;
-  background: $dark-gray;
-  display: flex;
-  justify-content: space-between;
+  .order-info {
+    padding: 10px;
+    background: $dark-gray;
+    display: flex;
+    justify-content: space-between;
+  }
 
-}
-
-.time-info {
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  line-height: 1.5rem;
-  background: $dark-red;
+  .time-info {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    line-height: 1.5rem;
+    background: $dark-red;
+    align-items: flex-start;
+  }
 }

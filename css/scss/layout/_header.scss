@@ -1,37 +1,41 @@
 header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  text-align: center;
   padding: 15px 30px;
   color: $dark-gray;
-  font-size: $lg-font-size;
   border-bottom: 3px solid $dark-gray;
 
-  button {
+  .log-out-button {
     margin: 20px 0;
     @include button_effect($dark-red);
   }
 
-  .logo  {
+  .clock {
+    font-size: $lg-font-size;
+  }
+
+  .logo-wrapper {
     width: 250px;
     display: flex;
     align-items: center;
-  }
+    margin: 0 auto;
 
-  h1 {
-    font-family: 'Dancing Script', cursive;
-    font-size: 2.5rem;
-  }
+    h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.5rem;
+    }
 
-  img {
-    max-width: 100px;
-    margin-right: 20px;
+    img {
+      max-width: 100px;
+      margin-right: 20px;
+    }
   }
 
   @media screen and (min-width: 600px) {
-    display: block;
+    .logo-wrapper {
+      margin: 0;
+    }
 
-    button, .clock {
+    .log-out-button, .clock {
       float: right;
       clear: right;
     }
@@ -39,23 +43,17 @@ header {
 
   @media screen and (min-width: 850px) {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
-    .reg-wrapper {
-      order: 1;
-      display: flex;
-      width: 250px;
-      justify-content: space-between;
-    }
+    justify-content: space-center;
+    align-items: center;
 
     .clock {
-      width: 250px;
-      text-align: center;
+      margin-right: auto;
+      width: 230px;
+    }
+
+    .log-out-button {
+      margin-left: auto;
+      order: 1;
     }
   }
-}
-
-.reg {
-  width: 120px;
 }

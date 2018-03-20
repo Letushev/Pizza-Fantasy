@@ -1,5 +1,5 @@
 (function() {
-  const time = document.getElementById('time');
+  const time = document.getElementById('current-time');
   const updateTime = () => {
     const now = new Date();
     time.innerHTML = [now.getHours(), now.getMinutes(), now.getSeconds()]

@@ -4,7 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Pizza Queue</title>
+
+  <title>Pizza Fantasy</title>
+
   <link rel="stylesheet" type="text/css" href="css/styles.css">
   <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
@@ -14,28 +16,22 @@
   <header>
     <div class="clock">
       <i class="fas fa-hourglass-half"></i>
-      <time id="time"></time>
+      <time id="current-time"></time>
     </div>
 
-    <div class="reg-wrapper">
-      <button type="button" class="reg">
-        <!-- <i class="fas fa-user-circle"></i> -->
-        Log in
-      </button>
-      <button type="button" class="reg">
-        <!-- <i class="fas fa-user-circle"></i> -->
-        Sign up
-      </button>
-    </div>
+    <button type="button" class="log-out-button">
+      <i class="fas fa-sign-out-alt"></i>
+      Log out
+    </button>
 
-    <div class="logo">
+    <div class="logo-wrapper">
       <img src="images/logo.svg" alt="">
       <h1>Pizza Fantasy</h1>
     </div>
   </header>
 
   <main>
-    <button type="button">
+    <button type="button" class="new-pizza-button">
       <i class="fas fa-plus"></i>
       New pizza
     </button>
