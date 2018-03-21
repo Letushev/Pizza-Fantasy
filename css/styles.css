@@ -56,7 +56,7 @@ body {
 
 button {
   position: relative;
-  width: 230px;
+  width: 180px;
   padding: 10px 20px;
   background: none;
   border: none;
@@ -115,7 +115,7 @@ header {
       align-items: center; }
       header .clock {
         margin-right: auto;
-        width: 230px; }
+        width: 180px; }
       header .log-out-button {
         margin-left: auto;
         order: 1; } }
