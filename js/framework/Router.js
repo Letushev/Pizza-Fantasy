@@ -11,10 +11,10 @@ class Router extends Component {
       activeComponent: null
     };
 
-    this.host = document.createElement('div');
+    this.host = document.getElementById('root');
 
     window.onpopstate = () => {
-      console.log('reload');
+      console.log('bla');
       this.handleUrlChange(this.path)
     };
 
@@ -22,19 +22,20 @@ class Router extends Component {
   }
 
   get path() {
-    return window.location.hash.slice(1);
+    return window.location.pathname;
   }
 
-  handleUrlChange(url) {
-    const { routes } = this.state;
-    let nextRoute = routes.find(({ href }) => href === url);
+  handleUrlChange(path) {
+    const { routes, activeRoute } = this.state;
 
-    this.applyRoute(nextRoute, url);
+    let nextRoute = routes.find(({ href }) => href === path);
+
+    if (nextRoute && nextRoute !== activeRoute) {
+      this.applyRoute(nextRoute, path)
+    }
   }
 
-  applyRoute(route, url) {
-    const { activeComponent } = this.state;
-
+  applyRoute(route, path) {
     const componentInstance = new route.component();
 
     this.updateState({
