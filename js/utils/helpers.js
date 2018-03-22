@@ -25,3 +25,11 @@ export const append = (node, child) => {
 
   return node;
 };
+
+const URL_PARAM_REGEXP = /:\w+/g; // matches all(beacuse of g) combinations with 'A-Za-z0-9_' after ':'
+
+const isUrlParam = path => URL_PARAM_REGEXP.test(path);
+
+const pathToRegExp = path => RegExp(`^${path.replace(URL_PARAM_REGEXP, '(.*)')}$`); // ^ - beginning, $ - finish
+
+export const isEqualPaths = (template, path) => pathToRegExp(template).test(path);

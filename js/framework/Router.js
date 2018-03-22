@@ -1,4 +1,5 @@
 import Component from './Component';
+import { isEqualPaths, extractUrlParams } from '../utils/helpers';
 
 class Router extends Component {
 
@@ -27,11 +28,19 @@ class Router extends Component {
   handleUrlChange(path) {
     const { routes, activeRoute } = this.state;
 
-    let nextRoute = routes.find(({ href }) => href === path);
+    let nextRoute = routes.find(({ href }) => isEqualPaths(href, path));
 
-    if (nextRoute && nextRoute !== activeRoute) {
+    if (!nextRoute) {
+      nextRoute = routes.find(({ href }) => href === '');
+    }
+
+    if (nextRoute !== activeRoute) {
       if (!!nextRoute.redirectTo) {
         return this.handleRedirect(nextRoute.redirectTo);
+      }
+
+      if (!!nextRoute.onEnter) {
+        return this.handleOnEnter(nextRoute, path);
       }
 
       this.applyRoute(nextRoute, path)
@@ -43,7 +52,8 @@ class Router extends Component {
   }
 
   applyRoute(route, path) {
-    const componentInstance = new route.component();
+    const { href, component } = route;
+    const componentInstance = new component();
 
     this.updateState({
       activeRoute: route,

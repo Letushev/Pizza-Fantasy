@@ -1,0 +1,32 @@
+.sign-up-form {
+  margin: 25px auto;
+
+  button {
+    @include button_effect($red);
+  }
+
+  a {
+    color: $green;
+  }
+
+  select {
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+  }
+
+  .select-wrapper {
+    position: relative;
+
+    &::after {
+      content: '\25BC';
+      position: absolute;
+      top: 25px;
+      right: 15px;
+
+      font-size: 1rem;
+
+      pointer-events: none
+    }
+  }
+}

@@ -146,6 +146,3 @@ class PizzasQueue extends Component {
 }
 
 export default PizzasQueue;
-
-
-/*  */

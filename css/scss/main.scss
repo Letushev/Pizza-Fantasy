@@ -6,5 +6,8 @@
 @import "components/forms";
 
 @import "layout/header";
-@import "layout/main";
 @import "layout/footer";
+
+@import "pages/queue";
+@import "pages/login";
+@import "pages/signup";
