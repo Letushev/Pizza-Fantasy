@@ -2,10 +2,13 @@ button {
   position: relative;
   width: 180px;
   padding: 10px 20px;
+
   background: none;
   border: none;
+
   font-family: $base-font-family;
   font-size: $lg-font-size;
+
   outline: none;
   cursor: pointer;
 
@@ -16,7 +19,9 @@ button {
     left: 0;
     right: 0;
     top: 100%;
+
     transition: .3s;
+
     z-index: -1;
   }
 

@@ -13,17 +13,15 @@ class Router extends Component {
 
     this.host = document.getElementById('root');
 
-    window.onpopstate = () => {
-      console.log('Popstate event is fired...');
-      console.log(this.path);
-      this.handleUrlChange(this.path)
-    };
+    window.addEventListener('hashchange', () => {
+      this.handleUrlChange(this.path);
+    });
 
     this.handleUrlChange(this.path);
   }
 
   get path() {
-    return window.location.pathname;
+    return window.location.hash.slice(1);
   }
 
   handleUrlChange(path) {
@@ -32,8 +30,16 @@ class Router extends Component {
     let nextRoute = routes.find(({ href }) => href === path);
 
     if (nextRoute && nextRoute !== activeRoute) {
+      if (!!nextRoute.redirectTo) {
+        return this.handleRedirect(nextRoute.redirectTo);
+      }
+
       this.applyRoute(nextRoute, path)
     }
+  }
+
+  handleRedirect(path) {
+    window.location.hash = path;
   }
 
   applyRoute(route, path) {

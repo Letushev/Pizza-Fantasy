@@ -4,7 +4,7 @@ main {
   text-align: center;
 
   .new-pizza-button {
-    @include button_effect($red);
+    @include button_effect($green);
   }
 
   .queue {

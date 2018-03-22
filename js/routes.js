@@ -5,6 +5,11 @@ import SignUp from './components/SignUp';
 const routes = [
 
   {
+    href: '',
+    redirectTo: '/'
+  },
+
+  {
     href: '/',
     component: PizzasQueue
   },

@@ -60,11 +60,133 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(1);
+module.exports = __webpack_require__(6);
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__routes__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__framework_Router__ = __webpack_require__(3);
+
+
+
+const router = new __WEBPACK_IMPORTED_MODULE_1__framework_Router__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0__routes__["a" /* default */]);
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_PizzasQueue__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_LogIn__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_SignUp__ = __webpack_require__(9);
+
+
+
+
+const routes = [
+
+  {
+    href: '',
+    redirectTo: '/'
+  },
+
+  {
+    href: '/',
+    component: __WEBPACK_IMPORTED_MODULE_0__components_PizzasQueue__["a" /* default */]
+  },
+
+  {
+    href: '/login',
+    component: __WEBPACK_IMPORTED_MODULE_1__components_LogIn__["a" /* default */]
+  },
+
+  {
+    href: '/signup',
+    component: __WEBPACK_IMPORTED_MODULE_2__components_SignUp__["a" /* default */]
+  }
+
+];
+
+/* harmony default export */ __webpack_exports__["a"] = (routes);
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Component__ = __webpack_require__(4);
+
+
+class Router extends __WEBPACK_IMPORTED_MODULE_0__Component__["a" /* default */] {
+
+  constructor(routes) {
+    super();
+
+    this.state = {
+      routes,
+      activeRoute: null,
+      activeComponent: null
+    };
+
+    this.host = document.getElementById('root');
+
+    window.addEventListener('hashchange', () => {
+      this.handleUrlChange(this.path);
+    });
+
+    this.handleUrlChange(this.path);
+  }
+
+  get path() {
+    return window.location.hash;
+  }
+
+  handleUrlChange(path) {
+    console.log(path);
+    const { routes, activeRoute } = this.state;
+
+    let nextRoute = routes.find(({ href }) => href === path);
+
+    if (nextRoute && nextRoute !== activeRoute) {
+      this.applyRoute(nextRoute, path)
+    }
+  }
+
+  applyRoute(route, path) {
+    const componentInstance = new route.component();
+
+    this.updateState({
+      activeRoute: route,
+      activeComponent: componentInstance,
+    });
+  }
+
+  render() {
+    return this.state.activeComponent.update();
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Router);
+
+
+/***/ }),
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -116,67 +238,59 @@ class Component {
 
 
 /***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(2);
-module.exports = __webpack_require__(9);
-
-
-/***/ }),
-/* 2 */
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__routes__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__framework_Router__ = __webpack_require__(8);
+const bindAll = (context, ...names) => {
+  names.forEach(name => {
+    context[name] = context[name].bind(context);
+  });
+};
+/* harmony export (immutable) */ __webpack_exports__["b"] = bindAll;
 
 
+const parseHTML = htmlString => {
+  const template = document.createElement('template');
+  template.innerHTML = htmlString.trim();
 
-const router = new __WEBPACK_IMPORTED_MODULE_1__framework_Router__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0__routes__["a" /* default */]);
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_PizzasQueue__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_LogIn__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_SignUp__ = __webpack_require__(7);
+  return template.content;
+};
+/* harmony export (immutable) */ __webpack_exports__["d"] = parseHTML;
 
 
+const clearChildren = node => {
+  node.innerHTML = '';
+  return node;
+};
+/* harmony export (immutable) */ __webpack_exports__["c"] = clearChildren;
 
 
-const routes = [
-
-  {
-    href: '/',
-    component: __WEBPACK_IMPORTED_MODULE_0__components_PizzasQueue__["a" /* default */]
-  },
-
-  {
-    href: '/login',
-    component: __WEBPACK_IMPORTED_MODULE_1__components_LogIn__["a" /* default */]
-  },
-
-  {
-    href: '/signup',
-    component: __WEBPACK_IMPORTED_MODULE_2__components_SignUp__["a" /* default */]
+const append = (node, child) => {
+  if (Array.isArray(child)) {
+    node.append(...child);
+  } else {
+    node.append(child);
   }
 
-];
+  return node;
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = append;
 
-/* harmony default export */ __webpack_exports__["a"] = (routes);
 
 
 /***/ }),
-/* 4 */
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "css/styles.css";
+
+/***/ }),
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(4);
 
 
 class PizzasQueue extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* default */] {
@@ -331,53 +445,11 @@ class PizzasQueue extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a"
 
 
 /***/ }),
-/* 5 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-const bindAll = (context, ...names) => {
-  names.forEach(name => {
-    context[name] = context[name].bind(context);
-  });
-};
-/* harmony export (immutable) */ __webpack_exports__["b"] = bindAll;
-
-
-const parseHTML = htmlString => {
-  const template = document.createElement('template');
-  template.innerHTML = htmlString.trim();
-
-  return template.content;
-};
-/* harmony export (immutable) */ __webpack_exports__["d"] = parseHTML;
-
-
-const clearChildren = node => {
-  node.innerHTML = '';
-  return node;
-};
-/* harmony export (immutable) */ __webpack_exports__["c"] = clearChildren;
-
-
-const append = (node, child) => {
-  if (Array.isArray(child)) {
-    node.append(...child);
-  } else {
-    node.append(child);
-  }
-
-  return node;
-};
-/* harmony export (immutable) */ __webpack_exports__["a"] = append;
-
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(4);
 
 
 class LogIn extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* default */] {
@@ -398,11 +470,11 @@ class LogIn extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
 
 
 /***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(4);
 
 
 class SignUp extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* default */] {
@@ -421,74 +493,6 @@ class SignUp extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* d
 
 /* harmony default export */ __webpack_exports__["a"] = (SignUp);
 
-
-/***/ }),
-/* 8 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Component__ = __webpack_require__(0);
-
-
-class Router extends __WEBPACK_IMPORTED_MODULE_0__Component__["a" /* default */] {
-
-  constructor(routes) {
-    super();
-
-    this.state = {
-      routes,
-      activeRoute: null,
-      activeComponent: null
-    };
-
-    this.host = document.getElementById('root');
-
-    window.onpopstate = () => {
-      console.log('Popstate event is fired...');
-      console.log(this.path);
-      this.handleUrlChange(this.path)
-    };
-
-    this.handleUrlChange(this.path);
-  }
-
-  get path() {
-    return window.location.pathname;
-  }
-
-  handleUrlChange(path) {
-    const { routes, activeRoute } = this.state;
-
-    let nextRoute = routes.find(({ href }) => href === path);
-
-    if (nextRoute && nextRoute !== activeRoute) {
-      this.applyRoute(nextRoute, path)
-    }
-  }
-
-  applyRoute(route, path) {
-    const componentInstance = new route.component();
-
-    this.updateState({
-      activeRoute: route,
-      activeComponent: componentInstance,
-    });
-  }
-
-  render() {
-    return this.state.activeComponent.update();
-  }
-
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (Router);
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "css/styles.css";
 
 /***/ })
 /******/ ]);
