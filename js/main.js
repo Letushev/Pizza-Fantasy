@@ -78,13 +78,21 @@ class Component {
     this.props = props || {};
     this.host = null;
 
-    Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["a" /* bindAll */])(this, 'updateState', 'update');
+    Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["b" /* bindAll */])(this, 'updateState', 'update');
   }
 
   updateHost() {
-    this.host.innerHTML = this.render();
+    const html = this.render();
 
-    return this.host.innerHTML;
+    if (!html && this.host) {
+      return this.host;
+    }
+
+    if (typeof html === 'string') {
+      return Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["a" /* append */])(Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["c" /* clearChildren */])(this.host), Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["d" /* parseHTML */])(html));
+    } else {
+      return Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["a" /* append */])(Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["c" /* clearChildren */])(this.host), html);
+    }
   }
 
   update(nextProps) {
@@ -97,6 +105,8 @@ class Component {
     this.state = nextState;
 
     this.updateHost();
+
+    return nextState;
   }
 
   render() {}
@@ -124,9 +134,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-const router = new __WEBPACK_IMPORTED_MODULE_1__framework_Router__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0__routes__["a" /* default */]);
+history.pushState({a :1 }, null, 'e');
 
-document.getElementById('root').appendChild(router.host);
+const router = new __WEBPACK_IMPORTED_MODULE_1__framework_Router__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0__routes__["a" /* default */]);
 
 
 /***/ }),
@@ -144,17 +154,17 @@ document.getElementById('root').appendChild(router.host);
 const routes = [
 
   {
-    href: '/',
+    href: '',
     component: __WEBPACK_IMPORTED_MODULE_0__components_PizzasQueue__["a" /* default */]
   },
 
   {
-    href: '/login',
+    href: 'login',
     component: __WEBPACK_IMPORTED_MODULE_1__components_LogIn__["a" /* default */]
   },
 
   {
-    href: '/signup',
+    href: 'signup',
     component: __WEBPACK_IMPORTED_MODULE_2__components_SignUp__["a" /* default */]
   }
 
@@ -332,7 +342,35 @@ const bindAll = (context, ...names) => {
     context[name] = context[name].bind(context);
   });
 };
-/* harmony export (immutable) */ __webpack_exports__["a"] = bindAll;
+/* harmony export (immutable) */ __webpack_exports__["b"] = bindAll;
+
+
+const parseHTML = htmlString => {
+  const template = document.createElement('template');
+  template.innerHTML = htmlString.trim();
+
+  return template.content;
+};
+/* harmony export (immutable) */ __webpack_exports__["d"] = parseHTML;
+
+
+const clearChildren = node => {
+  node.innerHTML = '';
+  return node;
+};
+/* harmony export (immutable) */ __webpack_exports__["c"] = clearChildren;
+
+
+const append = (node, child) => {
+  if (Array.isArray(child)) {
+    node.append(...child);
+  } else {
+    node.append(child);
+  }
+
+  return node;
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = append;
 
 
 
@@ -408,6 +446,7 @@ class Router extends __WEBPACK_IMPORTED_MODULE_0__Component__["a" /* default */]
     this.host = document.createElement('div');
 
     window.onpopstate = () => {
+      console.log('reload');
       this.handleUrlChange(this.path)
     };
 

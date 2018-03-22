@@ -1,6 +1,6 @@
 import routes from './routes';
 import Router from './framework/Router';
 
-const router = new Router(routes);
+history.pushState({a :1 }, null, 'e');
 
-document.getElementById('root').appendChild(router.host);
+const router = new Router(routes);

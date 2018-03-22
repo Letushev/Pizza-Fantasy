@@ -14,6 +14,7 @@ class Router extends Component {
     this.host = document.createElement('div');
 
     window.onpopstate = () => {
+      console.log('reload');
       this.handleUrlChange(this.path)
     };
 

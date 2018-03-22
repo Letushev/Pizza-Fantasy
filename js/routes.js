@@ -5,17 +5,17 @@ import SignUp from './components/SignUp';
 const routes = [
 
   {
-    href: '/',
+    href: '',
     component: PizzasQueue
   },
 
   {
-    href: '/login',
+    href: 'login',
     component: LogIn
   },
 
   {
-    href: '/signup',
+    href: 'signup',
     component: SignUp
   }
 

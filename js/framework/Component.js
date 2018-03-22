@@ -1,4 +1,4 @@
-import { bindAll } from '../utils/helpers';
+import { bindAll, parseHTML, append, clearChildren } from '../utils/helpers';
 
 class Component {
 
@@ -11,9 +11,17 @@ class Component {
   }
 
   updateHost() {
-    this.host.innerHTML = this.render();
+    const html = this.render();
 
-    return this.host.innerHTML;
+    if (!html && this.host) {
+      return this.host;
+    }
+
+    if (typeof html === 'string') {
+      return append(clearChildren(this.host), parseHTML(html));
+    } else {
+      return append(clearChildren(this.host), html);
+    }
   }
 
   update(nextProps) {
@@ -26,6 +34,8 @@ class Component {
     this.state = nextState;
 
     this.updateHost();
+
+    return nextState;
   }
 
   render() {}
