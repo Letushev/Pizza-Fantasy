@@ -444,7 +444,7 @@ class Router extends __WEBPACK_IMPORTED_MODULE_0__Component__["a" /* default */]
     this.host = document.getElementById('root');
 
     window.onpopstate = () => {
-      console.log('bla');
+      console.log('here');
       this.handleUrlChange(this.path)
     };
 
