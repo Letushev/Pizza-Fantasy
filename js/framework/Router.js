@@ -15,6 +15,7 @@ class Router extends Component {
 
     window.onpopstate = () => {
       console.log('Popstate event is fired...');
+      console.log(this.path);
       this.handleUrlChange(this.path)
     };
 

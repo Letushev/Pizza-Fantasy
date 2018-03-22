@@ -445,6 +445,7 @@ class Router extends __WEBPACK_IMPORTED_MODULE_0__Component__["a" /* default */]
 
     window.onpopstate = () => {
       console.log('Popstate event is fired...');
+      console.log(this.path);
       this.handleUrlChange(this.path)
     };
 
