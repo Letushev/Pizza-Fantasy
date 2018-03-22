@@ -134,8 +134,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-history.pushState({a :1 }, null, 'e');
-
 const router = new __WEBPACK_IMPORTED_MODULE_1__framework_Router__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0__routes__["a" /* default */]);
 
 
@@ -154,17 +152,17 @@ const router = new __WEBPACK_IMPORTED_MODULE_1__framework_Router__["a" /* defaul
 const routes = [
 
   {
-    href: '',
+    href: '/',
     component: __WEBPACK_IMPORTED_MODULE_0__components_PizzasQueue__["a" /* default */]
   },
 
   {
-    href: 'login',
+    href: '/login',
     component: __WEBPACK_IMPORTED_MODULE_1__components_LogIn__["a" /* default */]
   },
 
   {
-    href: 'signup',
+    href: '/signup',
     component: __WEBPACK_IMPORTED_MODULE_2__components_SignUp__["a" /* default */]
   }
 
@@ -443,10 +441,10 @@ class Router extends __WEBPACK_IMPORTED_MODULE_0__Component__["a" /* default */]
       activeComponent: null
     };
 
-    this.host = document.createElement('div');
+    this.host = document.getElementById('root');
 
     window.onpopstate = () => {
-      console.log('reload');
+      console.log('bla');
       this.handleUrlChange(this.path)
     };
 
@@ -454,19 +452,20 @@ class Router extends __WEBPACK_IMPORTED_MODULE_0__Component__["a" /* default */]
   }
 
   get path() {
-    return window.location.hash.slice(1);
+    return window.location.pathname;
   }
 
-  handleUrlChange(url) {
-    const { routes } = this.state;
-    let nextRoute = routes.find(({ href }) => href === url);
+  handleUrlChange(path) {
+    const { routes, activeRoute } = this.state;
 
-    this.applyRoute(nextRoute, url);
+    let nextRoute = routes.find(({ href }) => href === path);
+
+    if (nextRoute && nextRoute !== activeRoute) {
+      this.applyRoute(nextRoute, path)
+    }
   }
 
-  applyRoute(route, url) {
-    const { activeComponent } = this.state;
-
+  applyRoute(route, path) {
     const componentInstance = new route.component();
 
     this.updateState({
