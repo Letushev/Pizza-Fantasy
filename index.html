@@ -9,6 +9,7 @@
         const redirect = sessionStorage.redirect;
         delete sessionStorage.redirect;
 
+        console.log('herreee');
         if (redirect && redirect !== location.href) {
           history.replaceState(null, null, redirect);
         }
