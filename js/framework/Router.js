@@ -31,7 +31,7 @@ class Router extends Component {
     let nextRoute = routes.find(({ href }) => isEqualPaths(href, path));
 
     if (!nextRoute) {
-      nextRoute = routes.find(({ href }) => href === '');
+      this.handleRedirect('');
     }
 
     if (nextRoute !== activeRoute) {

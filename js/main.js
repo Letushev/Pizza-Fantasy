@@ -505,7 +505,7 @@ class Router extends __WEBPACK_IMPORTED_MODULE_0__Component__["a" /* default */]
     let nextRoute = routes.find(({ href }) => Object(__WEBPACK_IMPORTED_MODULE_1__utils_helpers__["d" /* isEqualPaths */])(href, path));
 
     if (!nextRoute) {
-      nextRoute = routes.find(({ href }) => href === '');
+      this.handleRedirect('');
     }
 
     if (nextRoute !== activeRoute) {
