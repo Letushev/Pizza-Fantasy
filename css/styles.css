@@ -53,12 +53,8 @@ body {
   font-family: "Ubuntu Mono";
   font-size: 1.2rem; }
 
-.pizzas-queue-container {
-  color: #fff; }
-
 button {
   position: relative;
-  width: 180px;
   padding: 10px 20px;
   background: none;
   border: none;
@@ -77,6 +73,21 @@ button {
     z-index: -1; }
   button:hover::before, button:focus::before {
     top: 0; }
+
+form {
+  width: 400px;
+  padding: 30px;
+  text-align: center;
+  border: 3px solid #444; }
+  form button {
+    width: 100%;
+    margin: 30px 0; }
+  form input, form select {
+    width: 100%;
+    padding: 10px 10px;
+    margin: 10px 0;
+    font-family: "Ubuntu Mono";
+    font-size: 1.2rem; }
 
 header {
   text-align: center;
@@ -122,43 +133,6 @@ header {
         margin-left: auto;
         order: 1; } }
 
-main {
-  flex: 1;
-  padding: 30px;
-  text-align: center; }
-  main .new-pizza-button {
-    color: #ff5023;
-    border: 3px solid #ff5023; }
-    main .new-pizza-button:hover, main .new-pizza-button:focus {
-      color: #fff; }
-    main .new-pizza-button::before {
-      background: #ff5023; }
-  main .queue {
-    display: grid;
-    grid-gap: 50px;
-    grid-template-columns: repeat(auto-fill, minmax(200px, auto));
-    margin: 50px 0; }
-
-.pizza {
-  border: 5px solid #444;
-  transition: .3s; }
-  .pizza img {
-    max-width: 100%; }
-  .pizza:hover {
-    box-shadow: 0 0 30px #444; }
-  .pizza .order-info {
-    padding: 10px;
-    background: #444;
-    display: flex;
-    justify-content: space-between; }
-  .pizza .time-info {
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    line-height: 1.5rem;
-    background: #bd3c1a;
-    align-items: flex-start; }
-
 footer {
   padding: 30px;
   background: #444;
@@ -173,3 +147,80 @@ footer {
     footer {
       display: flex;
       justify-content: space-between; } }
+
+.pizzas-queue-container {
+  color: #fff; }
+  .pizzas-queue-container main {
+    flex: 1;
+    padding: 30px;
+    text-align: center; }
+  .pizzas-queue-container button {
+    width: 180px; }
+  .pizzas-queue-container .new-pizza-button {
+    color: #2c8737;
+    border: 3px solid #2c8737; }
+    .pizzas-queue-container .new-pizza-button:hover, .pizzas-queue-container .new-pizza-button:focus {
+      color: #fff; }
+    .pizzas-queue-container .new-pizza-button::before {
+      background: #2c8737; }
+  .pizzas-queue-container .queue {
+    display: grid;
+    grid-gap: 50px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, auto));
+    margin: 50px 0; }
+    .pizzas-queue-container .queue .pizza {
+      border: 5px solid #444;
+      transition: .3s; }
+      .pizzas-queue-container .queue .pizza img {
+        max-width: 100%; }
+      .pizzas-queue-container .queue .pizza:hover {
+        box-shadow: 0 0 30px #444; }
+      .pizzas-queue-container .queue .pizza .order-info {
+        padding: 10px;
+        background: #444;
+        display: flex;
+        justify-content: space-between; }
+      .pizzas-queue-container .queue .pizza .time-info {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        line-height: 1.5rem;
+        background: #bd3c1a;
+        align-items: flex-start; }
+
+.log-in-form {
+  margin: 150px auto; }
+  .log-in-form button {
+    color: #2c8737;
+    border: 3px solid #2c8737; }
+    .log-in-form button:hover, .log-in-form button:focus {
+      color: #fff; }
+    .log-in-form button::before {
+      background: #2c8737; }
+  .log-in-form a {
+    color: #ff5023; }
+
+.sign-up-form {
+  margin: 25px auto; }
+  .sign-up-form button {
+    color: #ff5023;
+    border: 3px solid #ff5023; }
+    .sign-up-form button:hover, .sign-up-form button:focus {
+      color: #fff; }
+    .sign-up-form button::before {
+      background: #ff5023; }
+  .sign-up-form a {
+    color: #2c8737; }
+  .sign-up-form select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none; }
+  .sign-up-form .select-wrapper {
+    position: relative; }
+    .sign-up-form .select-wrapper::after {
+      content: '\25BC';
+      position: absolute;
+      top: 25px;
+      right: 15px;
+      font-size: 1rem;
+      pointer-events: none; }

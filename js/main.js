@@ -60,15 +60,59 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-__webpack_require__(1);
-module.exports = __webpack_require__(6);
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_helpers__ = __webpack_require__(1);
+
+
+class Component {
+
+  constructor(props) {
+    this.state = {};
+    this.props = props || {};
+    this.host = null;
+
+    Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["b" /* bindAll */])(this, 'updateState', 'update');
+  }
+
+  updateHost() {
+    const html = this.render();
+
+    if (!html && this.host) {
+      return this.host;
+    }
+
+    if (typeof html === 'string') {
+      return Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["a" /* append */])(Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["c" /* clearChildren */])(this.host), Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["e" /* parseHTML */])(html));
+    } else {
+      return Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["a" /* append */])(Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["c" /* clearChildren */])(this.host), html);
+    }
+  }
+
+  update(nextProps) {
+    this.props = nextProps;
+    return this.updateHost();
+  }
+
+  updateState(state) {
+    const nextState = Object.assign({}, this.state, state);
+    this.state = nextState;
+
+    this.updateHost();
+
+    return nextState;
+  }
+
+  render() {}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Component);
 
 
 /***/ }),
@@ -76,9 +120,69 @@ module.exports = __webpack_require__(6);
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+const bindAll = (context, ...names) => {
+  names.forEach(name => {
+    context[name] = context[name].bind(context);
+  });
+};
+/* harmony export (immutable) */ __webpack_exports__["b"] = bindAll;
+
+
+const parseHTML = htmlString => {
+  const template = document.createElement('template');
+  template.innerHTML = htmlString.trim();
+
+  return template.content;
+};
+/* harmony export (immutable) */ __webpack_exports__["e"] = parseHTML;
+
+
+const clearChildren = node => {
+  node.innerHTML = '';
+  return node;
+};
+/* harmony export (immutable) */ __webpack_exports__["c"] = clearChildren;
+
+
+const append = (node, child) => {
+  if (Array.isArray(child)) {
+    node.append(...child);
+  } else {
+    node.append(child);
+  }
+
+  return node;
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = append;
+
+
+const URL_PARAM_REGEXP = /:\w+/g; // matches all(beacuse of g) combinations with 'A-Za-z0-9_' after ':'
+
+const isUrlParam = path => URL_PARAM_REGEXP.test(path);
+
+const pathToRegExp = path => RegExp(`^${path.replace(URL_PARAM_REGEXP, '(.*)')}$`); // ^ - beginning, $ - finish
+
+const isEqualPaths = (template, path) => pathToRegExp(template).test(path);
+/* harmony export (immutable) */ __webpack_exports__["d"] = isEqualPaths;
+
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(3);
+module.exports = __webpack_require__(9);
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__routes__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__framework_Router__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__routes__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__framework_Router__ = __webpack_require__(8);
 
 
 
@@ -86,13 +190,13 @@ const router = new __WEBPACK_IMPORTED_MODULE_1__framework_Router__["a" /* defaul
 
 
 /***/ }),
-/* 2 */
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_PizzasQueue__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_LogIn__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_SignUp__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_PizzasQueue__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_LogIn__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_SignUp__ = __webpack_require__(7);
 
 
 
@@ -125,172 +229,11 @@ const routes = [
 
 
 /***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Component__ = __webpack_require__(4);
-
-
-class Router extends __WEBPACK_IMPORTED_MODULE_0__Component__["a" /* default */] {
-
-  constructor(routes) {
-    super();
-
-    this.state = {
-      routes,
-      activeRoute: null,
-      activeComponent: null
-    };
-
-    this.host = document.getElementById('root');
-
-    window.addEventListener('hashchange', () => {
-      this.handleUrlChange(this.path);
-    });
-
-    this.handleUrlChange(this.path);
-  }
-
-  get path() {
-    return window.location.hash;
-  }
-
-  handleUrlChange(path) {
-    console.log(path);
-    const { routes, activeRoute } = this.state;
-
-    let nextRoute = routes.find(({ href }) => href === path);
-
-    if (nextRoute && nextRoute !== activeRoute) {
-      this.applyRoute(nextRoute, path)
-    }
-  }
-
-  applyRoute(route, path) {
-    const componentInstance = new route.component();
-
-    this.updateState({
-      activeRoute: route,
-      activeComponent: componentInstance,
-    });
-  }
-
-  render() {
-    return this.state.activeComponent.update();
-  }
-
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (Router);
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_helpers__ = __webpack_require__(5);
-
-
-class Component {
-
-  constructor(props) {
-    this.state = {};
-    this.props = props || {};
-    this.host = null;
-
-    Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["b" /* bindAll */])(this, 'updateState', 'update');
-  }
-
-  updateHost() {
-    const html = this.render();
-
-    if (!html && this.host) {
-      return this.host;
-    }
-
-    if (typeof html === 'string') {
-      return Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["a" /* append */])(Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["c" /* clearChildren */])(this.host), Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["d" /* parseHTML */])(html));
-    } else {
-      return Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["a" /* append */])(Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["c" /* clearChildren */])(this.host), html);
-    }
-  }
-
-  update(nextProps) {
-    this.props = nextProps;
-    return this.updateHost();
-  }
-
-  updateState(state) {
-    const nextState = Object.assign({}, this.state, state);
-    this.state = nextState;
-
-    this.updateHost();
-
-    return nextState;
-  }
-
-  render() {}
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (Component);
-
-
-/***/ }),
 /* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-const bindAll = (context, ...names) => {
-  names.forEach(name => {
-    context[name] = context[name].bind(context);
-  });
-};
-/* harmony export (immutable) */ __webpack_exports__["b"] = bindAll;
-
-
-const parseHTML = htmlString => {
-  const template = document.createElement('template');
-  template.innerHTML = htmlString.trim();
-
-  return template.content;
-};
-/* harmony export (immutable) */ __webpack_exports__["d"] = parseHTML;
-
-
-const clearChildren = node => {
-  node.innerHTML = '';
-  return node;
-};
-/* harmony export (immutable) */ __webpack_exports__["c"] = clearChildren;
-
-
-const append = (node, child) => {
-  if (Array.isArray(child)) {
-    node.append(...child);
-  } else {
-    node.append(child);
-  }
-
-  return node;
-};
-/* harmony export (immutable) */ __webpack_exports__["a"] = append;
-
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "css/styles.css";
-
-/***/ }),
-/* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(0);
 
 
 class PizzasQueue extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* default */] {
@@ -441,15 +384,12 @@ class PizzasQueue extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a"
 /* harmony default export */ __webpack_exports__["a"] = (PizzasQueue);
 
 
-/*  */
-
-
 /***/ }),
-/* 8 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(0);
 
 
 class LogIn extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* default */] {
@@ -462,7 +402,18 @@ class LogIn extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
   }
 
   render() {
-    return 'Log in';
+    return `
+      <form class="log-in-form">
+
+        <input type="text" placeholder="Username" required>
+        <input type="password" placeholder="Password" required>
+
+        <button type="submit">Log in</button>
+
+        <p>New to Pizza Fantasy? <a href="#/signup">Sign Up</a></p>
+
+      <form>
+    `;
   }
 }
 
@@ -470,11 +421,11 @@ class LogIn extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
 
 
 /***/ }),
-/* 9 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(0);
 
 
 class SignUp extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* default */] {
@@ -487,12 +438,117 @@ class SignUp extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* d
   }
 
   render() {
-    return 'Sign up';
+    return `
+      <form class="sign-up-form">
+
+        <input type="text" placeholder="Username" required>
+        <input type="email" placeholder="Email">
+        <input type="password" placeholder="Password" required>
+        <input type="password" placeholder="Confirm password" required>
+
+        <p class="select-wrapper">
+          <select>
+            <option>Pizza Fantasy</option>
+          </select>
+        </p>
+        <input type="password" placeholder="Store password" required>
+
+        <button type="submit">Sign Up</button>
+
+        <p>Already have an account? <a href="#/login">Log in</a></p>
+
+      <form>
+    `;
   }
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (SignUp);
 
+
+/***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Component__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_helpers__ = __webpack_require__(1);
+
+
+
+class Router extends __WEBPACK_IMPORTED_MODULE_0__Component__["a" /* default */] {
+
+  constructor(routes) {
+    super();
+
+    this.state = {
+      routes,
+      activeRoute: null,
+      activeComponent: null
+    };
+
+    this.host = document.getElementById('root');
+
+    window.addEventListener('hashchange', () => {
+      this.handleUrlChange(this.path);
+    });
+
+    this.handleUrlChange(this.path);
+  }
+
+  get path() {
+    return window.location.hash.slice(1);
+  }
+
+  handleUrlChange(path) {
+    const { routes, activeRoute } = this.state;
+
+    let nextRoute = routes.find(({ href }) => Object(__WEBPACK_IMPORTED_MODULE_1__utils_helpers__["d" /* isEqualPaths */])(href, path));
+
+    if (!nextRoute) {
+      nextRoute = routes.find(({ href }) => href === '');
+    }
+
+    if (nextRoute !== activeRoute) {
+      if (!!nextRoute.redirectTo) {
+        return this.handleRedirect(nextRoute.redirectTo);
+      }
+
+      if (!!nextRoute.onEnter) {
+        return this.handleOnEnter(nextRoute, path);
+      }
+
+      this.applyRoute(nextRoute, path)
+    }
+  }
+
+  handleRedirect(path) {
+    window.location.hash = path;
+  }
+
+  applyRoute(route, path) {
+    const { href, component } = route;
+    const componentInstance = new component();
+
+    this.updateState({
+      activeRoute: route,
+      activeComponent: componentInstance,
+    });
+  }
+
+  render() {
+    return this.state.activeComponent.update();
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Router);
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "css/styles.css";
 
 /***/ })
 /******/ ]);
