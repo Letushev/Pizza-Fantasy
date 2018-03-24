@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -169,24 +169,89 @@ const isEqualPaths = (template, path) => pathToRegExp(template).test(path);
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-__webpack_require__(3);
-module.exports = __webpack_require__(9);
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Component__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_helpers__ = __webpack_require__(1);
+
+
+
+class Router extends __WEBPACK_IMPORTED_MODULE_0__Component__["a" /* default */] {
+
+  constructor(routes) {
+    super();
+
+    this.state = {
+      routes,
+      activeRoute: null,
+      activeComponent: null
+    };
+
+    this.host = document.getElementById('root');
+
+    window.addEventListener('hashchange', () => {
+      this.handleUrlChange(this.path);
+    });
+
+    this.handleUrlChange(this.path);
+  }
+
+  get path() {
+    return window.location.hash.slice(1);
+  }
+
+  handleUrlChange(path) {
+    const { routes, activeRoute } = this.state;
+
+    let nextRoute = routes.find(({ href }) => Object(__WEBPACK_IMPORTED_MODULE_1__utils_helpers__["d" /* isEqualPaths */])(href, path));
+
+    if (!nextRoute) {
+      this.navigate('');
+    }
+
+    if (nextRoute !== activeRoute) {
+      if (!!nextRoute.redirectTo) {
+        return this.navigate(nextRoute.redirectTo);
+      }
+
+      if (!!nextRoute.onEnter) {
+        return this.handleOnEnter(nextRoute, path);
+      }
+
+      this.applyRoute(nextRoute, path)
+    }
+  }
+
+  navigate(path) {
+    window.location.hash = path;
+  }
+
+  applyRoute(route, path) {
+    const { href, component } = route;
+    const componentInstance = new component();
+
+    this.updateState({
+      activeRoute: route,
+      activeComponent: componentInstance,
+    });
+  }
+
+  render() {
+    return this.state.activeComponent.update();
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Router);
 
 
 /***/ }),
 /* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__routes__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__framework_Router__ = __webpack_require__(8);
-
-
-
-const router = new __WEBPACK_IMPORTED_MODULE_1__framework_Router__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0__routes__["a" /* default */]);
+__webpack_require__(4);
+module.exports = __webpack_require__(10);
 
 
 /***/ }),
@@ -194,9 +259,23 @@ const router = new __WEBPACK_IMPORTED_MODULE_1__framework_Router__["a" /* defaul
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Queue__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Login__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Signup__ = __webpack_require__(7);
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__routes__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__framework_Router__ = __webpack_require__(2);
+
+
+
+const router = new __WEBPACK_IMPORTED_MODULE_1__framework_Router__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0__routes__["a" /* default */]);
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Queue__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Login__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Signup__ = __webpack_require__(8);
 
 
 
@@ -229,7 +308,7 @@ const routes = [
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -385,7 +464,7 @@ class Queue extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -421,11 +500,15 @@ class Login extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_authService__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__framework_Router__ = __webpack_require__(2);
+
+
 
 
 class Signup extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* default */] {
@@ -433,32 +516,83 @@ class Signup extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* d
   constructor() {
     super();
 
+    this.state = {
+      stores: []
+    };
+
     this.host = document.createElement('div');
     this.host.classList.add('sign-up-container');
+
+    this.host.addEventListener('submit', event => this.handleSubmit(event));
+
+    this.getStores();
+  }
+
+  getStores() {
+    __WEBPACK_IMPORTED_MODULE_1__services_authService__["a" /* default */].getStores()
+      .then(stores => this.updateState({ stores }));
   }
 
   render() {
+    const options = this.getSelectOptions(this.state.stores);
+
     return `
       <form class="sign-up-form">
 
-        <input type="text" placeholder="Username" required>
-        <input type="email" placeholder="Email">
-        <input type="password" placeholder="Password" required>
-        <input type="password" placeholder="Confirm password" required>
+        <input type="text" name="username" minlength="2" maxlength="24" placeholder="Username" required>
+        <input type="password" name="password" minlength="8" placeholder="Password" required>
+        <input type="password" name="password_repeat" minlength="8" placeholder="Confirm password" required>
+        <input type="email" name="email" placeholder="Email" required>
 
         <p class="select-wrapper">
-          <select>
-            <option>Pizza Fantasy</option>
+          <select name="store_id" required>
+            ${options}
           </select>
         </p>
-        <input type="password" placeholder="Store password" required>
+        <input type="password" name="store_password" minlength="8" placeholder="Store password" required>
 
-        <button type="submit">Sign Up</button>
+        <button type="submit" id="sign-up-button">Sign Up</button>
 
         <p>Already have an account? <a href="#/login">Log in</a></p>
 
       <form>
     `;
+  }
+
+  getSelectOptions(stores) {
+    return stores.reduce((stores, store) => stores += `<option value="${ store.id }">${ store.name }</option>`, '');
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    const target = event.target;
+
+    const userData = {
+      username: target.username.value.trim(),
+      password: target.password.value.trim(),
+      password_repeat: target.password_repeat.value.trim(),
+      email: target.email.value.trim(),
+      store_id: parseInt(target.store_id.value),
+      store_password: target.store_password.value.trim()
+    };
+
+    __WEBPACK_IMPORTED_MODULE_1__services_authService__["a" /* default */].signup(userData)
+      .then(() => window.location.hash = '/login')
+      .catch(this.handleErrors);
+  }
+
+  handleErrors(data) {
+    const list = document.createElement('ul');
+    list.classList.add('error-list');
+
+    data.answer.validations.forEach(msg => {
+      const error = document.createElement('li');
+      error.textContent = msg;
+      list.appendChild(error);
+    });
+
+    document.querySelector('.sign-up-form').insertBefore(list, document.querySelector('#sign-up-button'));
   }
 }
 
@@ -466,86 +600,51 @@ class Signup extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* d
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Component__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_helpers__ = __webpack_require__(1);
 
+class authService {
 
-
-class Router extends __WEBPACK_IMPORTED_MODULE_0__Component__["a" /* default */] {
-
-  constructor(routes) {
-    super();
-
-    this.state = {
-      routes,
-      activeRoute: null,
-      activeComponent: null
-    };
-
-    this.host = document.getElementById('root');
-
-    window.addEventListener('hashchange', () => {
-      this.handleUrlChange(this.path);
-    });
-
-    this.handleUrlChange(this.path);
+  constructor() {
   }
 
-  get path() {
-    return window.location.hash.slice(1);
+  signup(userData) {
+    return fetch('https://pizza-tele.ga/api/v1/user/create', {
+      method: 'POST',
+      body: JSON.stringify(userData),
+      headers: new Headers().append('content-type', 'application/json')
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.json()
+            .then(answer => Promise.resolve({answer}));
+        } else {
+          return response.json()
+            .then(answer => Promise.reject({answer}));
+        }
+      });
   }
 
-  handleUrlChange(path) {
-    const { routes, activeRoute } = this.state;
-
-    let nextRoute = routes.find(({ href }) => Object(__WEBPACK_IMPORTED_MODULE_1__utils_helpers__["d" /* isEqualPaths */])(href, path));
-
-    if (!nextRoute) {
-      this.handleRedirect('');
-    }
-
-    if (nextRoute !== activeRoute) {
-      if (!!nextRoute.redirectTo) {
-        return this.handleRedirect(nextRoute.redirectTo);
-      }
-
-      if (!!nextRoute.onEnter) {
-        return this.handleOnEnter(nextRoute, path);
-      }
-
-      this.applyRoute(nextRoute, path)
-    }
-  }
-
-  handleRedirect(path) {
-    window.location.hash = path;
-  }
-
-  applyRoute(route, path) {
-    const { href, component } = route;
-    const componentInstance = new component();
-
-    this.updateState({
-      activeRoute: route,
-      activeComponent: componentInstance,
-    });
-  }
-
-  render() {
-    return this.state.activeComponent.update();
+  getStores() {
+    return fetch('https://pizza-tele.ga/api/v1/store/list')
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+      });
   }
 
 }
 
-/* harmony default export */ __webpack_exports__["a"] = (Router);
+const AUTH_SERVICE = new authService();
+
+/* harmony default export */ __webpack_exports__["a"] = (AUTH_SERVICE);
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "css/styles.css";

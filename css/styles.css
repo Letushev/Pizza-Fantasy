@@ -224,3 +224,9 @@ footer {
       right: 15px;
       font-size: 1rem;
       pointer-events: none; }
+
+.error-list {
+  text-align: left; }
+  .error-list li {
+    margin-top: 5px;
+    color: #bd3c1a; }
