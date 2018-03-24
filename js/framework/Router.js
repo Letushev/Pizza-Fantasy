@@ -31,12 +31,12 @@ class Router extends Component {
     let nextRoute = routes.find(({ href }) => isEqualPaths(href, path));
 
     if (!nextRoute) {
-      this.handleRedirect('');
+      this.navigate('');
     }
 
     if (nextRoute !== activeRoute) {
       if (!!nextRoute.redirectTo) {
-        return this.handleRedirect(nextRoute.redirectTo);
+        return this.navigate(nextRoute.redirectTo);
       }
 
       if (!!nextRoute.onEnter) {
@@ -47,7 +47,7 @@ class Router extends Component {
     }
   }
 
-  handleRedirect(path) {
+  navigate(path) {
     window.location.hash = path;
   }
 

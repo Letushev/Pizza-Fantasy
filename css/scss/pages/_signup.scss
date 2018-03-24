@@ -30,3 +30,12 @@
     }
   }
 }
+
+.error-list {
+  text-align: left;
+
+  li {
+    margin-top: 5px;
+    color: $dark-red;
+  }
+}
