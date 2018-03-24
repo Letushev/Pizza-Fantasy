@@ -1,6 +1,6 @@
 import Component from '../framework/Component';
 
-class SignUp extends Component {
+class Signup extends Component {
 
   constructor() {
     super();
@@ -34,4 +34,4 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp;
+export default Signup;

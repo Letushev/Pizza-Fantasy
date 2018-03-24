@@ -1,6 +1,6 @@
-import PizzasQueue from './components/PizzasQueue';
-import LogIn from './components/LogIn';
-import SignUp from './components/SignUp';
+import Queue from './components/Queue';
+import Login from './components/Login';
+import Signup from './components/Signup';
 
 const routes = [
 
@@ -11,17 +11,17 @@ const routes = [
 
   {
     href: '/',
-    component: PizzasQueue
+    component: Queue
   },
 
   {
     href: '/login',
-    component: LogIn
+    component: Login
   },
 
   {
     href: '/signup',
-    component: SignUp
+    component: Signup
   }
 
 ];

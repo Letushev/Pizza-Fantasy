@@ -1,6 +1,6 @@
 import Component from '../framework/Component';
 
-class PizzasQueue extends Component {
+class Queue extends Component {
 
   constructor() {
     super();
@@ -145,4 +145,4 @@ class PizzasQueue extends Component {
   }
 }
 
-export default PizzasQueue;
+export default Queue;

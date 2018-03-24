@@ -194,9 +194,9 @@ const router = new __WEBPACK_IMPORTED_MODULE_1__framework_Router__["a" /* defaul
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_PizzasQueue__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_LogIn__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_SignUp__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Queue__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Login__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Signup__ = __webpack_require__(7);
 
 
 
@@ -210,17 +210,17 @@ const routes = [
 
   {
     href: '/',
-    component: __WEBPACK_IMPORTED_MODULE_0__components_PizzasQueue__["a" /* default */]
+    component: __WEBPACK_IMPORTED_MODULE_0__components_Queue__["a" /* default */]
   },
 
   {
     href: '/login',
-    component: __WEBPACK_IMPORTED_MODULE_1__components_LogIn__["a" /* default */]
+    component: __WEBPACK_IMPORTED_MODULE_1__components_Login__["a" /* default */]
   },
 
   {
     href: '/signup',
-    component: __WEBPACK_IMPORTED_MODULE_2__components_SignUp__["a" /* default */]
+    component: __WEBPACK_IMPORTED_MODULE_2__components_Signup__["a" /* default */]
   }
 
 ];
@@ -236,7 +236,7 @@ const routes = [
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(0);
 
 
-class PizzasQueue extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* default */] {
+class Queue extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* default */] {
 
   constructor() {
     super();
@@ -381,7 +381,7 @@ class PizzasQueue extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a"
   }
 }
 
-/* harmony default export */ __webpack_exports__["a"] = (PizzasQueue);
+/* harmony default export */ __webpack_exports__["a"] = (Queue);
 
 
 /***/ }),
@@ -392,7 +392,7 @@ class PizzasQueue extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a"
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(0);
 
 
-class LogIn extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* default */] {
+class Login extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* default */] {
 
   constructor() {
     super();
@@ -417,7 +417,7 @@ class LogIn extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
   }
 }
 
-/* harmony default export */ __webpack_exports__["a"] = (LogIn);
+/* harmony default export */ __webpack_exports__["a"] = (Login);
 
 
 /***/ }),
@@ -428,7 +428,7 @@ class LogIn extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(0);
 
 
-class SignUp extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* default */] {
+class Signup extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* default */] {
 
   constructor() {
     super();
@@ -462,7 +462,7 @@ class SignUp extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* d
   }
 }
 
-/* harmony default export */ __webpack_exports__["a"] = (SignUp);
+/* harmony default export */ __webpack_exports__["a"] = (Signup);
 
 
 /***/ }),
