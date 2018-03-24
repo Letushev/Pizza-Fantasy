@@ -2,6 +2,10 @@
 class authService {
 
   constructor() {
+
+  }
+
+  login(userData) {
   }
 
   signup(userData) {

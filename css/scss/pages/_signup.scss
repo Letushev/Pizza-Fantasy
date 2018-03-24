@@ -1,5 +1,6 @@
 .sign-up-form {
   margin: 25px auto;
+  position: relative;
 
   button {
     @include button_effect($red);
@@ -33,6 +34,7 @@
 
 .error-list {
   text-align: left;
+  list-style: square inside none;
 
   li {
     margin-top: 5px;

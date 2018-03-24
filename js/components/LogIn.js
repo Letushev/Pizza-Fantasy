@@ -1,4 +1,6 @@
 import Component from '../framework/Component';
+import AUTH_SERVICE from '../services/authService';
+import router from '../index';
 
 class Login extends Component {
 
@@ -7,14 +9,16 @@ class Login extends Component {
 
     this.host = document.createElement('div');
     this.host.classList.add('log-in-container');
+
+    this.host.addEventListener('submit', event => this.handleSubmit(event));
   }
 
   render() {
     return `
       <form class="log-in-form">
 
-        <input type="text" placeholder="Username" required>
-        <input type="password" placeholder="Password" required>
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" password="password" placeholder="Password" required>
 
         <button type="submit">Log in</button>
 
@@ -22,6 +26,19 @@ class Login extends Component {
 
       <form>
     `;
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    const target = event.target;
+    const userData = {
+      username: target.username.value.trim(),
+      password: target.password.value.trim()
+    };
+
+    AUTH_SERVICE.login(userData)
+      .then(() => router.navigate('/'));
   }
 }
 

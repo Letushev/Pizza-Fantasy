@@ -1,6 +1,6 @@
 import Component from '../framework/Component';
 import AUTH_SERVICE from '../services/authService';
-import Router from '../framework/Router';
+import router from '../index';
 
 class Signup extends Component {
 
@@ -42,6 +42,8 @@ class Signup extends Component {
         </p>
         <input type="password" name="store_password" minlength="8" placeholder="Store password" required>
 
+        <ul class="error-list"></ul>
+
         <button type="submit" id="sign-up-button">Sign Up</button>
 
         <p>Already have an account? <a href="#/login">Log in</a></p>
@@ -69,21 +71,19 @@ class Signup extends Component {
     };
 
     AUTH_SERVICE.signup(userData)
-      .then(() => window.location.hash = '/login')
-      .catch(this.handleErrors);
+      .then(() => router.navigate('/login'))
+      .catch(data => this.handleErrors(data));
   }
 
   handleErrors(data) {
-    const list = document.createElement('ul');
-    list.classList.add('error-list');
+    const list = document.querySelector('.error-list');
+    list.innerHTML = '';
 
     data.answer.validations.forEach(msg => {
       const error = document.createElement('li');
       error.textContent = msg;
       list.appendChild(error);
     });
-
-    document.querySelector('.sign-up-form').insertBefore(list, document.querySelector('#sign-up-button'));
   }
 }
 

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -68,7 +68,7 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_helpers__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_helpers__ = __webpack_require__(2);
 
 
 class Component {
@@ -120,6 +120,22 @@ class Component {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__routes__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__framework_Router__ = __webpack_require__(9);
+
+
+
+const router = new __WEBPACK_IMPORTED_MODULE_1__framework_Router__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0__routes__["a" /* default */]);
+
+/* harmony default export */ __webpack_exports__["default"] = (router);
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 const bindAll = (context, ...names) => {
   names.forEach(name => {
     context[name] = context[name].bind(context);
@@ -168,104 +184,59 @@ const isEqualPaths = (template, path) => pathToRegExp(template).test(path);
 
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Component__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_helpers__ = __webpack_require__(1);
 
+class authService {
 
+  constructor() {
 
-class Router extends __WEBPACK_IMPORTED_MODULE_0__Component__["a" /* default */] {
-
-  constructor(routes) {
-    super();
-
-    this.state = {
-      routes,
-      activeRoute: null,
-      activeComponent: null
-    };
-
-    this.host = document.getElementById('root');
-
-    window.addEventListener('hashchange', () => {
-      this.handleUrlChange(this.path);
-    });
-
-    this.handleUrlChange(this.path);
   }
 
-  get path() {
-    return window.location.hash.slice(1);
+  login(userData) {
   }
 
-  handleUrlChange(path) {
-    const { routes, activeRoute } = this.state;
-
-    let nextRoute = routes.find(({ href }) => Object(__WEBPACK_IMPORTED_MODULE_1__utils_helpers__["d" /* isEqualPaths */])(href, path));
-
-    if (!nextRoute) {
-      this.navigate('');
-    }
-
-    if (nextRoute !== activeRoute) {
-      if (!!nextRoute.redirectTo) {
-        return this.navigate(nextRoute.redirectTo);
-      }
-
-      if (!!nextRoute.onEnter) {
-        return this.handleOnEnter(nextRoute, path);
-      }
-
-      this.applyRoute(nextRoute, path)
-    }
+  signup(userData) {
+    return fetch('https://pizza-tele.ga/api/v1/user/create', {
+      method: 'POST',
+      body: JSON.stringify(userData),
+      headers: new Headers().append('content-type', 'application/json')
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.json()
+            .then(answer => Promise.resolve({answer}));
+        } else {
+          return response.json()
+            .then(answer => Promise.reject({answer}));
+        }
+      });
   }
 
-  navigate(path) {
-    window.location.hash = path;
-  }
-
-  applyRoute(route, path) {
-    const { href, component } = route;
-    const componentInstance = new component();
-
-    this.updateState({
-      activeRoute: route,
-      activeComponent: componentInstance,
-    });
-  }
-
-  render() {
-    return this.state.activeComponent.update();
+  getStores() {
+    return fetch('https://pizza-tele.ga/api/v1/store/list')
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+      });
   }
 
 }
 
-/* harmony default export */ __webpack_exports__["a"] = (Router);
+const AUTH_SERVICE = new authService();
 
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(4);
-module.exports = __webpack_require__(10);
+/* harmony default export */ __webpack_exports__["a"] = (AUTH_SERVICE);
 
 
 /***/ }),
 /* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__routes__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__framework_Router__ = __webpack_require__(2);
-
-
-
-const router = new __WEBPACK_IMPORTED_MODULE_1__framework_Router__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0__routes__["a" /* default */]);
+__webpack_require__(1);
+module.exports = __webpack_require__(10);
 
 
 /***/ }),
@@ -469,6 +440,10 @@ class Queue extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_authService__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index__ = __webpack_require__(1);
+
+
 
 
 class Login extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* default */] {
@@ -478,14 +453,16 @@ class Login extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
 
     this.host = document.createElement('div');
     this.host.classList.add('log-in-container');
+
+    this.host.addEventListener('submit', event => this.handleSubmit(event));
   }
 
   render() {
     return `
       <form class="log-in-form">
 
-        <input type="text" placeholder="Username" required>
-        <input type="password" placeholder="Password" required>
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" password="password" placeholder="Password" required>
 
         <button type="submit">Log in</button>
 
@@ -493,6 +470,19 @@ class Login extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
 
       <form>
     `;
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    const target = event.target;
+    const userData = {
+      username: target.username.value.trim(),
+      password: target.password.value.trim()
+    };
+
+    __WEBPACK_IMPORTED_MODULE_1__services_authService__["a" /* default */].login(userData)
+      .then(() => __WEBPACK_IMPORTED_MODULE_2__index__["default"].navigate('/'));
   }
 }
 
@@ -505,8 +495,8 @@ class Login extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_authService__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__framework_Router__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_authService__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index__ = __webpack_require__(1);
 
 
 
@@ -551,6 +541,8 @@ class Signup extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* d
         </p>
         <input type="password" name="store_password" minlength="8" placeholder="Store password" required>
 
+        <ul class="error-list"></ul>
+
         <button type="submit" id="sign-up-button">Sign Up</button>
 
         <p>Already have an account? <a href="#/login">Log in</a></p>
@@ -578,21 +570,19 @@ class Signup extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* d
     };
 
     __WEBPACK_IMPORTED_MODULE_1__services_authService__["a" /* default */].signup(userData)
-      .then(() => window.location.hash = '/login')
-      .catch(this.handleErrors);
+      .then(() => __WEBPACK_IMPORTED_MODULE_2__index__["default"].navigate('/login'))
+      .catch(data => this.handleErrors(data));
   }
 
   handleErrors(data) {
-    const list = document.createElement('ul');
-    list.classList.add('error-list');
+    const list = document.querySelector('.error-list');
+    list.innerHTML = '';
 
     data.answer.validations.forEach(msg => {
       const error = document.createElement('li');
       error.textContent = msg;
       list.appendChild(error);
     });
-
-    document.querySelector('.sign-up-form').insertBefore(list, document.querySelector('#sign-up-button'));
   }
 }
 
@@ -604,43 +594,78 @@ class Signup extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* d
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Component__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_helpers__ = __webpack_require__(2);
 
-class authService {
 
-  constructor() {
+
+class Router extends __WEBPACK_IMPORTED_MODULE_0__Component__["a" /* default */] {
+
+  constructor(routes) {
+    super();
+
+    this.state = {
+      routes,
+      activeRoute: null,
+      activeComponent: null
+    };
+
+    this.host = document.getElementById('root');
+
+    window.addEventListener('hashchange', () => {
+      this.handleUrlChange(this.path);
+    });
+
+    this.handleUrlChange(this.path);
   }
 
-  signup(userData) {
-    return fetch('https://pizza-tele.ga/api/v1/user/create', {
-      method: 'POST',
-      body: JSON.stringify(userData),
-      headers: new Headers().append('content-type', 'application/json')
-    })
-      .then(response => {
-        if (response.ok) {
-          return response.json()
-            .then(answer => Promise.resolve({answer}));
-        } else {
-          return response.json()
-            .then(answer => Promise.reject({answer}));
-        }
-      });
+  get path() {
+    return window.location.hash.slice(1);
   }
 
-  getStores() {
-    return fetch('https://pizza-tele.ga/api/v1/store/list')
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        }
-      });
+  handleUrlChange(path) {
+    const { routes, activeRoute } = this.state;
+
+    let nextRoute = routes.find(({ href }) => Object(__WEBPACK_IMPORTED_MODULE_1__utils_helpers__["d" /* isEqualPaths */])(href, path));
+
+    if (!nextRoute) {
+      this.navigate('');
+    }
+
+    if (nextRoute !== activeRoute) {
+      if (!!nextRoute.redirectTo) {
+        return this.navigate(nextRoute.redirectTo);
+      }
+
+      if (!!nextRoute.onEnter) {
+        return this.handleOnEnter(nextRoute, path);
+      }
+
+      this.applyRoute(nextRoute, path)
+    }
+  }
+
+  navigate(path) {
+    window.location.hash = path;
+  }
+
+  applyRoute(route, path) {
+    const { href, component } = route;
+    const componentInstance = new component();
+
+    this.updateState({
+      activeRoute: route,
+      activeComponent: componentInstance,
+    });
+  }
+
+  render() {
+    return this.state.activeComponent.update();
   }
 
 }
 
-const AUTH_SERVICE = new authService();
-
-/* harmony default export */ __webpack_exports__["a"] = (AUTH_SERVICE);
+/* harmony default export */ __webpack_exports__["a"] = (Router);
 
 
 /***/ }),
