@@ -70,16 +70,16 @@ class Signup extends Component {
       store_password: target.store_password.value.trim()
     };
 
-    AUTH_SERVICE.signup(userData)
+    AUTH_SERVICE.entry(userData)
       .then(() => router.navigate('/login'))
-      .catch(data => this.handleErrors(data));
+      .catch(data => this.handleErrors(data.answer.validations));
   }
 
-  handleErrors(data) {
+  handleErrors(errors) {
     const list = document.querySelector('.error-list');
     list.innerHTML = '';
 
-    data.answer.validations.forEach(msg => {
+    errors.forEach(msg => {
       const error = document.createElement('li');
       error.textContent = msg;
       list.appendChild(error);

@@ -32,6 +32,7 @@ class Login extends Component {
     event.preventDefault();
 
     const target = event.target;
+
     const userData = {
       username: target.username.value.trim(),
       password: target.password.value.trim()
