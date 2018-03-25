@@ -185,51 +185,9 @@ const isEqualPaths = (template, path) => pathToRegExp(template).test(path);
 
 /***/ }),
 /* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-class authService {
-
-  constructor() {
-
-  }
-
-  login(userData) {
-  }
-
-  signup(userData) {
-    return fetch('https://pizza-tele.ga/api/v1/user/create', {
-      method: 'POST',
-      body: JSON.stringify(userData),
-      headers: new Headers().append('content-type', 'application/json')
-    })
-      .then(response => {
-        if (response.ok) {
-          return response.json()
-            .then(answer => Promise.resolve({answer}));
-        } else {
-          return response.json()
-            .then(answer => Promise.reject({answer}));
-        }
-      });
-  }
-
-  getStores() {
-    return fetch('https://pizza-tele.ga/api/v1/store/list')
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        }
-      });
-  }
-
-}
-
-const AUTH_SERVICE = new authService();
-
-/* harmony default export */ __webpack_exports__["a"] = (AUTH_SERVICE);
-
+throw new Error("Module parse failed: setter should have exactly one param (9:11)\nYou may need an appropriate loader to handle this file type.\n|   }\r\n| \r\n|   set token() {\r\n|     this._token = token;\r\n|     localStorage.setItem('token', token);\r");
 
 /***/ }),
 /* 4 */
@@ -440,7 +398,8 @@ class Queue extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_authService__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_AuthService__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_AuthService___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__services_AuthService__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index__ = __webpack_require__(1);
 
 
@@ -476,12 +435,13 @@ class Login extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
     event.preventDefault();
 
     const target = event.target;
+
     const userData = {
       username: target.username.value.trim(),
       password: target.password.value.trim()
     };
 
-    __WEBPACK_IMPORTED_MODULE_1__services_authService__["a" /* default */].login(userData)
+    __WEBPACK_IMPORTED_MODULE_1__services_AuthService__["default"].login(userData)
       .then(() => __WEBPACK_IMPORTED_MODULE_2__index__["default"].navigate('/'));
   }
 }
@@ -495,7 +455,8 @@ class Login extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_authService__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_AuthService__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_AuthService___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__services_AuthService__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index__ = __webpack_require__(1);
 
 
@@ -519,7 +480,7 @@ class Signup extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* d
   }
 
   getStores() {
-    __WEBPACK_IMPORTED_MODULE_1__services_authService__["a" /* default */].getStores()
+    __WEBPACK_IMPORTED_MODULE_1__services_AuthService__["default"].getStores()
       .then(stores => this.updateState({ stores }));
   }
 
@@ -569,16 +530,16 @@ class Signup extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* d
       store_password: target.store_password.value.trim()
     };
 
-    __WEBPACK_IMPORTED_MODULE_1__services_authService__["a" /* default */].signup(userData)
+    __WEBPACK_IMPORTED_MODULE_1__services_AuthService__["default"].entry(userData)
       .then(() => __WEBPACK_IMPORTED_MODULE_2__index__["default"].navigate('/login'))
-      .catch(data => this.handleErrors(data));
+      .catch(data => this.handleErrors(data.answer.validations));
   }
 
-  handleErrors(data) {
+  handleErrors(errors) {
     const list = document.querySelector('.error-list');
     list.innerHTML = '';
 
-    data.answer.validations.forEach(msg => {
+    errors.forEach(msg => {
       const error = document.createElement('li');
       error.textContent = msg;
       list.appendChild(error);
