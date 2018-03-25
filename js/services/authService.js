@@ -1,5 +1,5 @@
 
-class authService {
+class AuthService {
 
   constructor() {
 
@@ -36,6 +36,6 @@ class authService {
 
 }
 
-const AUTH_SERVICE = new authService();
+const AUTH_SERVICE = new AuthService();
 
 export default AUTH_SERVICE;

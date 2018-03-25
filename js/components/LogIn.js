@@ -1,5 +1,5 @@
 import Component from '../framework/Component';
-import AUTH_SERVICE from '../services/authService';
+import AUTH_SERVICE from '../services/AuthService';
 import router from '../index';
 
 class Login extends Component {
