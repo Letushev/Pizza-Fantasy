@@ -1,26 +1,49 @@
+import { bindAll } from '../utils/helpers';
 
 class AuthService {
 
   constructor() {
-    this._token = null;
-    this._claims = null;
+    this._token = localStorage.getItem('token');
+    this._claims = JSON.parse(localStorage.getItem('claims'));
+
+    bindAll(this, 'isAuthorized');
   }
 
-  set token() {
+  set token(token) {
     this._token = token;
     localStorage.setItem('token', token);
   }
 
   get token() {
-
+    return this._token;
   }
 
-  set claims() {
-
+  set claims(claims) {
+    this._claims = claims;
+    localStorage.setItem('claims', JSON.stringify(claims));
   }
 
   get claims() {
+    return this._claims;
+  }
 
+  isAuthorized() {
+    if (!this.tokenIsNotExpired()) {
+      this.clearStorage();
+      return false;
+    }
+    return true;
+  }
+
+  clearStorage() {
+    this._token = null;
+    this._claims = null;
+    localStorage.removeItem('token');
+    localStorage.removeItem('claims');
+  }
+
+  tokenIsNotExpired() {
+    return !!this._token ? this.claims.exp * 1000 > Date.now() : false;
   }
 
   login(userData) {
@@ -31,11 +54,13 @@ class AuthService {
     })
       .then(response => {
         if (response.ok) {
-          return response.json()
-            .then(answer => Promise.resolve({answer}));
+          return response.json().then(answer => {
+            this.token = answer.token;
+            this.claims = this.parseJwtClaims(answer.token);
+            return Promise.resolve({answer})
+          });
         } else {
-          return response.json()
-            .then(answer => Promise.reject({answer}));
+          return response.json().then(answer => Promise.reject({answer}));
         }
       });
   }
@@ -64,6 +89,15 @@ class AuthService {
           return response.json();
         }
       });
+  }
+
+  parseJwtClaims(jwtToken) {
+    if (jwtToken) {
+      let base64Url = jwtToken.split('.')[1];
+      let base64 = base64Url.replace('-', '+').replace('_', '/');
+      return JSON.parse(window.atob(base64));
+    }
+    return {};
   }
 
 }

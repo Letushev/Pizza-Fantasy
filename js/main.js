@@ -68,74 +68,6 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_helpers__ = __webpack_require__(2);
-
-
-class Component {
-
-  constructor(props) {
-    this.state = {};
-    this.props = props || {};
-    this.host = null;
-
-    Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["b" /* bindAll */])(this, 'updateState', 'update');
-  }
-
-  updateHost() {
-    const html = this.render();
-
-    if (!html && this.host) {
-      return this.host;
-    }
-
-    if (typeof html === 'string') {
-      return Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["a" /* append */])(Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["c" /* clearChildren */])(this.host), Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["e" /* parseHTML */])(html));
-    } else {
-      return Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["a" /* append */])(Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["c" /* clearChildren */])(this.host), html);
-    }
-  }
-
-  update(nextProps) {
-    this.props = nextProps;
-    return this.updateHost();
-  }
-
-  updateState(state) {
-    const nextState = Object.assign({}, this.state, state);
-    this.state = nextState;
-
-    this.updateHost();
-
-    return nextState;
-  }
-
-  render() {}
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (Component);
-
-
-/***/ }),
-/* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__routes__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__framework_Router__ = __webpack_require__(9);
-
-
-
-const router = new __WEBPACK_IMPORTED_MODULE_1__framework_Router__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0__routes__["a" /* default */]);
-
-/* harmony default export */ __webpack_exports__["default"] = (router);
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 const bindAll = (context, ...names) => {
   names.forEach(name => {
     context[name] = context[name].bind(context);
@@ -150,7 +82,7 @@ const parseHTML = htmlString => {
 
   return template.content;
 };
-/* harmony export (immutable) */ __webpack_exports__["e"] = parseHTML;
+/* harmony export (immutable) */ __webpack_exports__["f"] = parseHTML;
 
 
 const clearChildren = node => {
@@ -179,21 +111,211 @@ const isUrlParam = path => URL_PARAM_REGEXP.test(path);
 const pathToRegExp = path => RegExp(`^${path.replace(URL_PARAM_REGEXP, '(.*)')}$`); // ^ - beginning, $ - finish
 
 const isEqualPaths = (template, path) => pathToRegExp(template).test(path);
-/* harmony export (immutable) */ __webpack_exports__["d"] = isEqualPaths;
+/* harmony export (immutable) */ __webpack_exports__["e"] = isEqualPaths;
+
+
+const handleErrors = errors => {
+  const list = document.querySelector('.error-list');
+  list.innerHTML = '';
+
+  errors.forEach(msg => {
+    const error = document.createElement('li');
+    error.textContent = msg;
+    list.appendChild(error);
+  });
+}
+/* harmony export (immutable) */ __webpack_exports__["d"] = handleErrors;
 
 
 
 /***/ }),
-/* 3 */
-/***/ (function(module, exports) {
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module parse failed: setter should have exactly one param (9:11)\nYou may need an appropriate loader to handle this file type.\n|   }\r\n| \r\n|   set token() {\r\n|     this._token = token;\r\n|     localStorage.setItem('token', token);\r");
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_helpers__ = __webpack_require__(0);
+
+
+class Component {
+
+  constructor(props) {
+    this.state = {};
+    this.props = props || {};
+    this.host = null;
+
+    Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["b" /* bindAll */])(this, 'updateState', 'update');
+  }
+
+  updateHost() {
+    const html = this.render();
+
+    if (!html && this.host) {
+      return this.host;
+    }
+
+    if (typeof html === 'string') {
+      return Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["a" /* append */])(Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["c" /* clearChildren */])(this.host), Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["f" /* parseHTML */])(html));
+    } else {
+      return Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["a" /* append */])(Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["c" /* clearChildren */])(this.host), html);
+    }
+  }
+
+  update(nextProps) {
+    this.props = nextProps;
+    return this.updateHost();
+  }
+
+  updateState(state) {
+    const nextState = Object.assign({}, this.state, state);
+    this.state = nextState;
+
+    this.updateHost();
+
+    return nextState;
+  }
+
+  render() {}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Component);
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__routes__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__framework_Router__ = __webpack_require__(9);
+
+
+
+const router = new __WEBPACK_IMPORTED_MODULE_1__framework_Router__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0__routes__["a" /* default */]);
+
+/* harmony default export */ __webpack_exports__["default"] = (router);
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_helpers__ = __webpack_require__(0);
+
+
+class AuthService {
+
+  constructor() {
+    this._token = localStorage.getItem('token');
+    this._claims = JSON.parse(localStorage.getItem('claims'));
+
+    Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["b" /* bindAll */])(this, 'isAuthorized');
+  }
+
+  set token(token) {
+    this._token = token;
+    localStorage.setItem('token', token);
+  }
+
+  get token() {
+    return this._token;
+  }
+
+  set claims(claims) {
+    this._claims = claims;
+    localStorage.setItem('claims', JSON.stringify(claims));
+  }
+
+  get claims() {
+    return this._claims;
+  }
+
+  isAuthorized() {
+    if (!this.tokenIsNotExpired()) {
+      this.clearStorage();
+      return false;
+    }
+    return true;
+  }
+
+  clearStorage() {
+    this._token = null;
+    this._claims = null;
+    localStorage.removeItem('token');
+    localStorage.removeItem('claims');
+  }
+
+  tokenIsNotExpired() {
+    return !!this._token ? this.claims.exp * 1000 > Date.now() : false;
+  }
+
+  login(userData) {
+    return fetch('https://pizza-tele.ga/api/v1/user/login', {
+      method: 'POST',
+      body: JSON.stringify(userData),
+      headers: new Headers().append('content-type', 'application/json')
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.json().then(answer => {
+            this.token = answer.token;
+            this.claims = this.parseJwtClaims(answer.token);
+            return Promise.resolve({answer})
+          });
+        } else {
+          return response.json().then(answer => Promise.reject({answer}));
+        }
+      });
+  }
+
+  signup(userData) {
+    return fetch('https://pizza-tele.ga/api/v1/user/create', {
+      method: 'POST',
+      body: JSON.stringify(userData),
+      headers: new Headers().append('content-type', 'application/json')
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.json()
+            .then(answer => Promise.resolve({answer}));
+        } else {
+          return response.json()
+            .then(answer => Promise.reject({answer}));
+        }
+      });
+  }
+
+  getStores() {
+    return fetch('https://pizza-tele.ga/api/v1/store/list')
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+      });
+  }
+
+  parseJwtClaims(jwtToken) {
+    if (jwtToken) {
+      let base64Url = jwtToken.split('.')[1];
+      let base64 = base64Url.replace('-', '+').replace('_', '/');
+      return JSON.parse(window.atob(base64));
+    }
+    return {};
+  }
+
+}
+
+const AUTH_SERVICE = new AuthService();
+
+/* harmony default export */ __webpack_exports__["a"] = (AUTH_SERVICE);
+
 
 /***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(1);
+__webpack_require__(2);
 module.exports = __webpack_require__(10);
 
 
@@ -205,6 +327,9 @@ module.exports = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Queue__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Login__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Signup__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_AuthService__ = __webpack_require__(3);
+
+
 
 
 
@@ -218,7 +343,8 @@ const routes = [
 
   {
     href: '/',
-    component: __WEBPACK_IMPORTED_MODULE_0__components_Queue__["a" /* default */]
+    component: __WEBPACK_IMPORTED_MODULE_0__components_Queue__["a" /* default */],
+    isAuthorized: __WEBPACK_IMPORTED_MODULE_3__services_AuthService__["a" /* default */].isAuthorized
   },
 
   {
@@ -241,7 +367,7 @@ const routes = [
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(1);
 
 
 class Queue extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* default */] {
@@ -397,10 +523,11 @@ class Queue extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_AuthService__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_AuthService___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__services_AuthService__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_helpers__ = __webpack_require__(0);
+
 
 
 
@@ -421,7 +548,9 @@ class Login extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
       <form class="log-in-form">
 
         <input type="text" name="username" placeholder="Username" required>
-        <input type="password" password="password" placeholder="Password" required>
+        <input type="password" name="password" placeholder="Password" required>
+
+        <ul class="error-list"></ul>
 
         <button type="submit">Log in</button>
 
@@ -441,8 +570,9 @@ class Login extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
       password: target.password.value.trim()
     };
 
-    __WEBPACK_IMPORTED_MODULE_1__services_AuthService__["default"].login(userData)
-      .then(() => __WEBPACK_IMPORTED_MODULE_2__index__["default"].navigate('/'));
+    __WEBPACK_IMPORTED_MODULE_1__services_AuthService__["a" /* default */].login(userData)
+      .then(() => __WEBPACK_IMPORTED_MODULE_2__index__["default"].navigate('/'))
+      .catch(data => Object(__WEBPACK_IMPORTED_MODULE_3__utils_helpers__["d" /* handleErrors */])([data.answer.error]));
   }
 }
 
@@ -454,10 +584,11 @@ class Login extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_AuthService__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_AuthService___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__services_AuthService__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_helpers__ = __webpack_require__(0);
+
 
 
 
@@ -480,7 +611,7 @@ class Signup extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* d
   }
 
   getStores() {
-    __WEBPACK_IMPORTED_MODULE_1__services_AuthService__["default"].getStores()
+    __WEBPACK_IMPORTED_MODULE_1__services_AuthService__["a" /* default */].getStores()
       .then(stores => this.updateState({ stores }));
   }
 
@@ -530,20 +661,9 @@ class Signup extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* d
       store_password: target.store_password.value.trim()
     };
 
-    __WEBPACK_IMPORTED_MODULE_1__services_AuthService__["default"].entry(userData)
+    __WEBPACK_IMPORTED_MODULE_1__services_AuthService__["a" /* default */].signup(userData)
       .then(() => __WEBPACK_IMPORTED_MODULE_2__index__["default"].navigate('/login'))
-      .catch(data => this.handleErrors(data.answer.validations));
-  }
-
-  handleErrors(errors) {
-    const list = document.querySelector('.error-list');
-    list.innerHTML = '';
-
-    errors.forEach(msg => {
-      const error = document.createElement('li');
-      error.textContent = msg;
-      list.appendChild(error);
-    });
+      .catch(data => Object(__WEBPACK_IMPORTED_MODULE_3__utils_helpers__["d" /* handleErrors */])(data.answer.validations));
   }
 }
 
@@ -555,8 +675,8 @@ class Signup extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* d
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Component__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_helpers__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Component__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_helpers__ = __webpack_require__(0);
 
 
 
@@ -587,13 +707,16 @@ class Router extends __WEBPACK_IMPORTED_MODULE_0__Component__["a" /* default */]
   handleUrlChange(path) {
     const { routes, activeRoute } = this.state;
 
-    let nextRoute = routes.find(({ href }) => Object(__WEBPACK_IMPORTED_MODULE_1__utils_helpers__["d" /* isEqualPaths */])(href, path));
+    let nextRoute = routes.find(({ href }) => Object(__WEBPACK_IMPORTED_MODULE_1__utils_helpers__["e" /* isEqualPaths */])(href, path));
 
     if (!nextRoute) {
       this.navigate('');
     }
 
     if (nextRoute !== activeRoute) {
+      if (!!nextRoute.isAuthorized) {
+        this.checkAuthorization(nextRoute.isAuthorized());
+      }
       if (!!nextRoute.redirectTo) {
         return this.navigate(nextRoute.redirectTo);
       }
@@ -603,6 +726,12 @@ class Router extends __WEBPACK_IMPORTED_MODULE_0__Component__["a" /* default */]
       }
 
       this.applyRoute(nextRoute, path)
+    }
+  }
+
+  checkAuthorization(auth) {
+    if (!auth) {
+      this.navigate('/login');
     }
   }
 

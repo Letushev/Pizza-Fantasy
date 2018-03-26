@@ -1,6 +1,7 @@
 import Component from '../framework/Component';
 import AUTH_SERVICE from '../services/AuthService';
 import router from '../index';
+import { handleErrors } from '../utils/helpers';
 
 class Signup extends Component {
 
@@ -70,20 +71,9 @@ class Signup extends Component {
       store_password: target.store_password.value.trim()
     };
 
-    AUTH_SERVICE.entry(userData)
+    AUTH_SERVICE.signup(userData)
       .then(() => router.navigate('/login'))
-      .catch(data => this.handleErrors(data.answer.validations));
-  }
-
-  handleErrors(errors) {
-    const list = document.querySelector('.error-list');
-    list.innerHTML = '';
-
-    errors.forEach(msg => {
-      const error = document.createElement('li');
-      error.textContent = msg;
-      list.appendChild(error);
-    });
+      .catch(data => handleErrors(data.answer.validations));
   }
 }
 

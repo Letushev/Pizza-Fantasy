@@ -1,6 +1,7 @@
 import Component from '../framework/Component';
 import AUTH_SERVICE from '../services/AuthService';
 import router from '../index';
+import { handleErrors } from '../utils/helpers';
 
 class Login extends Component {
 
@@ -18,7 +19,9 @@ class Login extends Component {
       <form class="log-in-form">
 
         <input type="text" name="username" placeholder="Username" required>
-        <input type="password" password="password" placeholder="Password" required>
+        <input type="password" name="password" placeholder="Password" required>
+
+        <ul class="error-list"></ul>
 
         <button type="submit">Log in</button>
 
@@ -39,7 +42,8 @@ class Login extends Component {
     };
 
     AUTH_SERVICE.login(userData)
-      .then(() => router.navigate('/'));
+      .then(() => router.navigate('/'))
+      .catch(data => handleErrors([data.answer.error]));
   }
 }
 

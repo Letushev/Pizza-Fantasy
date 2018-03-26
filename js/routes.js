@@ -2,6 +2,8 @@ import Queue from './components/Queue';
 import Login from './components/Login';
 import Signup from './components/Signup';
 
+import AUTH_SERVICE from './services/AuthService';
+
 const routes = [
 
   {
@@ -11,7 +13,8 @@ const routes = [
 
   {
     href: '/',
-    component: Queue
+    component: Queue,
+    isAuthorized: AUTH_SERVICE.isAuthorized
   },
 
   {

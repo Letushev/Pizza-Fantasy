@@ -33,3 +33,14 @@ const isUrlParam = path => URL_PARAM_REGEXP.test(path);
 const pathToRegExp = path => RegExp(`^${path.replace(URL_PARAM_REGEXP, '(.*)')}$`); // ^ - beginning, $ - finish
 
 export const isEqualPaths = (template, path) => pathToRegExp(template).test(path);
+
+export const handleErrors = errors => {
+  const list = document.querySelector('.error-list');
+  list.innerHTML = '';
+
+  errors.forEach(msg => {
+    const error = document.createElement('li');
+    error.textContent = msg;
+    list.appendChild(error);
+  });
+}

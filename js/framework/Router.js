@@ -35,6 +35,9 @@ class Router extends Component {
     }
 
     if (nextRoute !== activeRoute) {
+      if (!!nextRoute.isAuthorized) {
+        this.checkAuthorization(nextRoute.isAuthorized());
+      }
       if (!!nextRoute.redirectTo) {
         return this.navigate(nextRoute.redirectTo);
       }
@@ -44,6 +47,12 @@ class Router extends Component {
       }
 
       this.applyRoute(nextRoute, path)
+    }
+  }
+
+  checkAuthorization(auth) {
+    if (!auth) {
+      this.navigate('/login');
     }
   }
 
