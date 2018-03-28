@@ -174,7 +174,7 @@ const isEqualPaths = (template, path) => pathToRegExp(template).test(path);
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__routes__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__framework_Router__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__framework_Router__ = __webpack_require__(12);
 
 
 
@@ -335,7 +335,7 @@ class ErrorsMsg extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(2);
-module.exports = __webpack_require__(12);
+module.exports = __webpack_require__(13);
 
 
 /***/ }),
@@ -346,7 +346,9 @@ module.exports = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Queue__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Login__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Signup__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_AuthService__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_UserInfo__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_AuthService__ = __webpack_require__(3);
+
 
 
 
@@ -363,7 +365,7 @@ const routes = [
   {
     href: '/',
     component: __WEBPACK_IMPORTED_MODULE_0__components_Queue__["a" /* default */],
-    isAuthorized: __WEBPACK_IMPORTED_MODULE_3__services_AuthService__["a" /* default */].isAuthorized
+    isAuthorized: __WEBPACK_IMPORTED_MODULE_4__services_AuthService__["a" /* default */].isAuthorized
   },
 
   {
@@ -374,6 +376,12 @@ const routes = [
   {
     href: '/signup',
     component: __WEBPACK_IMPORTED_MODULE_2__components_Signup__["a" /* default */]
+  },
+
+  {
+    href: '/userinfo',
+    component: __WEBPACK_IMPORTED_MODULE_3__components_UserInfo__["a" /* default */],
+    isAuthorized: __WEBPACK_IMPORTED_MODULE_4__services_AuthService__["a" /* default */].isAuthorized
   }
 
 ];
@@ -787,6 +795,21 @@ class Signup extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* d
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(0);
+
+
+class UserInfo extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* default */] {
+
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (UserInfo);
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Component__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_helpers__ = __webpack_require__(1);
 
@@ -871,7 +894,7 @@ class Router extends __WEBPACK_IMPORTED_MODULE_0__Component__["a" /* default */]
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "css/styles.css";
