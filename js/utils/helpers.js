@@ -33,3 +33,29 @@ const isUrlParam = path => URL_PARAM_REGEXP.test(path);
 const pathToRegExp = path => RegExp(`^${path.replace(URL_PARAM_REGEXP, '(.*)')}$`); // ^ - beginning, $ - finish
 
 export const isEqualPaths = (template, path) => pathToRegExp(template).test(path);
+
+const addValidationErrors = validations => {
+  const addError = msg => {
+    const listItem = document.createElement('li');
+    listItem.textContent = msg;
+    return listItem;
+  }
+
+  const errorsList = document.createElement('ul');
+  validations.forEach(msg => errorsList.appendChild(addError(msg)));
+
+  return errorsList;
+}
+
+export const handleErrors = errorAnswer => {
+  const errorsContainer = document.querySelector('.errors-container');
+  errorsContainer.innerHTML = '';
+
+  let mainError = document.createElement('p');
+  mainError.textContent = errorAnswer.error;
+  errorsContainer.appendChild(mainError);
+
+  if (!!errorAnswer.validations) {
+    errorsContainer.appendChild(addValidationErrors(errorAnswer.validations));
+  }
+};

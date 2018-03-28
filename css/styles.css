@@ -89,13 +89,14 @@ form {
     font-family: "Ubuntu Mono";
     font-size: 1.2rem; }
 
-.error-list {
-  margin-top: 15px;
+.errors-container {
   text-align: left;
-  list-style: square inside none; }
-  .error-list li {
-    margin-top: 5px;
-    color: #bd3c1a; }
+  list-style: square inside none;
+  color: #bd3c1a; }
+  .errors-container ul {
+    margin-top: 10px;
+    list-style-type: disc;
+    list-style-position: inside; }
 
 header {
   text-align: center;

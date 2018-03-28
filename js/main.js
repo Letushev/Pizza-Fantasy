@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -89,7 +89,7 @@ class Component {
     }
 
     if (typeof html === 'string') {
-      return Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["a" /* append */])(Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["c" /* clearChildren */])(this.host), Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["e" /* parseHTML */])(html));
+      return Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["a" /* append */])(Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["c" /* clearChildren */])(this.host), Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["f" /* parseHTML */])(html));
     } else {
       return Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["a" /* append */])(Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["c" /* clearChildren */])(this.host), html);
     }
@@ -134,7 +134,7 @@ const parseHTML = htmlString => {
 
   return template.content;
 };
-/* harmony export (immutable) */ __webpack_exports__["e"] = parseHTML;
+/* harmony export (immutable) */ __webpack_exports__["f"] = parseHTML;
 
 
 const clearChildren = node => {
@@ -163,7 +163,35 @@ const isUrlParam = path => URL_PARAM_REGEXP.test(path);
 const pathToRegExp = path => RegExp(`^${path.replace(URL_PARAM_REGEXP, '(.*)')}$`); // ^ - beginning, $ - finish
 
 const isEqualPaths = (template, path) => pathToRegExp(template).test(path);
-/* harmony export (immutable) */ __webpack_exports__["d"] = isEqualPaths;
+/* harmony export (immutable) */ __webpack_exports__["e"] = isEqualPaths;
+
+
+const addValidationErrors = validations => {
+  const addError = msg => {
+    const listItem = document.createElement('li');
+    listItem.textContent = msg;
+    return listItem;
+  }
+
+  const errorsList = document.createElement('ul');
+  validations.forEach(msg => errorsList.appendChild(addError(msg)));
+
+  return errorsList;
+}
+
+const handleErrors = errorAnswer => {
+  const errorsContainer = document.querySelector('.errors-container');
+  errorsContainer.innerHTML = '';
+
+  let mainError = document.createElement('p');
+  mainError.textContent = errorAnswer.error;
+  errorsContainer.appendChild(mainError);
+
+  if (!!errorAnswer.validations) {
+    errorsContainer.appendChild(addValidationErrors(errorAnswer.validations));
+  }
+};
+/* harmony export (immutable) */ __webpack_exports__["d"] = handleErrors;
 
 
 
@@ -173,8 +201,8 @@ const isEqualPaths = (template, path) => pathToRegExp(template).test(path);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__routes__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__framework_Router__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__routes__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__framework_Router__ = __webpack_require__(11);
 
 
 
@@ -299,54 +327,21 @@ const AUTH_SERVICE = new AuthService();
 
 /***/ }),
 /* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(0);
-
-
-class ErrorsMsg extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* default */] {
-  constructor(props) {
-    super(props);
-
-    this.host = document.createElement('ul');
-    this.host.classList.add('error-list');
-  }
-
-  render() {
-    let errors = '';
-    const { answer } = this.props;
-
-    if (!!answer.validations) {
-      answer.validations.forEach(msg => errors += `<li>${ msg }</li>`);
-    } else {
-      errors = `<li>${ answer.error }</li>`;
-    }
-
-    return errors;
-  }
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (ErrorsMsg);
+__webpack_require__(2);
+module.exports = __webpack_require__(12);
 
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(2);
-module.exports = __webpack_require__(13);
-
-
-/***/ }),
-/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Queue__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Login__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Signup__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_UserInfo__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Queue__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Login__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Signup__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_UserInfo__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_AuthService__ = __webpack_require__(3);
 
 
@@ -390,12 +385,12 @@ const routes = [
 
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Clock__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Clock__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_AuthService__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__index__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_helpers__ = __webpack_require__(1);
@@ -557,7 +552,7 @@ class Queue extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
       </footer>
     `;
 
-    const parsedHTML = Object(__WEBPACK_IMPORTED_MODULE_4__utils_helpers__["e" /* parseHTML */])(html);
+    const parsedHTML = Object(__WEBPACK_IMPORTED_MODULE_4__utils_helpers__["f" /* parseHTML */])(html);
     const headerElement = parsedHTML.querySelector('.queue-header');
 
     headerElement.insertAdjacentElement('afterbegin', this.clock.update());
@@ -570,7 +565,7 @@ class Queue extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
 
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -618,14 +613,14 @@ class Clock extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
 
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_AuthService__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ErrorsMsg__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_helpers__ = __webpack_require__(1);
 
 
 
@@ -636,36 +631,26 @@ class Login extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
   constructor() {
     super();
 
-    this.state = {
-      errorAnswer: null
-    };
-
     this.host = document.createElement('div');
     this.host.classList.add('log-in-container');
     this.host.addEventListener('submit', event => this.handleSubmit(event));
-
-    this.errorsMsg = new __WEBPACK_IMPORTED_MODULE_3__ErrorsMsg__["a" /* default */]();
   }
 
   render() {
-    const { errorAnswer } = this.state;
-    const formContainer = document.createElement('form');
-    formContainer.classList.add('log-in-form');
 
-    formContainer.innerHTML = `
-      <input type="text" name="username" placeholder="Username" required>
-      <input type="password" name="password" placeholder="Password" required>
+    return `
+      <form class="log-in-form">
 
-      <button type="submit">Log in</button>
+        <div class="errors-container"></div>
 
-      <p>New to Pizza Fantasy? <a href="#/signup">Sign Up</a></p>
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+
+        <button type="submit">Log in</button>
+
+        <p>New to Pizza Fantasy? <a href="#/signup">Sign Up</a></p>
+      </form>
     `;
-
-    if (errorAnswer) {
-      formContainer.append(this.errorsMsg.update({ answer: errorAnswer }));
-    }
-
-    return formContainer;
   }
 
   handleSubmit(event) {
@@ -680,9 +665,7 @@ class Login extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
 
     __WEBPACK_IMPORTED_MODULE_1__services_AuthService__["a" /* default */].login(userData)
       .then(() => __WEBPACK_IMPORTED_MODULE_2__index__["default"].navigate('/'))
-      .catch(data => {
-        this.updateState({ errorAnswer: data.answer });
-      });
+      .catch(response => Object(__WEBPACK_IMPORTED_MODULE_3__utils_helpers__["d" /* handleErrors */])(response.answer));
   }
 }
 
@@ -690,15 +673,14 @@ class Login extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
 
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_AuthService__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ErrorsMsg__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_helpers__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_helpers__ = __webpack_require__(1);
 
 
 
@@ -711,15 +693,12 @@ class Signup extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* d
     super();
 
     this.state = {
-      stores: [],
-      errorAnswer: null
+      stores: []
     };
 
     this.host = document.createElement('div');
     this.host.classList.add('sign-up-container');
     this.host.addEventListener('submit', event => this.handleSubmit(event));
-
-    this.errorsMsg = new __WEBPACK_IMPORTED_MODULE_3__ErrorsMsg__["a" /* default */]();
 
     this.getStores();
   }
@@ -731,34 +710,29 @@ class Signup extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* d
 
   render() {
     const options = this.getSelectOptions(this.state.stores);
-    const { errorAnswer } = this.state;
 
-    const formContainer = document.createElement('form');
-    formContainer.classList.add('sign-up-form');
+    return `
+      <form class="sign-up-form">
 
-    formContainer.innerHTML = `
-      <input type="text" name="username" minlength="2" maxlength="24" placeholder="Username" required>
-      <input type="password" name="password" minlength="8" placeholder="Password" required>
-      <input type="password" name="password_repeat" minlength="8" placeholder="Confirm password" required>
-      <input type="email" name="email" placeholder="Email" required>
+        <div class="errors-container"></div>
 
-      <p class="select-wrapper">
-        <select name="store_id" required>
-          ${options}
-        </select>
-      </p>
-      <input type="password" name="store_password" minlength="8" placeholder="Store password" required>
+        <input type="text" name="username" minlength="2" maxlength="24" placeholder="Username" required>
+        <input type="password" name="password" minlength="8" placeholder="Password" required>
+        <input type="password" name="password_repeat" minlength="8" placeholder="Confirm password" required>
+        <input type="email" name="email" placeholder="Email" required>
 
-      <button type="submit" id="sign-up-button">Sign Up</button>
+        <p class="select-wrapper">
+          <select name="store_id" required>
+            ${options}
+          </select>
+        </p>
+        <input type="password" name="store_password" minlength="8" placeholder="Store password" required>
 
-      <p>Already have an account? <a href="#/login">Log in</a></p>
+        <button type="submit" id="sign-up-button">Sign Up</button>
+
+        <p>Already have an account? <a href="#/login">Log in</a></p>
+      </form>
     `;
-
-     if (errorAnswer) {
-        formContainer.append(this.errorsMsg.update({answer: errorAnswer}));
-     }
-
-     return formContainer;
   }
 
   getSelectOptions(stores) {
@@ -781,9 +755,7 @@ class Signup extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* d
 
     __WEBPACK_IMPORTED_MODULE_1__services_AuthService__["a" /* default */].signup(userData)
       .then(() => __WEBPACK_IMPORTED_MODULE_2__index__["default"].navigate('/login'))
-      .catch(data => {
-        this.updateState({ errorAnswer: data.answer });
-      });
+      .catch(response => Object(__WEBPACK_IMPORTED_MODULE_3__utils_helpers__["d" /* handleErrors */])(response.answer));
   }
 }
 
@@ -791,7 +763,7 @@ class Signup extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* d
 
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -806,7 +778,7 @@ class UserInfo extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /*
 
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -842,7 +814,7 @@ class Router extends __WEBPACK_IMPORTED_MODULE_0__Component__["a" /* default */]
   handleUrlChange(path) {
     const { routes, activeRoute } = this.state;
 
-    let nextRoute = routes.find(({ href }) => Object(__WEBPACK_IMPORTED_MODULE_1__utils_helpers__["d" /* isEqualPaths */])(href, path));
+    let nextRoute = routes.find(({ href }) => Object(__WEBPACK_IMPORTED_MODULE_1__utils_helpers__["e" /* isEqualPaths */])(href, path));
 
     if (!nextRoute) {
       this.navigate('');
@@ -894,7 +866,7 @@ class Router extends __WEBPACK_IMPORTED_MODULE_0__Component__["a" /* default */]
 
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "css/styles.css";

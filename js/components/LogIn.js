@@ -1,43 +1,33 @@
 import Component from '../framework/Component';
 import AUTH_SERVICE from '../services/AuthService';
 import ROUTER from '../index';
-import ErrorsMsg from './ErrorsMsg';
+import { handleErrors } from '../utils/helpers';
 
 class Login extends Component {
 
   constructor() {
     super();
 
-    this.state = {
-      errorAnswer: null
-    };
-
     this.host = document.createElement('div');
     this.host.classList.add('log-in-container');
     this.host.addEventListener('submit', event => this.handleSubmit(event));
-
-    this.errorsMsg = new ErrorsMsg();
   }
 
   render() {
-    const { errorAnswer } = this.state;
-    const formContainer = document.createElement('form');
-    formContainer.classList.add('log-in-form');
 
-    formContainer.innerHTML = `
-      <input type="text" name="username" placeholder="Username" required>
-      <input type="password" name="password" placeholder="Password" required>
+    return `
+      <form class="log-in-form">
 
-      <button type="submit">Log in</button>
+        <div class="errors-container"></div>
 
-      <p>New to Pizza Fantasy? <a href="#/signup">Sign Up</a></p>
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+
+        <button type="submit">Log in</button>
+
+        <p>New to Pizza Fantasy? <a href="#/signup">Sign Up</a></p>
+      </form>
     `;
-
-    if (errorAnswer) {
-      formContainer.append(this.errorsMsg.update({ answer: errorAnswer }));
-    }
-
-    return formContainer;
   }
 
   handleSubmit(event) {
@@ -52,9 +42,7 @@ class Login extends Component {
 
     AUTH_SERVICE.login(userData)
       .then(() => ROUTER.navigate('/'))
-      .catch(data => {
-        this.updateState({ errorAnswer: data.answer });
-      });
+      .catch(response => handleErrors(response.answer));
   }
 }
 
