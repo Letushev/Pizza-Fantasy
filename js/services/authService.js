@@ -54,10 +54,9 @@ class AuthService {
     })
       .then(response => {
         if (response.ok) {
-          return response.json().then(answer => {
+          response.json().then(answer => {
             this.token = answer.token;
             this.claims = this.parseJwtClaims(answer.token);
-            return Promise.resolve({answer})
           });
         } else {
           return response.json().then(answer => Promise.reject({answer}));
@@ -72,12 +71,8 @@ class AuthService {
       headers: new Headers().append('content-type', 'application/json')
     })
       .then(response => {
-        if (response.ok) {
-          return response.json()
-            .then(answer => Promise.resolve({answer}));
-        } else {
-          return response.json()
-            .then(answer => Promise.reject({answer}));
+        if (!response.ok) {
+          return response.json().then(answer => Promise.reject({answer}));
         }
       });
   }

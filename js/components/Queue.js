@@ -1,4 +1,6 @@
 import Component from '../framework/Component';
+import Clock from './Clock';
+import { parseHTML } from '../utils/helpers';
 
 class Queue extends Component {
 
@@ -7,16 +9,13 @@ class Queue extends Component {
 
     this.host = document.createElement('div');
     this.host.classList.add('pizzas-queue-container');
+
+    this.clock = new Clock();
   }
 
   render() {
-    return `
-      <header>
-        <div class="clock">
-          <i class="fas fa-hourglass-half"></i>
-          <time id="current-time"></time>
-        </div>
-
+    const html = `
+      <header class="queue-header">
         <button type="button" class="log-out-button">
           <i class="fas fa-sign-out-alt"></i>
           Log out
@@ -142,6 +141,13 @@ class Queue extends Component {
         <small>Pizza Fantasy &copy; 2018</small>
       </footer>
     `;
+
+    const parsedHTML = parseHTML(html);
+    const headerElement = parsedHTML.querySelector('.queue-header');
+
+    headerElement.insertAdjacentElement('afterbegin', this.clock.update());
+
+    return parsedHTML;
   }
 }
 

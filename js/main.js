@@ -114,16 +114,23 @@ const isEqualPaths = (template, path) => pathToRegExp(template).test(path);
 /* harmony export (immutable) */ __webpack_exports__["e"] = isEqualPaths;
 
 
-const handleErrors = errors => {
+const handleErrors = answer => {
   const list = document.querySelector('.error-list');
-  list.innerHTML = '';
 
-  errors.forEach(msg => {
+  const addErrorMsg = msg => {
     const error = document.createElement('li');
     error.textContent = msg;
     list.appendChild(error);
-  });
-}
+  };
+
+  list.innerHTML = '';
+
+  if (!!answer.validations) {
+    answer.validations.forEach(msg => addErrorMsg(msg));
+  } else {
+    addErrorMsg(answer.error);
+  }
+};
 /* harmony export (immutable) */ __webpack_exports__["d"] = handleErrors;
 
 
@@ -187,7 +194,7 @@ class Component {
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__routes__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__framework_Router__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__framework_Router__ = __webpack_require__(10);
 
 
 
@@ -258,10 +265,9 @@ class AuthService {
     })
       .then(response => {
         if (response.ok) {
-          return response.json().then(answer => {
+          response.json().then(answer => {
             this.token = answer.token;
             this.claims = this.parseJwtClaims(answer.token);
-            return Promise.resolve({answer})
           });
         } else {
           return response.json().then(answer => Promise.reject({answer}));
@@ -276,12 +282,8 @@ class AuthService {
       headers: new Headers().append('content-type', 'application/json')
     })
       .then(response => {
-        if (response.ok) {
-          return response.json()
-            .then(answer => Promise.resolve({answer}));
-        } else {
-          return response.json()
-            .then(answer => Promise.reject({answer}));
+        if (!response.ok) {
+          return response.json().then(answer => Promise.reject({answer}));
         }
       });
   }
@@ -316,7 +318,7 @@ const AUTH_SERVICE = new AuthService();
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(2);
-module.exports = __webpack_require__(10);
+module.exports = __webpack_require__(11);
 
 
 /***/ }),
@@ -325,8 +327,8 @@ module.exports = __webpack_require__(10);
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Queue__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Login__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Signup__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Login__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Signup__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_AuthService__ = __webpack_require__(3);
 
 
@@ -368,6 +370,10 @@ const routes = [
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Clock__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_helpers__ = __webpack_require__(0);
+
+
 
 
 class Queue extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* default */] {
@@ -377,16 +383,13 @@ class Queue extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
 
     this.host = document.createElement('div');
     this.host.classList.add('pizzas-queue-container');
+
+    this.clock = new __WEBPACK_IMPORTED_MODULE_1__Clock__["a" /* default */]();
   }
 
   render() {
-    return `
-      <header>
-        <div class="clock">
-          <i class="fas fa-hourglass-half"></i>
-          <time id="current-time"></time>
-        </div>
-
+    const html = `
+      <header class="queue-header">
         <button type="button" class="log-out-button">
           <i class="fas fa-sign-out-alt"></i>
           Log out
@@ -512,6 +515,13 @@ class Queue extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
         <small>Pizza Fantasy &copy; 2018</small>
       </footer>
     `;
+
+    const parsedHTML = Object(__WEBPACK_IMPORTED_MODULE_2__utils_helpers__["f" /* parseHTML */])(html);
+    const headerElement = parsedHTML.querySelector('.queue-header');
+
+    headerElement.insertAdjacentElement('afterbegin', this.clock.update());
+
+    return parsedHTML;
   }
 }
 
@@ -520,6 +530,54 @@ class Queue extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
 
 /***/ }),
 /* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(1);
+
+
+class Clock extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* default */] {
+  constructor() {
+    super();
+
+    this.state = {
+      currentTime: this.getCurrentTime()
+    };
+
+    this.host = document.createElement('div');
+    this.host.classList.add('clock');
+
+    window.setInterval(function timer() {
+      const currentTime = this.getCurrentTime();
+      this.updateState({ currentTime });
+    }.bind(this), 500);
+  }
+
+  render() {
+    const { currentTime } = this.state;
+
+    return `
+      <i class="fas fa-hourglass-half"></i>
+      <time id="current-time">
+        ${currentTime}
+      </time>
+    `;
+  }
+
+  getCurrentTime() {
+    const now = new Date();
+
+    return [now.getHours(), now.getMinutes(), now.getSeconds()]
+      .map(n => `${n}`.padStart(2, '0')) // add 0 if number is single-digit
+      .join(':');
+  }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Clock);
+
+
+/***/ }),
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -572,7 +630,7 @@ class Login extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
 
     __WEBPACK_IMPORTED_MODULE_1__services_AuthService__["a" /* default */].login(userData)
       .then(() => __WEBPACK_IMPORTED_MODULE_2__index__["default"].navigate('/'))
-      .catch(data => Object(__WEBPACK_IMPORTED_MODULE_3__utils_helpers__["d" /* handleErrors */])([data.answer.error]));
+      .catch(data => Object(__WEBPACK_IMPORTED_MODULE_3__utils_helpers__["d" /* handleErrors */])(data.answer));
   }
 }
 
@@ -580,7 +638,7 @@ class Login extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -663,7 +721,7 @@ class Signup extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* d
 
     __WEBPACK_IMPORTED_MODULE_1__services_AuthService__["a" /* default */].signup(userData)
       .then(() => __WEBPACK_IMPORTED_MODULE_2__index__["default"].navigate('/login'))
-      .catch(data => Object(__WEBPACK_IMPORTED_MODULE_3__utils_helpers__["d" /* handleErrors */])(data.answer.validations));
+      .catch(data => Object(__WEBPACK_IMPORTED_MODULE_3__utils_helpers__["d" /* handleErrors */])(data.answer));
   }
 }
 
@@ -671,7 +729,7 @@ class Signup extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* d
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -759,7 +817,7 @@ class Router extends __WEBPACK_IMPORTED_MODULE_0__Component__["a" /* default */]
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "css/styles.css";

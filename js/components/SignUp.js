@@ -73,7 +73,7 @@ class Signup extends Component {
 
     AUTH_SERVICE.signup(userData)
       .then(() => router.navigate('/login'))
-      .catch(data => handleErrors(data.answer.validations));
+      .catch(data => handleErrors(data.answer));
   }
 }
 

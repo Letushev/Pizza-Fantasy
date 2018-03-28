@@ -43,7 +43,7 @@ class Login extends Component {
 
     AUTH_SERVICE.login(userData)
       .then(() => router.navigate('/'))
-      .catch(data => handleErrors([data.answer.error]));
+      .catch(data => handleErrors(data.answer));
   }
 }
 
