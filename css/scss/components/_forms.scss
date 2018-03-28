@@ -20,3 +20,15 @@ form {
     font-size: $base-font-size;
   }
 }
+
+.error-list {
+  margin-top: 15px;
+  text-align: left;
+  list-style: square inside none;
+
+  li {
+    margin-top: 5px;
+    color: $dark-red;
+  }
+}
+

@@ -1,7 +1,8 @@
 import Component from '../framework/Component';
 import AUTH_SERVICE from '../services/AuthService';
 import ROUTER from '../index';
-import { handleErrors } from '../utils/helpers';
+import ErrorsMsg from './ErrorsMsg';
+import { parseHTML } from '../utils/helpers';
 
 class Signup extends Component {
 
@@ -9,13 +10,15 @@ class Signup extends Component {
     super();
 
     this.state = {
-      stores: []
+      stores: [],
+      errorAnswer: null
     };
 
     this.host = document.createElement('div');
     this.host.classList.add('sign-up-container');
-
     this.host.addEventListener('submit', event => this.handleSubmit(event));
+
+    this.errorsMsg = new ErrorsMsg();
 
     this.getStores();
   }
@@ -27,30 +30,34 @@ class Signup extends Component {
 
   render() {
     const options = this.getSelectOptions(this.state.stores);
+    const { errorAnswer } = this.state;
 
-    return `
-      <form class="sign-up-form">
+    const formContainer = document.createElement('form');
+    formContainer.classList.add('sign-up-form');
 
-        <input type="text" name="username" minlength="2" maxlength="24" placeholder="Username" required>
-        <input type="password" name="password" minlength="8" placeholder="Password" required>
-        <input type="password" name="password_repeat" minlength="8" placeholder="Confirm password" required>
-        <input type="email" name="email" placeholder="Email" required>
+    formContainer.innerHTML = `
+      <input type="text" name="username" minlength="2" maxlength="24" placeholder="Username" required>
+      <input type="password" name="password" minlength="8" placeholder="Password" required>
+      <input type="password" name="password_repeat" minlength="8" placeholder="Confirm password" required>
+      <input type="email" name="email" placeholder="Email" required>
 
-        <p class="select-wrapper">
-          <select name="store_id" required>
-            ${options}
-          </select>
-        </p>
-        <input type="password" name="store_password" minlength="8" placeholder="Store password" required>
+      <p class="select-wrapper">
+        <select name="store_id" required>
+          ${options}
+        </select>
+      </p>
+      <input type="password" name="store_password" minlength="8" placeholder="Store password" required>
 
-        <ul class="error-list"></ul>
+      <button type="submit" id="sign-up-button">Sign Up</button>
 
-        <button type="submit" id="sign-up-button">Sign Up</button>
-
-        <p>Already have an account? <a href="#/login">Log in</a></p>
-
-      <form>
+      <p>Already have an account? <a href="#/login">Log in</a></p>
     `;
+
+     if (errorAnswer) {
+        formContainer.append(this.errorsMsg.update({answer: errorAnswer}));
+     }
+
+     return formContainer;
   }
 
   getSelectOptions(stores) {
@@ -73,7 +80,9 @@ class Signup extends Component {
 
     AUTH_SERVICE.signup(userData)
       .then(() => ROUTER.navigate('/login'))
-      .catch(data => handleErrors(data.answer));
+      .catch(data => {
+        this.updateState({ errorAnswer: data.answer });
+      });
   }
 }
 
