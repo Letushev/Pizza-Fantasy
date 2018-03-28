@@ -22,6 +22,7 @@
     &::after {
       content: '\25BC';
       position: absolute;
+      color: $gray;
       top: 25px;
       right: 15px;
 

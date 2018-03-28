@@ -85,18 +85,43 @@ form {
   form input, form select {
     width: 100%;
     padding: 10px 10px;
-    margin: 10px 0;
+    margin: 15px 0;
+    border: none;
+    border-bottom: 2px solid #888;
     font-family: "Ubuntu Mono";
-    font-size: 1.2rem; }
+    font-size: 1.2rem;
+    outline: none; }
+    form input:focus, form select:focus {
+      border-bottom-color: #bd3c1a; }
+    form input:-webkit-autofill, form select:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 100px #fff inset; }
 
 .errors-container {
+  margin-bottom: 15px;
   text-align: left;
-  list-style: square inside none;
   color: #bd3c1a; }
   .errors-container ul {
     margin-top: 10px;
-    list-style-type: disc;
-    list-style-position: inside; }
+    padding: 0 25px;
+    list-style-type: square;
+    font-size: 1.1rem; }
+
+.input-container {
+  position: relative; }
+  .input-container label {
+    position: absolute;
+    top: 30%;
+    left: 10px;
+    color: #888;
+    text-align: left;
+    transition: 0.2s; }
+  .input-container input:valid + label,
+  .input-container input:focus + label {
+    top: 0;
+    color: #888;
+    font-size: 1.1rem; }
+  .input-container input:focus + label {
+    color: #bd3c1a; }
 
 header {
   text-align: center;
@@ -230,6 +255,7 @@ footer {
     .sign-up-form .select-wrapper::after {
       content: '\25BC';
       position: absolute;
+      color: #888;
       top: 25px;
       right: 15px;
       font-size: 1rem;

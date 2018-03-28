@@ -33,17 +33,37 @@ class Signup extends Component {
 
         <div class="errors-container"></div>
 
-        <input type="text" name="username" minlength="2" maxlength="24" placeholder="Username" required>
-        <input type="password" name="password" minlength="8" placeholder="Password" required>
-        <input type="password" name="password_repeat" minlength="8" placeholder="Confirm password" required>
-        <input type="email" name="email" placeholder="Email" required>
+        <div class="input-container">
+          <input type="text" name="username" id="username" required>
+          <label for="username">Username</label>
+        </div>
+
+        <div class="input-container">
+          <input type="password" name="password" id="password" required>
+          <label for="password">Password</label>
+        </div>
+
+        <div class="input-container">
+          <input type="password" name="password_repeat" id="confirm_password" required>
+          <label for="confirm_password">Confirm password</label>
+        </div>
+
+        <div class="input-container">
+          <input type="email" name="email" id="email" required>
+          <label for="email">Email</label>
+        </div>
 
         <p class="select-wrapper">
-          <select name="store_id" required>
+          <select name="store_id" id="store_id" required>
+            <option selected disabled value="">Select the store</option>
             ${options}
           </select>
         </p>
-        <input type="password" name="store_password" minlength="8" placeholder="Store password" required>
+
+        <div class="input-container">
+          <input type="password" name="store_password" id="store_password" required>
+          <label for="store_password">Store password</label>
+        </div>
 
         <button type="submit" id="sign-up-button">Sign Up</button>
 

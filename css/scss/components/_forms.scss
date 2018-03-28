@@ -14,22 +14,36 @@ form {
   input, select {
     width: 100%;
     padding: 10px 10px;
-    margin: 10px 0;
+    margin: 15px 0;
+
+    border: none;
+    border-bottom: 2px solid $gray;
 
     font-family: $base-font-family;
     font-size: $base-font-size;
+
+    outline: none;
+
+    &:focus {
+      border-bottom-color: $dark-red;
+    }
+
+    &:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 100px #fff inset;
+    }
   }
 }
 
 .errors-container {
+  margin-bottom: 15px;
   text-align: left;
-  list-style: square inside none;
   color: $dark-red;
 
   ul {
     margin-top: 10px;
-    list-style-type: disc;
-    list-style-position: inside;
+    padding: 0 25px;
+    list-style-type: square;
+    font-size: 1.1rem;
   }
 }
 

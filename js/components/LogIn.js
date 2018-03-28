@@ -20,8 +20,14 @@ class Login extends Component {
 
         <div class="errors-container"></div>
 
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
+        <div class="input-container">
+          <input type="text" id="username" name="username" required>
+          <label for="username">Username</label>
+        </div>
+        <div class="input-container">
+          <input type="password" name="password" id="password" required>
+          <label for="password">Password</label>
+        </div>
 
         <button type="submit">Log in</button>
 
