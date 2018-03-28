@@ -9,8 +9,6 @@ class ErrorsMsg extends Component {
   }
 
   render() {
-    if (!this.props) return '';
-
     let errors = '';
     const { answer } = this.props;
 

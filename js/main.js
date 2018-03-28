@@ -314,8 +314,6 @@ class ErrorsMsg extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /
   }
 
   render() {
-    if (!this.props) return '';
-
     let errors = '';
     const { answer } = this.props;
 
