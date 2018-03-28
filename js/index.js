@@ -1,6 +1,6 @@
 import routes from './routes';
 import Router from './framework/Router';
 
-const router = new Router(routes);
+const ROUTER = new Router(routes);
 
-export default router;
+export default ROUTER;

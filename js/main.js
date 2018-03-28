@@ -198,9 +198,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-const router = new __WEBPACK_IMPORTED_MODULE_1__framework_Router__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0__routes__["a" /* default */]);
+const ROUTER = new __WEBPACK_IMPORTED_MODULE_1__framework_Router__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0__routes__["a" /* default */]);
 
-/* harmony default export */ __webpack_exports__["default"] = (router);
+/* harmony default export */ __webpack_exports__["default"] = (ROUTER);
 
 
 /***/ }),
@@ -288,6 +288,10 @@ class AuthService {
       });
   }
 
+  logout() {
+    this.clearStorage();
+  }
+
   getStores() {
     return fetch('https://pizza-tele.ga/api/v1/store/list')
       .then(response => {
@@ -371,7 +375,11 @@ const routes = [
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Clock__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_helpers__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_AuthService__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__index__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_helpers__ = __webpack_require__(0);
+
+
 
 
 
@@ -383,8 +391,20 @@ class Queue extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
 
     this.host = document.createElement('div');
     this.host.classList.add('pizzas-queue-container');
+    this.host.addEventListener('click', event => this.handleClick(event));
 
     this.clock = new __WEBPACK_IMPORTED_MODULE_1__Clock__["a" /* default */]();
+  }
+
+  handleClick(event) {
+    if (event.target && event.target.matches('button.log-out-button')) {
+      this.handleLogout();
+    }
+  }
+
+  handleLogout() {
+    __WEBPACK_IMPORTED_MODULE_2__services_AuthService__["a" /* default */].logout();
+    __WEBPACK_IMPORTED_MODULE_3__index__["default"].navigate('/login');
   }
 
   render() {
@@ -516,7 +536,7 @@ class Queue extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
       </footer>
     `;
 
-    const parsedHTML = Object(__WEBPACK_IMPORTED_MODULE_2__utils_helpers__["f" /* parseHTML */])(html);
+    const parsedHTML = Object(__WEBPACK_IMPORTED_MODULE_4__utils_helpers__["f" /* parseHTML */])(html);
     const headerElement = parsedHTML.querySelector('.queue-header');
 
     headerElement.insertAdjacentElement('afterbegin', this.clock.update());

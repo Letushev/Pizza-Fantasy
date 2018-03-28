@@ -77,6 +77,10 @@ class AuthService {
       });
   }
 
+  logout() {
+    this.clearStorage();
+  }
+
   getStores() {
     return fetch('https://pizza-tele.ga/api/v1/store/list')
       .then(response => {

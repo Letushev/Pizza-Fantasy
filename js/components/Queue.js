@@ -1,6 +1,8 @@
 import Component from '../framework/Component';
 import Clock from './Clock';
-import { parseHTML } from '../utils/helpers';
+import AUTH_SERVICE from '../services/AuthService';
+import ROUTER from '../index';
+import { parseHTML, bindAll } from '../utils/helpers';
 
 class Queue extends Component {
 
@@ -9,8 +11,20 @@ class Queue extends Component {
 
     this.host = document.createElement('div');
     this.host.classList.add('pizzas-queue-container');
+    this.host.addEventListener('click', event => this.handleClick(event));
 
     this.clock = new Clock();
+  }
+
+  handleClick(event) {
+    if (event.target && event.target.matches('button.log-out-button')) {
+      this.handleLogout();
+    }
+  }
+
+  handleLogout() {
+    AUTH_SERVICE.logout();
+    ROUTER.navigate('/login');
   }
 
   render() {

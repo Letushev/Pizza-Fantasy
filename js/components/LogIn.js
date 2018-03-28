@@ -1,6 +1,6 @@
 import Component from '../framework/Component';
 import AUTH_SERVICE from '../services/AuthService';
-import router from '../index';
+import ROUTER from '../index';
 import { handleErrors } from '../utils/helpers';
 
 class Login extends Component {
@@ -42,7 +42,7 @@ class Login extends Component {
     };
 
     AUTH_SERVICE.login(userData)
-      .then(() => router.navigate('/'))
+      .then(() => ROUTER.navigate('/'))
       .catch(data => handleErrors(data.answer));
   }
 }
