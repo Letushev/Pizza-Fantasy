@@ -68,58 +68,6 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_helpers__ = __webpack_require__(1);
-
-
-class Component {
-
-  constructor(props) {
-    this.state = {};
-    this.props = props || {};
-    this.host = null;
-
-    Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["b" /* bindAll */])(this, 'updateState', 'update');
-  }
-
-  updateHost() {
-    const html = this.render();
-
-    if (!html && this.host) {
-      return this.host;
-    }
-
-    if (typeof html === 'string') {
-      return Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["a" /* append */])(Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["c" /* clearChildren */])(this.host), Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["f" /* parseHTML */])(html));
-    } else {
-      return Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["a" /* append */])(Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["c" /* clearChildren */])(this.host), html);
-    }
-  }
-
-  update(nextProps) {
-    this.props = nextProps;
-    return this.updateHost();
-  }
-
-  updateState(state) {
-    const nextState = Object.assign({}, this.state, state);
-    this.state = nextState;
-
-    this.updateHost();
-
-    return nextState;
-  }
-
-  render() {}
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (Component);
-
-
-/***/ }),
-/* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 const bindAll = (context, ...names) => {
   names.forEach(name => {
     context[name] = context[name].bind(context);
@@ -134,7 +82,7 @@ const parseHTML = htmlString => {
 
   return template.content;
 };
-/* harmony export (immutable) */ __webpack_exports__["f"] = parseHTML;
+/* harmony export (immutable) */ __webpack_exports__["g"] = parseHTML;
 
 
 const clearChildren = node => {
@@ -163,7 +111,7 @@ const isUrlParam = path => URL_PARAM_REGEXP.test(path);
 const pathToRegExp = path => RegExp(`^${path.replace(URL_PARAM_REGEXP, '(.*)')}$`); // ^ - beginning, $ - finish
 
 const isEqualPaths = (template, path) => pathToRegExp(template).test(path);
-/* harmony export (immutable) */ __webpack_exports__["e"] = isEqualPaths;
+/* harmony export (immutable) */ __webpack_exports__["f"] = isEqualPaths;
 
 
 const addValidationErrors = validations => {
@@ -191,8 +139,64 @@ const handleErrors = errorAnswer => {
     errorsContainer.appendChild(addValidationErrors(errorAnswer.validations));
   }
 };
-/* harmony export (immutable) */ __webpack_exports__["d"] = handleErrors;
+/* harmony export (immutable) */ __webpack_exports__["e"] = handleErrors;
 
+
+const editProfileDate = date => date.split('T')[0].split('-').reverse().join('/');
+/* harmony export (immutable) */ __webpack_exports__["d"] = editProfileDate;
+
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_helpers__ = __webpack_require__(0);
+
+
+class Component {
+
+  constructor(props) {
+    this.state = {};
+    this.props = props || {};
+    this.host = null;
+
+    Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["b" /* bindAll */])(this, 'updateState', 'update');
+  }
+
+  updateHost() {
+    const html = this.render();
+
+    if (!html && this.host) {
+      return this.host;
+    }
+
+    if (typeof html === 'string') {
+      return Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["a" /* append */])(Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["c" /* clearChildren */])(this.host), Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["g" /* parseHTML */])(html));
+    } else {
+      return Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["a" /* append */])(Object(__WEBPACK_IMPORTED_MODULE_0__utils_helpers__["c" /* clearChildren */])(this.host), html);
+    }
+  }
+
+  update(nextProps) {
+    this.props = nextProps;
+    return this.updateHost();
+  }
+
+  updateState(state) {
+    const nextState = Object.assign({}, this.state, state);
+    this.state = nextState;
+
+    this.updateHost();
+
+    return nextState;
+  }
+
+  render() {}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Component);
 
 
 /***/ }),
@@ -200,23 +204,7 @@ const handleErrors = errorAnswer => {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__routes__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__framework_Router__ = __webpack_require__(11);
-
-
-
-const ROUTER = new __WEBPACK_IMPORTED_MODULE_1__framework_Router__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0__routes__["a" /* default */]);
-
-/* harmony default export */ __webpack_exports__["default"] = (ROUTER);
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_helpers__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_helpers__ = __webpack_require__(0);
 
 
 class AuthService {
@@ -318,6 +306,23 @@ class AuthService {
     return {};
   }
 
+  getProfileInfo() {
+    if (this._token) {
+      return fetch('https://pizza-tele.ga/api/v1/user/my_info', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${this._token}`,
+          'content-type': 'application/json'
+        }
+      })
+        .then(response => {
+          if(response.ok) {
+            return response.json();
+          }
+        });
+    }
+  }
+
 }
 
 const AUTH_SERVICE = new AuthService();
@@ -326,10 +331,26 @@ const AUTH_SERVICE = new AuthService();
 
 
 /***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__routes__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__framework_Router__ = __webpack_require__(11);
+
+
+
+const ROUTER = new __WEBPACK_IMPORTED_MODULE_1__framework_Router__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0__routes__["a" /* default */]);
+
+/* harmony default export */ __webpack_exports__["default"] = (ROUTER);
+
+
+/***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(2);
+__webpack_require__(3);
 module.exports = __webpack_require__(12);
 
 
@@ -342,7 +363,7 @@ module.exports = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Login__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Signup__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Profile__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_AuthService__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_AuthService__ = __webpack_require__(2);
 
 
 
@@ -389,11 +410,11 @@ const routes = [
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Clock__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_AuthService__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__index__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_helpers__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_AuthService__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__index__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_helpers__ = __webpack_require__(0);
 
 
 
@@ -415,12 +436,18 @@ class Queue extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
   handleClick(event) {
     if (event.target && event.target.matches('button.log-out-button')) {
       this.handleLogout();
+    } else if (event.target && event.target.matches('button.profile-button')) {
+      this.handleRedirectToProfile();
     }
   }
 
   handleLogout() {
     __WEBPACK_IMPORTED_MODULE_2__services_AuthService__["a" /* default */].logout();
     __WEBPACK_IMPORTED_MODULE_3__index__["default"].navigate('/login');
+  }
+
+  handleRedirectToProfile() {
+    __WEBPACK_IMPORTED_MODULE_3__index__["default"].navigate('/profile');
   }
 
   render() {
@@ -560,7 +587,7 @@ class Queue extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
       </footer>
     `;
 
-    const parsedHTML = Object(__WEBPACK_IMPORTED_MODULE_4__utils_helpers__["f" /* parseHTML */])(html);
+    const parsedHTML = Object(__WEBPACK_IMPORTED_MODULE_4__utils_helpers__["g" /* parseHTML */])(html);
     const headerElement = parsedHTML.querySelector('.queue-header');
 
     headerElement.insertAdjacentElement('afterbegin', this.clock.update());
@@ -577,7 +604,7 @@ class Queue extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(1);
 
 
 class Clock extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* default */] {
@@ -625,10 +652,10 @@ class Clock extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_AuthService__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_helpers__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_AuthService__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_helpers__ = __webpack_require__(0);
 
 
 
@@ -679,7 +706,7 @@ class Login extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
 
     __WEBPACK_IMPORTED_MODULE_1__services_AuthService__["a" /* default */].login(userData)
       .then(() => __WEBPACK_IMPORTED_MODULE_2__index__["default"].navigate('/'))
-      .catch(response => Object(__WEBPACK_IMPORTED_MODULE_3__utils_helpers__["d" /* handleErrors */])(response.answer));
+      .catch(response => Object(__WEBPACK_IMPORTED_MODULE_3__utils_helpers__["e" /* handleErrors */])(response.answer));
   }
 }
 
@@ -691,10 +718,10 @@ class Login extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_AuthService__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_helpers__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_AuthService__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_helpers__ = __webpack_require__(0);
 
 
 
@@ -789,7 +816,7 @@ class Signup extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* d
 
     __WEBPACK_IMPORTED_MODULE_1__services_AuthService__["a" /* default */].signup(userData)
       .then(() => __WEBPACK_IMPORTED_MODULE_2__index__["default"].navigate('/login'))
-      .catch(response => Object(__WEBPACK_IMPORTED_MODULE_3__utils_helpers__["d" /* handleErrors */])(response.answer));
+      .catch(response => Object(__WEBPACK_IMPORTED_MODULE_3__utils_helpers__["e" /* handleErrors */])(response.answer));
   }
 }
 
@@ -801,10 +828,63 @@ class Signup extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* d
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_AuthService__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_helpers__ = __webpack_require__(0);
+
+
 
 
 class Profile extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* default */] {
+  constructor() {
+    super();
+
+    this.state = {
+      info: null
+    };
+
+    this.host = document.createElement('div');
+    this.host.classList.add('profile-container');
+
+    this.getInfo();
+  }
+
+  getInfo() {
+    __WEBPACK_IMPORTED_MODULE_1__services_AuthService__["a" /* default */].getProfileInfo()
+      .then(response => this.computeNextState(response));
+  }
+
+  computeNextState(state) {
+    state.created_at = Object(__WEBPACK_IMPORTED_MODULE_2__utils_helpers__["d" /* editProfileDate */])(state.created_at);
+    state.last_login = Object(__WEBPACK_IMPORTED_MODULE_2__utils_helpers__["d" /* editProfileDate */])(state.last_login);
+
+    this.updateState({ info: state });
+  }
+
+  render() {
+    const { info } = this.state;
+    return info
+      ?  `<table class="profile-table">
+            <tr>
+              <th>Username</th>
+              <td>${ info.username }</td>
+            </tr>
+            <tr>
+              <th>Email</th>
+              <td>${ info.email }</td>
+            <tr>
+            <tr>
+              <th>Created at</th>
+              <td>${ info.created_at }</td>
+            </tr>
+            <tr>
+              <th>Last login</th>
+              <td>${ info.last_login }</td>
+            </tr>
+          </table>
+          <a href="/">Back to pizzas queue</a>`
+      : '';
+  }
 
 }
 
@@ -816,8 +896,8 @@ class Profile extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* 
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Component__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_helpers__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Component__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_helpers__ = __webpack_require__(0);
 
 
 
@@ -848,7 +928,7 @@ class Router extends __WEBPACK_IMPORTED_MODULE_0__Component__["a" /* default */]
   handleUrlChange(path) {
     const { routes, activeRoute } = this.state;
 
-    let nextRoute = routes.find(({ href }) => Object(__WEBPACK_IMPORTED_MODULE_1__utils_helpers__["e" /* isEqualPaths */])(href, path));
+    let nextRoute = routes.find(({ href }) => Object(__WEBPACK_IMPORTED_MODULE_1__utils_helpers__["f" /* isEqualPaths */])(href, path));
 
     if (!nextRoute) {
       this.navigate('');

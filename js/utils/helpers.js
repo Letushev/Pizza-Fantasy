@@ -59,3 +59,5 @@ export const handleErrors = errorAnswer => {
     errorsContainer.appendChild(addValidationErrors(errorAnswer.validations));
   }
 };
+
+export const editProfileDate = date => date.split('T')[0].split('-').reverse().join('/');

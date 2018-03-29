@@ -1,0 +1,28 @@
+.profile-table {
+  margin: 100px auto 25px auto;
+  border: 3px solid $dark-gray;
+
+  th, td {
+    text-align: left;
+    padding: 15px 25px 15px 15px;
+    border-bottom: 2px solid $gray;
+  }
+
+  th {
+    color: $dark-red;
+  }
+
+  tr {
+    &:hover {
+      background: #ddd;
+    }
+  }
+}
+
+.profile-container {
+  text-align: center;
+
+  a {
+    color: $red;
+  }
+}

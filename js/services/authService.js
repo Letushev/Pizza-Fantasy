@@ -99,6 +99,23 @@ class AuthService {
     return {};
   }
 
+  getProfileInfo() {
+    if (this._token) {
+      return fetch('https://pizza-tele.ga/api/v1/user/my_info', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${this._token}`,
+          'content-type': 'application/json'
+        }
+      })
+        .then(response => {
+          if(response.ok) {
+            return response.json();
+          }
+        });
+    }
+  }
+
 }
 
 const AUTH_SERVICE = new AuthService();

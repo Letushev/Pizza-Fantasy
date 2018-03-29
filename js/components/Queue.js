@@ -19,12 +19,18 @@ class Queue extends Component {
   handleClick(event) {
     if (event.target && event.target.matches('button.log-out-button')) {
       this.handleLogout();
+    } else if (event.target && event.target.matches('button.profile-button')) {
+      this.handleRedirectToProfile();
     }
   }
 
   handleLogout() {
     AUTH_SERVICE.logout();
     ROUTER.navigate('/login');
+  }
+
+  handleRedirectToProfile() {
+    ROUTER.navigate('/profile');
   }
 
   render() {
