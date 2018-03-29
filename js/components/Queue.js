@@ -30,10 +30,18 @@ class Queue extends Component {
   render() {
     const html = `
       <header class="queue-header">
-        <button type="button" class="log-out-button">
-          <i class="fas fa-sign-out-alt"></i>
-          Log out
-        </button>
+
+        <div class="header-buttons-wrapper">
+          <button type="button" class="profile-button">
+            <i class="fas fa-user"></i>
+            Profile
+          </button>
+
+          <button type="button" class="log-out-button">
+            <i class="fas fa-sign-out-alt"></i>
+            Log out
+          </button>
+        </div>
 
         <div class="logo-wrapper">
           <img src="images/logo.svg" alt="">

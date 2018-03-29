@@ -341,7 +341,7 @@ module.exports = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Queue__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Login__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Signup__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_UserInfo__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Profile__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_AuthService__ = __webpack_require__(3);
 
 
@@ -374,8 +374,8 @@ const routes = [
   },
 
   {
-    href: '/userinfo',
-    component: __WEBPACK_IMPORTED_MODULE_3__components_UserInfo__["a" /* default */],
+    href: '/profile',
+    component: __WEBPACK_IMPORTED_MODULE_3__components_Profile__["a" /* default */],
     isAuthorized: __WEBPACK_IMPORTED_MODULE_4__services_AuthService__["a" /* default */].isAuthorized
   }
 
@@ -426,10 +426,18 @@ class Queue extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* de
   render() {
     const html = `
       <header class="queue-header">
-        <button type="button" class="log-out-button">
-          <i class="fas fa-sign-out-alt"></i>
-          Log out
-        </button>
+
+        <div class="header-buttons-wrapper">
+          <button type="button" class="profile-button">
+            <i class="fas fa-user"></i>
+            Profile
+          </button>
+
+          <button type="button" class="log-out-button">
+            <i class="fas fa-sign-out-alt"></i>
+            Log out
+          </button>
+        </div>
 
         <div class="logo-wrapper">
           <img src="images/logo.svg" alt="">
@@ -796,11 +804,11 @@ class Signup extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* d
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__framework_Component__ = __webpack_require__(0);
 
 
-class UserInfo extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* default */] {
+class Profile extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* default */] {
 
 }
 
-/* harmony default export */ __webpack_exports__["a"] = (UserInfo);
+/* harmony default export */ __webpack_exports__["a"] = (Profile);
 
 
 /***/ }),

@@ -1,7 +1,7 @@
 import Queue from './components/Queue';
 import Login from './components/Login';
 import Signup from './components/Signup';
-import UserInfo from './components/UserInfo';
+import Profile from './components/Profile';
 
 import AUTH_SERVICE from './services/AuthService';
 
@@ -29,8 +29,8 @@ const routes = [
   },
 
   {
-    href: '/userinfo',
-    component: UserInfo,
+    href: '/profile',
+    component: Profile,
     isAuthorized: AUTH_SERVICE.isAuthorized
   }
 

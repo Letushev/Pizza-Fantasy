@@ -128,14 +128,23 @@ header {
   padding: 15px 30px;
   color: #444;
   border-bottom: 3px solid #444; }
-  header .log-out-button {
-    margin: 20px 0;
-    color: #bd3c1a;
-    border: 3px solid #bd3c1a; }
-    header .log-out-button:hover, header .log-out-button:focus {
-      color: #fff; }
-    header .log-out-button::before {
-      background: #bd3c1a; }
+  header .header-buttons-wrapper {
+    margin: 20px 0; }
+    header .header-buttons-wrapper .profile-button {
+      color: #444;
+      border: 3px solid #444;
+      margin-bottom: 10px; }
+      header .header-buttons-wrapper .profile-button:hover, header .header-buttons-wrapper .profile-button:focus {
+        color: #fff; }
+      header .header-buttons-wrapper .profile-button::before {
+        background: #444; }
+    header .header-buttons-wrapper .log-out-button {
+      color: #bd3c1a;
+      border: 3px solid #bd3c1a; }
+      header .header-buttons-wrapper .log-out-button:hover, header .header-buttons-wrapper .log-out-button:focus {
+        color: #fff; }
+      header .header-buttons-wrapper .log-out-button::before {
+        background: #bd3c1a; }
   header .clock {
     font-size: 1.3rem; }
   header .logo-wrapper {
@@ -149,23 +158,26 @@ header {
     header .logo-wrapper img {
       max-width: 100px;
       margin-right: 20px; }
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 730px) {
     header .logo-wrapper {
       margin: 0; }
-    header .log-out-button, header .clock {
+    header .header-buttons-wrapper, header .clock {
       float: right;
-      clear: right; } }
+      clear: right;
+      width: 400px; } }
   @media screen and (min-width: 850px) {
     header {
       display: flex;
       justify-content: space-center;
       align-items: center; }
       header .clock {
+        margin-left: 25px;
         margin-right: auto;
-        width: 180px; }
-      header .log-out-button {
+        text-align: left; }
+      header .header-buttons-wrapper {
         margin-left: auto;
-        order: 1; } }
+        order: 1;
+        text-align: right; } }
 
 footer {
   padding: 30px;

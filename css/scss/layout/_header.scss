@@ -4,9 +4,17 @@ header {
   color: $dark-gray;
   border-bottom: 3px solid $dark-gray;
 
-  .log-out-button {
+  .header-buttons-wrapper {
     margin: 20px 0;
-    @include button_effect($dark-red);
+
+    .profile-button {
+      @include button_effect($dark-gray);
+      margin-bottom: 10px;
+    }
+
+    .log-out-button {
+      @include button_effect($dark-red);
+    }
   }
 
   .clock {
@@ -30,14 +38,15 @@ header {
     }
   }
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 730px) {
     .logo-wrapper {
       margin: 0;
     }
 
-    .log-out-button, .clock {
+    .header-buttons-wrapper, .clock {
       float: right;
       clear: right;
+      width: 400px;
     }
   }
 
@@ -47,13 +56,15 @@ header {
     align-items: center;
 
     .clock {
+      margin-left: 25px;
       margin-right: auto;
-      width: 180px;
+      text-align: left;
     }
 
-    .log-out-button {
+    .header-buttons-wrapper {
       margin-left: auto;
       order: 1;
+      text-align: right;
     }
   }
 }
