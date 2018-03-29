@@ -49,7 +49,7 @@ class Profile extends Component {
               <td>${ info.last_login }</td>
             </tr>
           </table>
-          <a href="/">Back to pizzas queue</a>`
+          <a href="#/">Back to pizzas queue</a>`
       : '';
   }
 

@@ -882,7 +882,7 @@ class Profile extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* 
               <td>${ info.last_login }</td>
             </tr>
           </table>
-          <a href="/">Back to pizzas queue</a>`
+          <a href="#/">Back to pizzas queue</a>`
       : '';
   }
 
