@@ -54,7 +54,12 @@ module.exports = {
   plugins: [
     extractSass,
     new htmlPlugin({
-      template: './src/index.html'
+      template: './src/index.html',
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        conservativeCollapse: true
+      }
     }),
     new googleFontsPlugin({
       fonts: [
