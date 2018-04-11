@@ -1,0 +1,29 @@
+/* === Dancing Script - regular */
+@font-face {
+	font-family: 'Dancing Script';
+	font-style: normal;
+	font-weight: 400;
+	src: url("./font/DancingScript-Regular.eot");
+	src: local("Dancing Script Regular"),
+		local("DancingScript-Regular"),
+		url("./font/DancingScript-Regular.eot") format("embedded-opentype"),
+		url("./font/DancingScript-Regular.woff2") format("woff2"),
+		url("./font/DancingScript-Regular.woff") format("woff"),
+		url("./font/DancingScript-Regular.ttf") format("truetype"),
+		url("./font/DancingScript-Regular.svg") format("svg");
+}
+
+/* === Ubuntu Mono - regular */
+@font-face {
+	font-family: 'Ubuntu Mono';
+	font-style: normal;
+	font-weight: 400;
+	src: url("./font/UbuntuMono-Regular.eot");
+	src: local("Ubuntu Mono"),
+		local("UbuntuMono-Regular"),
+		url("./font/UbuntuMono-Regular.eot") format("embedded-opentype"),
+		url("./font/UbuntuMono-Regular.woff2") format("woff2"),
+		url("./font/UbuntuMono-Regular.woff") format("woff"),
+		url("./font/UbuntuMono-Regular.ttf") format("truetype"),
+		url("./font/UbuntuMono-Regular.svg") format("svg");
+}

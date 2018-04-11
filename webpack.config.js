@@ -1,32 +1,67 @@
+const path = require('path');
+const webpack = require('webpack');
+const htmlPlugin = require('html-webpack-plugin');
+const extractTextPlugin = require('extract-text-webpack-plugin');
+const googleFontsPlugin = require('google-fonts-webpack-plugin');
+
+const extractSass = new extractTextPlugin({
+  filename: './styles.css'
+});
+
 module.exports = {
-  entry: ['./js/index.js', './css/scss/main.scss'],
+  entry: './src/js/index.js',
   output: {
-    filename: 'js/main.js',
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'index.js'
   },
   module: {
     rules: [
       {
         test: /\.scss$/,
+        use: extractSass.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                minimize: true
+              }
+            },
+            {
+              loader: 'sass-loader'
+            }
+          ]
+        })
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
         use: [
           {
-            loader: 'file-loader',
+            loader: 'babel-loader',
             options: {
-              name: 'styles.css',
-              outputPath: 'css/'
+              presets: [[ 'env', {
+                targets: {
+                  browsers: ['last 2 versions', 'ie >= 10']
+                }
+              }]]
             }
-          },
-          {
-            loader: 'extract-loader'
-          },
-          {
-            loader: 'css-loader'
-          },
-          {
-            loader: 'sass-loader'
           }
         ]
       }
     ]
-  }
+  },
+  plugins: [
+    extractSass,
+    new htmlPlugin({
+      template: './src/index.html'
+    }),
+    new googleFontsPlugin({
+      fonts: [
+        { family: 'Ubuntu Mono'},
+        { family: 'Dancing Script'}
+      ]
+    }),
+    new webpack.optimize.UglifyJsPlugin()
+  ]
 };
-
