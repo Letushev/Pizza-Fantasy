@@ -9,7 +9,8 @@ const extractSass = new extractTextPlugin({
 });
 
 module.exports = {
-  entry: './src/js/index.js',
+  context: path.resolve(__dirname, 'src'),
+  entry: './js/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'index.js'
@@ -54,7 +55,7 @@ module.exports = {
   plugins: [
     extractSass,
     new htmlPlugin({
-      template: './src/index.html',
+      template: './index.html',
       minify: {
         removeComments: true,
         collapseWhitespace: true,
