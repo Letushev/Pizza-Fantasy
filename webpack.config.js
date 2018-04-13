@@ -10,13 +10,17 @@ const extractSass = new extractTextPlugin({
 
 module.exports = {
   context: path.resolve(__dirname, 'src'),
+
   entry: './js/index.js',
+
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'index.js'
   },
+
   module: {
     rules: [
+
       {
         test: /\.scss$/,
         use: extractSass.extract({
@@ -34,6 +38,7 @@ module.exports = {
           ]
         })
       },
+
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -49,11 +54,27 @@ module.exports = {
             }
           }
         ]
+      },
+
+      {
+        test: /\.(jpg|png|gif|svg)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: './images/'
+            }
+          }
+        ]
       }
+
     ]
   },
+
   plugins: [
     extractSass,
+
     new htmlPlugin({
       template: './index.html',
       minify: {
@@ -62,12 +83,14 @@ module.exports = {
         conservativeCollapse: true
       }
     }),
+
     new googleFontsPlugin({
       fonts: [
         { family: 'Ubuntu Mono'},
         { family: 'Dancing Script'}
       ]
     }),
+
     new webpack.optimize.UglifyJsPlugin()
   ]
 };
