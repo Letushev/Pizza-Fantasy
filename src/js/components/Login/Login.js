@@ -1,5 +1,5 @@
 import Component from '../../framework/Component';
-import '../../../images/pizza-guy.png';
+import pizzaGuy from '../../../images/pizza-guy.svg';
 
 class Login extends Component {
   constructor() {
@@ -11,7 +11,7 @@ class Login extends Component {
 
   render() {
     const img = document.createElement('img');
-    img.setAttribute('src', 'images/pizza-guy.png');
+    img.src = pizzaGuy;
 
     const form = document.createElement('form');
     form.innerHTML = `
