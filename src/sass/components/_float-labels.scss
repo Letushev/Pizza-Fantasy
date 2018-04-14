@@ -11,7 +11,7 @@
     transition: .2s;
   }
 
-  input:valid + label,
+  input:not(:placeholder-shown) + label,
   input:focus + label {
     top: -10px;
     color: $gray;

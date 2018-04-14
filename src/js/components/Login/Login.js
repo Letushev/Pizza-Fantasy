@@ -18,12 +18,12 @@ class Login extends Component {
     const form = document.createElement('form');
     form.innerHTML = `
       <div class="input-container">
-        <input type="text" id="username" name="username" required>
+        <input type="text" id="username" name="username" minlength="2" maxlength="24" placeholder=" " required>
         <label for="username">Username</label>
       </div>
 
       <div class="input-container">
-        <input type="password" name="password" id="password" required>
+        <input type="password" name="password" id="password" minlength="8" placeholder=" " required>
         <label for="password">Password</label>
       </div>
 
