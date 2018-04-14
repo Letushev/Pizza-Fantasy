@@ -1,0 +1,20 @@
+form {
+  width: 350px;
+  padding: 40px;
+  
+  background-color: #fff;
+  box-shadow: 0 3px 15px $silver-chalice;
+
+  input, select, button {
+    width: 100%;
+  }
+
+  p {
+    text-align: center;
+  }
+
+  @media screen and (max-width: 400px) {
+    width: 100%;
+    box-shadow: none;
+  }
+}

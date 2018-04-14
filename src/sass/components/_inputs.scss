@@ -1,0 +1,25 @@
+input, select {
+  padding: 10px 0;
+  margin-bottom: 25px;
+
+  border: none;
+  border-bottom: 1px solid $gray;
+  
+  color: $mine-shaft;
+  font-size: $main-font-size;
+  font-family: $main-font-size;
+
+  outline: none;
+}
+
+input:-webkit-autofill {
+  box-shadow: 0 0 0 100px #fff inset;
+}
+
+select {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+          
+  cursor: pointer;
+}

@@ -1,5 +1,8 @@
-$base-font-size: 16px;
-$base-font-family: 'Ubuntu Mono';
+$main-font-size: 16px;
+$main-font-family: 'Ubuntu Mono';
+
+$small-font-size: 14px;
+
 
 /* RED */
 $pomegranate: #f44336;
@@ -10,7 +13,7 @@ $jelly-bean: #238795;
 $mosque: #045c68;
 
 /* GRAY */
-$galery: #eee;
+$gallery: #eee;
 $silver-chalice: #aaa;
 $gray: #888;
 $tundora: #444;
@@ -18,3 +21,10 @@ $mine-shaft: #333;
 
 /* GREEN */
 $forest-green: #29bb42;
+
+
+%flex-centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,5 +1,7 @@
-import Component from '../../framework/Component';
+import './login.scss';
 import pizzaGuy from '../../../images/pizza-guy.svg';
+
+import Component from '../../framework/Component';
 
 class Login extends Component {
   constructor() {
@@ -26,7 +28,7 @@ class Login extends Component {
       </div>
 
       <button type="submit">Log in</button> 
-      <p>New to Pizza Fantasy? <a href="#/signup">Sign Up</a></p>`;
+      <p>New to Pizza Fantasy? <a href="#/signup">Sign&nbsp;up</a></p>`;
 
     return [img, form];
   }

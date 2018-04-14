@@ -1,0 +1,20 @@
+.input-container {
+  position: relative;
+
+  label {
+    position: absolute;
+    top: 10px;
+    left: 0px;
+
+    color: $gray;
+
+    transition: .2s;
+  }
+
+  input:valid + label,
+  input:focus + label {
+    top: -10px;
+    color: $gray;
+    font-size: $small-font-size;
+  }
+}

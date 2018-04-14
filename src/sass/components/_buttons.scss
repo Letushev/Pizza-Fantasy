@@ -1,0 +1,15 @@
+button {
+  padding: 8px 15px;
+  margin: 10px 0;
+
+  background: none;
+  border: none;
+  
+  font-size: $main-font-size;
+  font-family: $main-font-family;
+
+  outline: none;
+  cursor: pointer;
+
+  transition: .2s;
+}

@@ -3,3 +3,15 @@
 *::before {
   box-sizing: border-box;
 }
+
+body {
+  background-color: $gallery;
+  
+  color: $mine-shaft;
+  font-size: $main-font-size;
+  font-family: $main-font-family;
+
+  @media screen and (max-width: 400px) {
+    background-color: #fff;
+  }
+}

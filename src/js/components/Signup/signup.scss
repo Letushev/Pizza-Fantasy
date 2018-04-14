@@ -1,0 +1,51 @@
+@import '../../../sass/base/utils';
+
+.signup-wrapper {
+  margin: 50px 0;
+  display: flex;
+  justify-content: center;
+
+  button {
+    color: #fff;
+    background-color: $jelly-bean;
+    box-shadow: 0 3px 10px $silver-chalice;
+
+    &:hover,
+    &:focus {
+      background-color: $mosque;
+    }
+  }
+
+  input:focus {
+    border-bottom-color: $jelly-bean;
+
+    & + label {
+      color: $jelly-bean;
+    }
+  }
+
+  a {
+    color: $pomegranate;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .select-wrapper {
+    position: relative;
+
+    &::after {
+      content: '\25BC';
+      position: absolute;
+      top: 12px;
+      right: 10px;
+
+      color: $gray;
+      font-size: $small-font-size;
+
+      pointer-events: none;
+    }
+  }
+}
