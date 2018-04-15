@@ -1,17 +1,28 @@
 import './signup.scss';
 
 import Component from '../../framework/Component';
+import API from '../../API';
 
 class Signup extends Component {
   constructor() {
     super();
-    
+    this.state = {
+      stores: []
+    };
     this.host = document.createElement('div');
     this.host.className = 'signup-wrapper';
+
+    this.getStoreList();
+  }
+
+  getStoreList() {
+    API.getStoreList()
+      .then(stores => this.updateState({ stores }));
   }
 
   render() {
     const form = document.createElement('form');
+    const options = this.getSelectOptions(this.state.stores);
     form.innerHTML = `
       <div class="input-container">
         <input type="text" name="username" id="username" minlength="2" maxlength="24" placeholder=" " required>
@@ -36,6 +47,7 @@ class Signup extends Component {
       <p class="select-wrapper">
         <select name="store_id" id="store_id" required>
           <option selected disabled value="">Select the store</option>
+          ${ options }
         </select>
       </p>
      
@@ -48,6 +60,10 @@ class Signup extends Component {
       <p>Already have an account? <a href="#/login">Log&nbsp;in</a></p> `;
      
     return form;
+  }
+
+  getSelectOptions(stores) {
+    return stores.reduce((options, store) => options += `<option value="${ store.id }">${ store.name }</option>`, '');
   }
 
 }
