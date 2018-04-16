@@ -1,9 +1,14 @@
-@import '../../../sass/base/utils';
+@import '../../../sass/base/variables';
+@import '../../../sass/base/extends';
 
 .signup-wrapper {
   margin: 50px 0;
-  display: flex;
-  justify-content: center;
+  @extend %flex-centered;
+  
+  form {
+    @extend %auth_forms;
+  }
+
 
   button {
     color: #fff;

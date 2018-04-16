@@ -4,7 +4,8 @@
   "description": "SPA for creating pizzas",
   "scripts": {
     "build": "./node_modules/.bin/webpack",
-    "watch": "./node_modules/.bin/webpack --watch"
+    "watch": "./node_modules/.bin/webpack --watch",
+    "dev": "./node_modules/.bin/webpack-dev-server"
   },
   "author": "Olexiy Letushev",
   "license": "ISC",

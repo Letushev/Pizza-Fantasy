@@ -1,8 +1,8 @@
 @import 'base/reset';
-@import 'base/utils';
+@import 'base/variables';
+@import 'base/extends';
 @import 'base/base';
 
 @import 'components/buttons';
-@import 'components/forms';
 @import 'components/inputs';
 @import 'components/float-labels';

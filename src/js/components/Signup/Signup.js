@@ -7,19 +7,15 @@ import { ERRORS } from '../../utils/constants';
 class Signup extends Component {
   constructor() {
     super();
+
     this.state = {
-      stores: [],
-      errors: {
-        usernameError: '',
-        passwordError: '',
-        storeError: ''
-      }
+      stores: []
     };
+
     this.host = document.createElement('div');
     this.host.className = 'signup-wrapper';
 
     this.getStoreList();
-
     this.host.addEventListener('submit', this.handleSubmit.bind(this));
   }
 
@@ -53,28 +49,28 @@ class Signup extends Component {
   render() {
     const form = document.createElement('form');
     const options = this.getSelectOptions(this.state.stores);
-    const { usernameError, passwordError, storeError } = this.state.errors;
+
+    form.className = 'signup-form';
     form.innerHTML = `
+      <ul class="server-error-list"></ul>
       <div class="input-container">
         <input type="text" name="username" id="username" minlength="2" maxlength="24" placeholder=" " required>
-        <label for="username">Username</label>
-        <p class="error-message">${ usernameError }</p>
+        <label for="username" data-error="Must contain at least 2 characters">Username</label>
       </div>
      
       <div class="input-container">
         <input type="password" name="password" id="password" minlength="8" placeholder=" " required>
-        <label for="password">Password</label>
+        <label for="password" data-error="Must contain at least 8 characters">Password</label>
       </div>
      
       <div class="input-container">
         <input type="password" name="password_repeat" id="password_repeat" placeholder=" " required>
         <label for="confirm_password">Confirm password</label>
-        <p class="error-message">${ passwordError }</p>
       </div>
      
       <div class="input-container">
         <input type="email" name="email" id="email" placeholder=" " required>
-        <label for="email">Email</label>
+        <label for="email" data-error="Must contain @ symbol">Email</label>
       </div>
      
       <p class="select-wrapper">
@@ -86,8 +82,7 @@ class Signup extends Component {
      
       <div class="input-container">
         <input type="password" name="store_password" id="store_password" minlength="8" placeholder=" " required>
-        <label for="store_password">Store password</label>
-        <p class="error-message">${ storeError }</p>
+        <label for="store_password" data-error="Must contain at least 8 characters">Store password</label>
       </div>
      
       <button type="submit">Sign Up</button>
@@ -101,12 +96,11 @@ class Signup extends Component {
   }
 
   handleFailure(validations) {
-    console.log(validations);
-    const { errors } = this.state;
-    errors.usernameError = validations.includes(ERRORS.username) ? ERRORS.username : ''; 
-    errors.passwordError = validations.includes(ERRORS.password) ? ERRORS.password : '';
-    errors.storeError = validations.includes(ERRORS.store) ? ERRORS.store : '';
-    this.updateState({ errors });
+    const signupForm = document.querySelector('.signup-form');
+    let errorList = document.querySelector('.server-error-list');
+    errorList.innerHTML = validations.reduce((list, msg) => {
+      return list += `<li>${ msg }</li>`;
+    }, '');
   }
 
   getSelectOptions(stores) {

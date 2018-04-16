@@ -23,3 +23,20 @@ select {
           
   cursor: pointer;
 }
+
+input:not(:placeholder-shown):invalid {
+  border-bottom-color: $guardsman-red;
+}
+
+input:valid, select:valid {
+  border-bottom-color: $forest-green;
+}
+
+input:not(:placeholder-shown):invalid + label::after {
+  content: attr(data-error);
+  position: absolute;
+  bottom: -48px;
+  left: 0;
+  color: $guardsman-red;
+  font-size: $small-font-size;
+}

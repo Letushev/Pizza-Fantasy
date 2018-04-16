@@ -1,0 +1,35 @@
+%flex-centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+%auth_forms {
+  width: 350px;
+  padding: 40px;
+  
+  background-color: #fff;
+  box-shadow: 0 3px 15px $silver-chalice;
+
+  input, select, button {
+    width: 100%;
+  }
+
+  .help-form-message {
+    text-align: center;
+  }
+
+  .server-error-list:not(:empty) {
+    margin-bottom: 25px;
+    padding: 10px 0;
+    list-style: square;
+    color: $guardsman-red;
+    border-top: 1px solid $guardsman-red;
+    border-bottom: 1px solid $guardsman-red;
+  }
+ 
+  @media screen and (max-width: 400px) {
+    width: 100%;
+    box-shadow: none;
+  }
+}
