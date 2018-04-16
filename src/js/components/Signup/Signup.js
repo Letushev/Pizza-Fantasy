@@ -64,7 +64,7 @@ class Signup extends Component {
      
       <div class="input-container">
         <input type="password" name="password_repeat" id="password_repeat" placeholder=" " required>
-        <label for="confirm_password">Confirm password</label>
+        <label for="confirm_password" data-error="Passwords must be equal">Confirm password</label>
       </div>
      
       <div class="input-container">
@@ -86,8 +86,22 @@ class Signup extends Component {
      
       <button type="submit">Sign Up</button>
       <p class="help-form-message">Already have an account? <a href="#/login">Log&nbsp;in</a></p> `;
-     
+    
+    const password = form.querySelector('#password');
+    const passwordRepeat = form.querySelector('#password_repeat');
+    passwordRepeat.addEventListener('keyup', () => {
+      this.checkPasswords(password, password_repeat);
+    });
+    
     return form;
+  }
+
+  checkPasswords(password, password_repeat) {
+    if (password.value !== password_repeat.value) {
+      password_repeat.setCustomValidity('Passwords must be equal');
+    } else {
+      password_repeat.setCustomValidity('');
+    }
   }
 
   handleSuccess() {

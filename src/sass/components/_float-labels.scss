@@ -10,6 +10,7 @@
     color: $gray;
 
     transition: .2s;
+    pointer-events: none;
   }
 
   input:not(:placeholder-shown) + label,
