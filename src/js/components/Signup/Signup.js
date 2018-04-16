@@ -2,7 +2,6 @@ import './signup.scss';
 
 import Component from '../../framework/Component';
 import API_SERVICE from '../../api/api-service';
-import { ERRORS } from '../../utils/constants';
 
 class Signup extends Component {
   constructor() {
