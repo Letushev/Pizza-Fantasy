@@ -9,8 +9,15 @@ form {
     width: 100%;
   }
 
-  p {
+  .help-form-message {
     text-align: center;
+  }
+
+  .error-message {
+    color: red;
+    font-size: $small-font-size;
+    position: absolute;
+    bottom: 18px;
   }
 
   @media screen and (max-width: 400px) {

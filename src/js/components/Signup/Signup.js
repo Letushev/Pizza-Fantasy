@@ -1,32 +1,64 @@
 import './signup.scss';
 
 import Component from '../../framework/Component';
-import API from '../../API';
+import API_SERVICE from '../../api/api-service';
+import { ERRORS } from '../../utils/constants';
 
 class Signup extends Component {
   constructor() {
     super();
     this.state = {
-      stores: []
+      stores: [],
+      errors: {
+        usernameError: '',
+        passwordError: '',
+        storeError: ''
+      }
     };
     this.host = document.createElement('div');
     this.host.className = 'signup-wrapper';
 
     this.getStoreList();
+
+    this.host.addEventListener('submit', this.handleSubmit.bind(this));
   }
 
   getStoreList() {
-    API.getStoreList()
+    API_SERVICE.getStoreList()
       .then(stores => this.updateState({ stores }));
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const target = event.target;
+    const userData = {
+      username: target.username.value.trim(),
+      password: target.password.value.trim(),
+      password_repeat: target.password_repeat.value.trim(),
+      email: target.email.value.trim(),
+      store_id: parseInt(target.store_id.value),
+      store_password: target.store_password.value.trim()
+    };
+
+    API_SERVICE.signupUser(userData)
+      .then(response => {
+        if (response.success) {
+          this.handleSuccess();
+        } else {
+          this.handleFailure(response.validations);
+        }
+      })
   }
 
   render() {
     const form = document.createElement('form');
     const options = this.getSelectOptions(this.state.stores);
+    const { usernameError, passwordError, storeError } = this.state.errors;
     form.innerHTML = `
       <div class="input-container">
         <input type="text" name="username" id="username" minlength="2" maxlength="24" placeholder=" " required>
         <label for="username">Username</label>
+        <p class="error-message">${ usernameError }</p>
       </div>
      
       <div class="input-container">
@@ -35,8 +67,9 @@ class Signup extends Component {
       </div>
      
       <div class="input-container">
-        <input type="password" name="password_repeat" id="confirm_password" placeholder=" " required>
+        <input type="password" name="password_repeat" id="password_repeat" placeholder=" " required>
         <label for="confirm_password">Confirm password</label>
+        <p class="error-message">${ passwordError }</p>
       </div>
      
       <div class="input-container">
@@ -54,12 +87,26 @@ class Signup extends Component {
       <div class="input-container">
         <input type="password" name="store_password" id="store_password" minlength="8" placeholder=" " required>
         <label for="store_password">Store password</label>
+        <p class="error-message">${ storeError }</p>
       </div>
      
       <button type="submit">Sign Up</button>
-      <p>Already have an account? <a href="#/login">Log&nbsp;in</a></p> `;
+      <p class="help-form-message">Already have an account? <a href="#/login">Log&nbsp;in</a></p> `;
      
     return form;
+  }
+
+  handleSuccess() {
+
+  }
+
+  handleFailure(validations) {
+    console.log(validations);
+    const { errors } = this.state;
+    errors.usernameError = validations.includes(ERRORS.username) ? ERRORS.username : ''; 
+    errors.passwordError = validations.includes(ERRORS.password) ? ERRORS.password : '';
+    errors.storeError = validations.includes(ERRORS.store) ? ERRORS.store : '';
+    this.updateState({ errors });
   }
 
   getSelectOptions(stores) {

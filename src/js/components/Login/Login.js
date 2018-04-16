@@ -28,7 +28,7 @@ class Login extends Component {
       </div>
 
       <button type="submit">Log in</button> 
-      <p>New to Pizza Fantasy? <a href="#/signup">Sign&nbsp;up</a></p>`;
+      <p class="help-form-message">New to Pizza Fantasy? <a href="#/signup">Sign&nbsp;up</a></p>`;
 
     return [img, form];
   }
