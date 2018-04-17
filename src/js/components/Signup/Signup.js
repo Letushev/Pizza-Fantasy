@@ -30,12 +30,12 @@ class Signup extends Component {
     event.preventDefault();
     const target = event.target;
     const userData = {
-      username: target.username.value.trim(),
-      password: target.password.value.trim(),
-      password_repeat: target.password_repeat.value.trim(),
-      email: target.email.value.trim(),
+      username: target.username.value,
+      password: target.password.value,
+      password_repeat: target.password_repeat.value,
+      email: target.email.value,
       store_id: parseInt(target.store_id.value),
-      store_password: target.store_password.value.trim()
+      store_password: target.store_password.value
     };
 
     API_SERVICE.signupUser(userData)
@@ -115,7 +115,7 @@ class Signup extends Component {
     this.updateState({ message: response });
     setTimeout(() => {
       window.location.hash = '/login';
-    }, 3000);
+    }, 2000);
   }
 
   handleFailure(response) {

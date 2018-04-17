@@ -1,6 +1,7 @@
 import './login.scss';
 import pizzaGuy from '../../../images/pizza-guy.svg';
 import Component from '../../framework/Component';
+import AUTH_SERVICE from '../../api/auth-service';
 import Message from '../Message/Message';
 
 class Login extends Component {
@@ -15,6 +16,7 @@ class Login extends Component {
     this.host.className = 'login-wrapper';
     
     this._message = new Message('Login');
+    this.host.addEventListener('submit', this.handleSubmit.bind(this));
   }
 
   render() {
@@ -44,6 +46,34 @@ class Login extends Component {
     return [img, form];
   }
 
+  handleSubmit(event) {
+    event.preventDefault();
+    const target = event.target;
+    const credentials = {
+      username: target.username.value,
+      password: target.password.value
+    };
+     
+    AUTH_SERVICE.login(credentials)
+      .then(response => {
+        if (response.success) {
+          this.handleSuccess(response);
+        } else {
+          this.handleFailure(response);
+        }
+      });
+  }
+
+  handleSuccess(response) {
+    this.updateState({ message: response });
+    setTimeout(() => {
+      window.location.hash = '/signup';
+    }, 2000);
+  }
+
+  handleFailure(response) {
+    this.updateState({ message: response });
+  }
 }
 
 export default Login;

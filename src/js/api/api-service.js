@@ -18,6 +18,10 @@ class ApiService {
     return this.post(this.urlPaths.userCreate, userData);
   }
 
+  loginUser(credentials) {
+    return this.post(this.urlPaths.userLogin, credentials);
+  }
+
   get(path) {
     const headers = new Headers();
     headers.append('content-type', 'application/json');
@@ -42,5 +46,4 @@ class ApiService {
 }
 
 const API_SERVICE = new ApiService();
-
 export default API_SERVICE;
