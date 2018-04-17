@@ -1,17 +1,24 @@
 import './login.scss';
 import pizzaGuy from '../../../images/pizza-guy.svg';
-
 import Component from '../../framework/Component';
+import Message from '../Message/Message';
 
 class Login extends Component {
   constructor() {
     super();
+
+    this.state = {
+      message: null
+    };
     
     this.host = document.createElement('div');
     this.host.className = 'login-wrapper';
+    
+    this._message = new Message('Login');
   }
 
   render() {
+    const { message } = this.state;
     const img = document.createElement('img');
     img.src = pizzaGuy;
 
@@ -29,6 +36,10 @@ class Login extends Component {
 
       <button type="submit">Log in</button> 
       <p class="help-form-message">New to Pizza Fantasy? <a href="#/signup">Sign&nbsp;up</a></p>`;
+
+    if (message) {
+      form.insertAdjacentElement('afterbegin', this._message.update(message));
+    }
 
     return [img, form];
   }

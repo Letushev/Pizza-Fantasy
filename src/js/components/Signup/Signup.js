@@ -1,18 +1,21 @@
 import './signup.scss';
-
 import Component from '../../framework/Component';
 import API_SERVICE from '../../api/api-service';
+import Message from '../Message/Message';
 
 class Signup extends Component {
   constructor() {
     super();
 
     this.state = {
-      stores: []
+      stores: [],
+      message: null
     };
 
     this.host = document.createElement('div');
     this.host.className = 'signup-wrapper';
+
+    this._message = new Message('Registration');
 
     this.getStoreList();
     this.host.addEventListener('submit', this.handleSubmit.bind(this));
@@ -38,9 +41,9 @@ class Signup extends Component {
     API_SERVICE.signupUser(userData)
       .then(response => {
         if (response.success) {
-          this.handleSuccess();
+          this.handleSuccess(response);
         } else {
-          this.handleFailure(response.validations);
+          this.handleFailure(response);
         }
       })
   }
@@ -48,10 +51,10 @@ class Signup extends Component {
   render() {
     const form = document.createElement('form');
     const options = this.getSelectOptions(this.state.stores);
+    const { message } = this.state;
 
     form.className = 'signup-form';
     form.innerHTML = `
-      <ul class="server-error-list"></ul>
       <div class="input-container">
         <input type="text" name="username" id="username" minlength="2" maxlength="24" placeholder=" " required>
         <label for="username" data-error="Must contain at least 2 characters">Username</label>
@@ -86,6 +89,10 @@ class Signup extends Component {
      
       <button type="submit">Sign Up</button>
       <p class="help-form-message">Already have an account? <a href="#/login">Log&nbsp;in</a></p> `;
+
+    if (message) {
+      form.insertAdjacentElement('afterbegin', this._message.update(message));
+    }
     
     const password = form.querySelector('#password');
     const passwordRepeat = form.querySelector('#password_repeat');
@@ -104,16 +111,15 @@ class Signup extends Component {
     }
   }
 
-  handleSuccess() {
-
+  handleSuccess(response) {
+    this.updateState({ message: response });
+    setTimeout(() => {
+      window.location.hash = '/login';
+    }, 3000);
   }
 
-  handleFailure(validations) {
-    const signupForm = document.querySelector('.signup-form');
-    let errorList = document.querySelector('.server-error-list');
-    errorList.innerHTML = validations.reduce((list, msg) => {
-      return list += `<li>${ msg }</li>`;
-    }, '');
+  handleFailure(response) {
+    this.updateState({ message: response });
   }
 
   getSelectOptions(stores) {

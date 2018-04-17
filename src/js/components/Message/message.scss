@@ -1,0 +1,25 @@
+@import '../../../sass/base/variables';
+
+.message-container {
+  margin-bottom: 25px;
+  padding: 10px 0;
+  border-top: 1px solid $guardsman-red;
+  border-bottom: 1px solid $guardsman-red;
+
+  ul {
+    list-style: square;
+  }
+
+  .error-message, li {
+    color: $guardsman-red;
+  }
+
+  .success-message {
+    color: $forest-green;
+  }
+}
+
+.successful {
+  border-top-color: $forest-green;
+  border-bottom-color: $forest-green;
+}
