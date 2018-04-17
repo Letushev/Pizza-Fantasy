@@ -68,7 +68,7 @@ class Login extends Component {
     this.updateState({ message: response });
     setTimeout(() => {
       window.location.hash = '/signup';
-    }, 2000);
+    }, 1000);
   }
 
   handleFailure(response) {
