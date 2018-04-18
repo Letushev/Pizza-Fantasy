@@ -67,7 +67,7 @@ class Login extends Component {
   handleSuccess(response) {
     this.updateState({ message: response });
     setTimeout(() => {
-      window.location.hash = '/signup';
+      window.location.hash = '/queue';
     }, 1000);
   }
 
