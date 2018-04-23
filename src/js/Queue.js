@@ -11,14 +11,14 @@ class Queue extends Component {
     this.host.className = 'queue-container';
 
     this._header = new Header();
-    this._main = new List();
+    this._list = new List();
     this._footer = new Footer();
   }
   
   render() {
     return [
       this._header.update(),
-      this._main.update(),
+      this._list.update(),
       this._footer.update()
     ]
   }

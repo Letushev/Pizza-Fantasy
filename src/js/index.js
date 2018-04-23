@@ -1,3 +1,5 @@
+'use strict';
+
 import '../sass/main.scss';
 
 import Router from './framework/Router';

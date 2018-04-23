@@ -11,14 +11,14 @@ class Order extends Component {
     this.host.className = 'order-container';
 
     this._header = new Header();
-    this._main = new Create();
+    this._create = new Create();
     this._footer = new Footer();
   }
   
   render() {
     return [
       this._header.update(),
-      this._main.update(),
+      this._create.update(),
       this._footer.update()
     ]
   }
