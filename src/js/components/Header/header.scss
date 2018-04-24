@@ -1,0 +1,66 @@
+@import '../../../sass/base/variables';
+
+header {
+  height: 60px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px $silver-chalice;
+
+  .header-wrapper {
+    width: 75%;
+    // TODO 
+    // max-width:
+    height: 100%;
+    margin: 0 auto;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .logo {
+      margin-right: auto;
+      color: $pomegranate;
+      font-size: $logo-font-size;
+      font-family: $logo-font-family;
+    }
+
+    nav a {
+      font-size: $big-font-size;
+
+      &:not(:last-child) {
+        margin-right: 25px;
+
+        &:hover,
+        &:focus {
+          color: $guardsman-red;
+        }
+      }
+
+      &.active {
+        position: relative;
+
+        &::after {
+          content: '';
+          position: absolute;
+          top: -21px;
+          left: 0;
+          right: 0;
+          height: 5px;
+          background-color: $pomegranate;
+        }
+      }
+    }
+
+    .logout {
+      background-color: $pomegranate;
+      border-radius: 3px;
+      box-shadow: 0 2px 5px $silver-chalice;
+
+      color: #fff;
+
+      &:hover,
+      &:focus {
+        background-color: $guardsman-red;
+      }
+    }
+  }
+}

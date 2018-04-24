@@ -19,9 +19,7 @@ class Component {
     const children = this.render();
 
     this.host.innerHTML = '';
-    if (typeof children === 'string') {
-      this.host.innerHTML = children;
-    } else if (Array.isArray(children)) { 
+    if (Array.isArray(children)) { 
       this.host.append(...children)
     } else {
       this.host.append(children);

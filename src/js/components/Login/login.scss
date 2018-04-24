@@ -12,7 +12,7 @@
   button {
     color: #fff;
     background-color: $pomegranate;
-    box-shadow: 0 3px 10px $silver-chalice;
+    box-shadow: 0 2px 5px $silver-chalice;
 
     &:hover,
     &:focus {
@@ -30,10 +30,13 @@
 
   a {
     color: $jelly-bean;
-    text-decoration: none;
 
     &:hover {
       text-decoration: underline;
+    }
+
+    &:focus {
+      color: $mosque;
     }
   }
 

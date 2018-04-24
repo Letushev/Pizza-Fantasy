@@ -17,7 +17,7 @@ class Order extends Component {
   
   render() {
     return [
-      this._header.update(),
+      this._header.update({ active: 'order' }),
       this._create.update(),
       this._footer.update()
     ]
