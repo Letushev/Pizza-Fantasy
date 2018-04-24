@@ -48,18 +48,18 @@ header {
           background-color: $pomegranate;
         }
       }
-    }
 
-    .logout {
-      background-color: $pomegranate;
-      border-radius: 3px;
-      box-shadow: 0 2px 5px $silver-chalice;
-
-      color: #fff;
-
-      &:hover,
-      &:focus {
-        background-color: $guardsman-red;
+      &.logout {
+        background-color: $pomegranate;
+        border-radius: 3px;
+        box-shadow: 0 2px 5px $silver-chalice;
+  
+        color: #fff;
+  
+        &:hover,
+        &:focus {
+          background-color: $guardsman-red;
+        }
       }
     }
   }

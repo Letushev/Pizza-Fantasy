@@ -1,0 +1,23 @@
+@import '../../../sass/base/variables';
+
+footer {
+  height: 60px;
+  background-color: $mine-shaft;
+
+  .footer-wrapper {
+    width: 75%;
+    height: 100%;
+    margin: 0 auto;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    color: #fff;
+
+    a:hover,
+    a:focus {
+      text-decoration: underline;
+    }
+  }
+}

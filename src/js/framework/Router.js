@@ -29,6 +29,14 @@ class Router extends Component {
     
     if (!!route) {
       if (route !== this.state.activeRoute) {
+        if (!!route.redirectTo) {
+          return this.navigateTo(route.redirectTo);
+        }
+
+        if (!!route.isAuthorized && !route.isAuthorized()) {
+          return this.navigateTo('/login');
+        }
+
         this.applyRoute(route);
       }
     } else {

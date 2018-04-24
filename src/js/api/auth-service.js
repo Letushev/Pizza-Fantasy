@@ -4,6 +4,7 @@ class AuthService {
   constructor() {
     this._token = localStorage.getItem('token');
     this._claims = JSON.parse(localStorage.getItem('claims'));
+    this.isAuthorized = this.isAuthorized.bind(this);
   }
 
   set token(token) {

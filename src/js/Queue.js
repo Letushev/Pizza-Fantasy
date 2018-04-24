@@ -17,7 +17,7 @@ class Queue extends Component {
   
   render() {
     return [
-      this._header.update({ active: 'queue' }),
+      this._header.update({ activeLink: 'queue' }),
       this._list.update(),
       this._footer.update()
     ]

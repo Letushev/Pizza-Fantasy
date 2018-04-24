@@ -5,43 +5,42 @@ import AUTH_SERVICE from '../../api/auth-service';
 class Header extends Component {
   constructor() {
     super();
-
     this.host = document.createElement('header');
   }
 
   render() {
-    const wrapper = document.createElement('div');
-    const logo = document.createElement('a');
-    const navigation = document.createElement('nav');
-    const logout = document.createElement('a');
+    const headerWrapper = document.createElement('div');
+    const logoLink = document.createElement('a');
+    const navigationEl = document.createElement('nav');
+    const logoutButton = document.createElement('a');
 
-    wrapper.className = 'header-wrapper';
-    logo.className = 'logo';
-    logout.className = 'logout button';
+    headerWrapper.className = 'header-wrapper';
+    logoLink.className = 'logo';
+    logoutButton.className = 'logout button';
 
-    logo.textContent = 'Pizza Fantasy';
-    navigation.innerHTML = `
+    logoLink.textContent = 'Pizza Fantasy';
+    navigationEl.innerHTML = `
       <a class="queue-link" href="#/queue">Queue</a>
       <a class="order-link" href="#/order">Order</a>
       <a class="profile-link" href="#/profile">Profile</a>` ;
-    logout.textContent = 'Log out';
+    logoutButton.textContent = 'Log out';
 
-    logo.href = '#/queue';
-    logout.href = '#/login';
+    logoLink.href = '#/queue';
+    logoutButton.href = '#/login';
 
-    logout.addEventListener('click', () => {
+    logoutButton.addEventListener('click', () => {
       AUTH_SERVICE.logout();
     });
     
-    this.setActiveLink(navigation, this.props.active);
-    navigation.appendChild(logout);
-    wrapper.append(logo, navigation);
+    this.setActiveLink(navigationEl, this.props.activeLink);
+    navigationEl.appendChild(logoutButton);
+    headerWrapper.append(logoLink, navigationEl);
 
-    return wrapper;
+    return headerWrapper;
   }
 
-  setActiveLink(container, active) {
-    switch(active) {
+  setActiveLink(container, activeLink) {
+    switch(activeLink) {
       case 'queue':
         container.querySelector('.queue-link').classList.add('active');
         break;
