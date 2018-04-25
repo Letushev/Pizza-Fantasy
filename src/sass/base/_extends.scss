@@ -24,3 +24,9 @@
     box-shadow: none;
   }
 }
+
+%sticky-footer-container {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
