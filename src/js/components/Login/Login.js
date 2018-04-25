@@ -27,12 +27,12 @@ class Login extends Component {
     const form = document.createElement('form');
     form.innerHTML = `
       <div class="input-container">
-        <input type="text" id="username" name="username" minlength="2" maxlength="24" placeholder=" " required>
+        <input type="text" name="username" minlength="2" maxlength="24" placeholder=" " required>
         <label for="username" data-error="Must contain at least 2 characters">Username</label>
       </div>
 
       <div class="input-container">
-        <input type="password" name="password" id="password" minlength="8" placeholder=" " required>
+        <input type="password" name="password" minlength="8" placeholder=" " required>
         <label for="password" data-error="Must contain at least 8 characters">Password</label>
       </div>
 
@@ -48,13 +48,7 @@ class Login extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const target = event.target;
-    const credentials = {
-      username: target.username.value,
-      password: target.password.value
-    };
-     
-    AUTH_SERVICE.login(credentials)
+    AUTH_SERVICE.login(new FormData(event.target))
       .then(response => {
         if (response.success) {
           this.handleSuccess(response);

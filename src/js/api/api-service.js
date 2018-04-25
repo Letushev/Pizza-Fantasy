@@ -18,8 +18,8 @@ class ApiService {
     return this.post(this.urlPaths.userCreate, userData);
   }
 
-  loginUser(credentials) {
-    return this.post(this.urlPaths.userLogin, credentials);
+  loginUser(userData) {
+    return this.post(this.urlPaths.userLogin, userData);
   }
 
   get(path) {
@@ -32,9 +32,19 @@ class ApiService {
     }).then(response => response.json());
   }
 
-  post(path, body) {
+  post(path, userData) {
     const headers = new Headers();
     headers.append('content-type', 'application/json');
+
+    const body = {};
+    for (const [key, value] of userData) {
+      body[key] = value;
+    }
+    
+    // store_id value must be integer
+    if (body.hasOwnProperty('store_id')) {
+      body.store_id = parseInt(body.store_id);
+    }
 
     return fetch(this.baseUrl + path, {
       method: 'POST',

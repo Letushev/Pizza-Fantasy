@@ -28,17 +28,7 @@ class Signup extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const target = event.target;
-    const userData = {
-      username: target.username.value,
-      password: target.password.value,
-      password_repeat: target.password_repeat.value,
-      email: target.email.value,
-      store_id: parseInt(target.store_id.value),
-      store_password: target.store_password.value
-    };
-
-    API_SERVICE.signupUser(userData)
+    API_SERVICE.signupUser(new FormData(event.target))
       .then(response => {
         if (response.success) {
           this.handleSuccess(response);
@@ -56,34 +46,34 @@ class Signup extends Component {
     form.className = 'signup-form';
     form.innerHTML = `
       <div class="input-container">
-        <input type="text" name="username" id="username" minlength="2" maxlength="24" placeholder=" " required>
+        <input type="text" name="username" minlength="2" maxlength="24" placeholder=" " required>
         <label for="username" data-error="Must contain at least 2 characters">Username</label>
       </div>
      
       <div class="input-container">
-        <input type="password" name="password" id="password" minlength="8" placeholder=" " required>
+        <input type="password" name="password" minlength="8" placeholder=" " required>
         <label for="password" data-error="Must contain at least 8 characters">Password</label>
       </div>
      
       <div class="input-container">
-        <input type="password" name="password_repeat" id="password_repeat" placeholder=" " required>
+        <input type="password" name="password_repeat" placeholder=" " required>
         <label for="confirm_password" data-error="Passwords must be equal">Confirm password</label>
       </div>
      
       <div class="input-container">
-        <input type="email" name="email" id="email" placeholder=" " required>
+        <input type="email" name="email" placeholder=" " required>
         <label for="email" data-error="Must contain @ symbol">Email</label>
       </div>
      
       <p class="select-wrapper">
-        <select name="store_id" id="store_id" required>
+        <select name="store_id" required>
           <option selected disabled value="">Select the store</option>
           ${ options }
         </select>
       </p>
      
       <div class="input-container">
-        <input type="password" name="store_password" id="store_password" minlength="8" placeholder=" " required>
+        <input type="password" name="store_password" minlength="8" placeholder=" " required>
         <label for="store_password" data-error="Must contain at least 8 characters">Store password</label>
       </div>
      
@@ -94,20 +84,20 @@ class Signup extends Component {
       form.insertAdjacentElement('afterbegin', this._message.update(message));
     }
     
-    const password = form.querySelector('#password');
-    const passwordRepeat = form.querySelector('#password_repeat');
+    const password = form.querySelector('[name="password"]');
+    const passwordRepeat = form.querySelector('[name="password_repeat"]');
     passwordRepeat.addEventListener('keyup', () => {
-      this.checkPasswords(password, password_repeat);
+      this.checkPasswords(password, passwordRepeat);
     });
     
     return form;
   }
 
-  checkPasswords(password, password_repeat) {
-    if (password.value !== password_repeat.value) {
-      password_repeat.setCustomValidity('Passwords must be equal');
+  checkPasswords(password, passwordRepeat) {
+    if (password.value !== passwordRepeat.value) {
+      passwordRepeat.setCustomValidity('Passwords must be equal');
     } else {
-      password_repeat.setCustomValidity('');
+      passwordRepeat.setCustomValidity('');
     }
   }
 

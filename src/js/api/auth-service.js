@@ -44,8 +44,8 @@ class AuthService {
     return !!this._token ? this.claims.exp * 1000 > Date.now() : false;
   }
 
-  login(credentials) {
-    return API_SERVICE.loginUser(credentials)
+  login(userData) {
+    return API_SERVICE.loginUser(userData)
       .then(response => {
         if (response.success) {
           this.token = response.token;
