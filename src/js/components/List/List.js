@@ -6,6 +6,7 @@ class List extends Component {
     super();
 
     this.host = document.createElement('main');
+    this.host.className = 'list-container';
   }
 
   render() {

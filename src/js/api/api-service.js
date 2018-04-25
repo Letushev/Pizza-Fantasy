@@ -1,3 +1,5 @@
+import AUTH_SERVICE from './auth-service';
+
 class ApiService {
   constructor() {
     this.domain = 'https://pizza-tele.ga';
@@ -6,12 +8,22 @@ class ApiService {
 			storeList: '/store/list',
 			userCreate: '/user/create',
 			userLogin: '/user/login',
-			userInfo: '/user/my_info',
+      userInfo: '/user/my_info',
+      ingredientList: '/ingredient/list',
+      tagList: '/tag/list'
 		};
   }
 
   getStoreList() {
     return this.get(this.urlPaths.storeList);
+  }
+
+  getIngredientList() {
+    return this.get(this.urlPaths.ingredientList, AUTH_SERVICE.token);
+  }
+
+  getTagList() {
+    return this.get(this.urlPaths.tagList, AUTH_SERVICE.token);
   }
 
   signupUser(userData) {
@@ -22,10 +34,14 @@ class ApiService {
     return this.post(this.urlPaths.userLogin, userData);
   }
 
-  get(path) {
+  get(path, token) {
     const headers = new Headers();
     headers.append('content-type', 'application/json');
 
+    if (token) {
+			headers.append('Authorization', `Bearer ${ token }`);
+    }
+    
     return fetch(this.baseUrl + path, { 
       method: 'GET',
       headers 

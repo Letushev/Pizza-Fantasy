@@ -29,3 +29,4 @@ class EventEmitter {
 }
 
 const EVENT_EMITTER = new EventEmitter();
+export default EVENT_EMITTER;
