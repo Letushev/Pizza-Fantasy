@@ -6,25 +6,25 @@ class PizzaService {
     this.tags = [];
     this.images = {};
 
-    this.crust_img = `${ API_SERVICE.domain }/static/images/pizza.png`;
+    this.crust_url = `${ API_SERVICE.domain }/static/images/pizza.png`;
   }
 
   preloadPizzaData() {
     return Promise.all([
       this.getTags(),
       this.getIngridients()
-        .then(() => this.loadImages())
-        .then(images => {
-          images.forEach(image => {
-            this.images[image.name] = image.source;
-          });
-        })
     ]);
   }
 
   getIngridients() {
     return API_SERVICE.getIngredientList()
-      .then(data => this.ingredients = data.results);
+      .then(data => this.ingredients = data.results)
+      .then(this.loadImages.bind(this))
+      .then(images => {
+        images.forEach(image => {
+          this.images[image.name] = image.source;
+        });
+      });
   }
 
   getTags() {
@@ -32,10 +32,10 @@ class PizzaService {
       .then(data => this.tags = data.results);
   }
 
-  loadImages() {
+  loadImages(ingredients) {
     let promises = [];
-    promises.push(this.loadImage('crust', this.crust_img));
-    this.ingredients.forEach(ingredient => {
+    promises.push(this.loadImage('crust', this.crust_url));
+    ingredients.forEach(ingredient => {
       promises.push(this.loadImage(ingredient.name, `${ API_SERVICE.domain }/${ ingredient.image_url }`));
     });
     return Promise.all(promises);
@@ -45,7 +45,7 @@ class PizzaService {
     return new Promise((resolve, reject) => {
       const image = new Image();
       image.src = url;
-      image.load = () => resolve({ name, source });
+      image.onload = () => resolve({ name, source: image });
     });
   }
 }

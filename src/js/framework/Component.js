@@ -6,6 +6,7 @@ class Component {
   }
 
   update(props) {
+    this.beforeUpdate(props);
     this.props = props;
     return this._render();
   }
@@ -29,6 +30,7 @@ class Component {
   }
 
   render() {}
+  beforeUpdate() {}
 }
 
 export default Component;

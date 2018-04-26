@@ -21,10 +21,14 @@ class Create extends Component {
     this._canvas = new Canvas();
     this._description = new Description();
     this._price = new Price();
+  }
 
-    PIZZA_SERVICE.preloadPizzaData().then(() => {
-      console.log(PIZZA_SERVICE.ingredients, PIZZA_SERVICE.tags, PIZZA_SERVICE.images);
-    })
+  beforeUpdate(props) {
+    PIZZA_SERVICE.preloadPizzaData()
+      .then(() => {
+        const { ingredients, tags, images } = PIZZA_SERVICE;
+        console.log(ingredients, tags, images);
+      });
   }
 
   render() {
