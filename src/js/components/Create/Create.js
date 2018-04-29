@@ -10,10 +10,6 @@ class Create extends Component {
   constructor() {
     super();
 
-    this.state = {
-
-    };
-
     this.host = document.createElement('main');
     this.host.className = 'create-container';
 
@@ -23,16 +19,23 @@ class Create extends Component {
     this._price = new Price();
   }
 
-  beforeUpdate(props) {
+  beforeUpdate() {
     PIZZA_SERVICE.preloadPizzaData()
       .then(() => {
-        const { ingredients, tags, images } = PIZZA_SERVICE;
-        console.log(ingredients, tags, images);
+        const { ingredients, tags, crust_image } = PIZZA_SERVICE;
+        this.host.append(
+          this._ingredients.update({ ingredients }),
+          this._canvas.update({ crust_image }),
+          this._description.update()
+        );
       });
   }
 
   render() {
-
+    const heading = document.createElement('h1');
+    heading.textContent = 'Create and order your pizza';
+    heading.className = 'create-heading';
+    return heading;
   }
 }
 

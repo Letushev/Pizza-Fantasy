@@ -2,11 +2,9 @@ import API_SERVICE from './api-service';
 
 class PizzaService {
   constructor() {
-    this.ingredients = [];
-    this.tags = [];
-    this.images = {};
-
-    this.crust_url = `${ API_SERVICE.domain }/static/images/pizza.png`;
+    this.ingredients = null;
+    this.tags = null;
+    this.crust_image = null;
   }
 
   preloadPizzaData() {
@@ -18,34 +16,49 @@ class PizzaService {
 
   getIngridients() {
     return API_SERVICE.getIngredientList()
-      .then(data => this.ingredients = data.results)
-      .then(this.loadImages.bind(this))
-      .then(images => {
-        images.forEach(image => {
-          this.images[image.name] = image.source;
-        });
-      });
+      .then(data => this.ingredients = this.pullNames(data.results))
+      .then(this.loadResources.bind(this))
+      .then(this.saveImages.bind(this));
   }
 
   getTags() {
     return API_SERVICE.getTagList()
-      .then(data => this.tags = data.results);
+      .then(data => this.tags = this.pullNames(data.results));
   }
 
-  loadImages(ingredients) {
+  pullNames(arr) {
+    return arr.reduce((result, elem) => {
+      result[elem.name] = elem;
+      delete result[elem.name].name;
+      return result;
+    }, {});
+  }
+
+  saveImages(images) {
+    images.forEach(img => {
+      if (img.name === 'crust') {
+        this.crust_image = img.image;
+      } else {
+        delete this.ingredients[img.name].image_url;
+        this.ingredients[img.name].image = img.image;
+      }
+    })
+  }
+
+  loadResources(ingredients) {
     let promises = [];
-    promises.push(this.loadImage('crust', this.crust_url));
-    ingredients.forEach(ingredient => {
-      promises.push(this.loadImage(ingredient.name, `${ API_SERVICE.domain }/${ ingredient.image_url }`));
-    });
+    promises.push(this.loadImage('crust', `${ API_SERVICE.domain }/static/images/pizza.png`));
+    for (const ingr in ingredients) {
+      promises.push(this.loadImage(ingr, `${ API_SERVICE.domain }/${ ingredients[ingr].image_url }`));
+    }
     return Promise.all(promises);
   }
 
   loadImage(name, url) {
     return new Promise((resolve, reject) => {
-      const image = new Image();
-      image.src = url;
-      image.onload = () => resolve({ name, source: image });
+      const img = new Image();
+      img.src = url;
+      img.onload = () => resolve({ name, image: img });
     });
   }
 }

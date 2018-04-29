@@ -1,0 +1,34 @@
+@import '../../../sass/base/variables';
+@import '../../../sass/base/extends';
+
+.ingredients-container form {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 15px;
+
+  input[type=checkbox] {
+    @extend %hidden-widget;
+
+    &:checked + label {
+      border: 2px solid $forest-green;
+      color: $forest-green;
+      box-shadow: none;
+    }
+  }
+
+  label {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 3px 12px $silver-chalice;
+    border: 2px solid transparent;
+
+    img {
+      margin-right: 15px;
+    }
+  }
+}
