@@ -33,9 +33,9 @@ class Canvas extends Component {
     const { circles, ingridients } = this.state;
     
     ctx.translate( -(canvasWidth / 2), -(canvasHeight / 2));
-    ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 0;
-    ctx.shadowBlur = 5;
+    ctx.shadowOffsetX = 3;
+    ctx.shadowOffsetY = 3;
+    ctx.shadowBlur = 3;
     ctx.shadowColor = '#541200';
     
     circles.forEach((circle, circleIndex) => {
@@ -102,13 +102,17 @@ class Canvas extends Component {
   startAnimation(ctx, crust, ingridientWidth, ingridientHeight) {
     const canvas = ctx.canvas;
     const time = new Date();
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.save();
     ctx.translate(canvas.width / 2, canvas.height / 2);
     ctx.rotate(((2 * Math.PI) / 60) * time.getSeconds() + ((2 * Math.PI) / 60000) * time.getMilliseconds());
+
     this.drawCrust(ctx, crust, canvas.width, canvas.height);
     this.drawIngridients(ctx, canvas.width, canvas.height, ingridientWidth, ingridientHeight);
+
     ctx.restore();
+
     requestAnimationFrame(() => {
       this.startAnimation(...arguments);
     })
@@ -119,13 +123,11 @@ class Canvas extends Component {
     const { size } = this.state;
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
-    const canvasWidth = 160 * size;
-    const canvasHeight = 160 * size;
     const ingridientWidth = 12 * size;
     const ingridientHeight = 12 * size;
     
-    canvas.width = canvasWidth;
-    canvas.height = canvasHeight;
+    canvas.width = 160 * size;
+    canvas.height = 160 * size;
 
     requestAnimationFrame(() => {
       this.startAnimation(ctx, crust_image, ingridientWidth, ingridientHeight);

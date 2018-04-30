@@ -1,0 +1,22 @@
+@import '../../../sass/base/variables';
+
+.description-container {
+  height: 100%;
+
+  .description-form {
+    background-color: #fff;
+    padding: 40px;
+    height: 100%;
+    box-shadow: 0 3px 12px $silver-chalice;
+
+    textarea {
+      border: none;
+      border-bottom: 1px solid $silver-chalice;
+      outline: none;
+    }
+
+    input, textarea {
+      width: 100%;
+    }
+  }
+}
