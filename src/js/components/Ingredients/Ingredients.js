@@ -15,18 +15,24 @@ class Ingredients extends Component {
 
   handleChange(target) {
     if (target.matches('[type=checkbox]')) {
-      const { ingredients } = this.props;
-      EVENT_EMITTER.emit('ingridient-clicked', ingredients[target.id]);
+      const { ingredients } = this.props; 
+      const addedElements = document.querySelectorAll('[name=ingredient]:checked');
+      const notAddedElements = document.querySelectorAll('[name=ingredient]:not(:checked)');
 
-      const added = document.querySelectorAll('[name=ingredient]:checked');
-      const notAdded = document.querySelectorAll('[name=ingredient]:not(:checked)');
+      const addedIngredients = [];
 
-      if (added.length === this.MAXIngredientsNumber) {
-        notAdded.forEach(checkbox => {
+      addedElements.forEach(element => {
+        addedIngredients.push(ingredients[element.id]);
+      });
+      
+      EVENT_EMITTER.emit('ingredients-change', addedIngredients);
+
+      if (addedElements .length === this.MAXIngredientsNumber) {
+        notAddedElements .forEach(checkbox => {
           checkbox.disabled = true;
         })
       } else {
-        notAdded.forEach(checkbox => {
+        notAddedElements .forEach(checkbox => {
           checkbox.disabled = false;
         })
       }
@@ -35,6 +41,7 @@ class Ingredients extends Component {
 
   render() {
     const { ingredients } = this.props;
+    console.log(ingredients);
     const form = document.createElement('form');
     form.className = 'ingredients-form';
     form.addEventListener('change', event => {

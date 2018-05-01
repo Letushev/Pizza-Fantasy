@@ -1,7 +1,7 @@
 import './canvas.scss';
 import Component from '../../framework/Component';
 import EVENT_EMITTER from '../../framework/EventEmitter';
-import { removeArrayElement, getRandomNumber } from '../../utils/helpers';
+import { findDifference, getRandomNumber } from '../../utils/helpers';
 
 class Canvas extends Component {
   constructor() {
@@ -9,18 +9,19 @@ class Canvas extends Component {
 
     this.state = {
       size: 2,
-      ingridients: [],
+      ingredients: [],
       circles: this.fillCircles()
     };
 
     this.host = document.createElement('div');
     this.host.className = 'canvas-container';
 
-    EVENT_EMITTER.subscribe('ingridient-clicked', this.handleIngridientsChange.bind(this));
+    EVENT_EMITTER.subscribe('ingredients-change', this.handleIngredientsChange.bind(this));
+    EVENT_EMITTER.subscribe('size-changed', this.handleSizeChange.bind(this));
   }
 
   fillCircles() {
-    // 5 circles with appropriate number of ingridients
+    // 5 circles with appropriate number of ingredients
     const circles = [new Array(1), new Array(4), new Array(10), new Array(18), new Array(27)];
     return circles.map(arr => arr.fill(0));
   }
@@ -29,8 +30,8 @@ class Canvas extends Component {
     ctx.drawImage(crust, -(canvasWidth / 2), -(canvasHeight / 2), canvasWidth, canvasHeight);
   }
 
-  drawIngridients(ctx, canvasWidth, canvasHeight, ingridientWidth, ingridientHeight) {
-    const { circles, ingridients } = this.state;
+  drawIngredients(ctx, canvasWidth, canvasHeight, ingridientWidth, ingridientHeight) {
+    const { circles, ingredients } = this.state;
     
     ctx.translate( -(canvasWidth / 2), -(canvasHeight / 2));
     ctx.shadowOffsetX = 3;
@@ -41,7 +42,7 @@ class Canvas extends Component {
     circles.forEach((circle, circleIndex) => {
       circle.forEach((cell, cellIndex) => {
         if (cell !== 0) {
-          const image = (ingridients.find(({ id }) => id === cell)).image;
+          const image = (ingredients.find(({ id }) => id === cell)).image;
           const angle = 360 / circle.length * cellIndex;
           const radius = ingridientWidth / 2;
           const offset = (circleIndex * 4 - cell) / 10 * radius; // fake random
@@ -60,19 +61,21 @@ class Canvas extends Component {
     })
   }
 
-  handleIngridientsChange(ingr) {
-    const { ingridients, circles } = this.state;
-    const id = ingr.id;
+  handleIngredientsChange(changedIngredients) {
+    const { ingredients, circles } = this.state;
+    const id = findDifference(changedIngredients, ingredients).id;
 
-    if (ingridients.includes(ingr)) {
-      removeArrayElement(ingr, ingridients);
-      this.removeIngridient(id, circles);
-    } else {
-      ingridients.push(ingr);
+    if (changedIngredients.length > ingredients.length) {
       this.spreadIngridient(id, circles);
+    } else { 
+      this.removeIngridient(id, circles);
     }
 
-    this.updateState({ ingridients, circles });
+    this.updateState({ ingredients: changedIngredients, circles });
+  }
+
+  handleSizeChange(newSize) {
+    this.updateState({ size: newSize});
   }
 
   spreadIngridient(id, circles) { 
@@ -109,7 +112,7 @@ class Canvas extends Component {
     ctx.rotate(((2 * Math.PI) / 60) * time.getSeconds() + ((2 * Math.PI) / 60000) * time.getMilliseconds());
 
     this.drawCrust(ctx, crust, canvas.width, canvas.height);
-    this.drawIngridients(ctx, canvas.width, canvas.height, ingridientWidth, ingridientHeight);
+    this.drawIngredients(ctx, canvas.width, canvas.height, ingridientWidth, ingridientHeight);
 
     ctx.restore();
 

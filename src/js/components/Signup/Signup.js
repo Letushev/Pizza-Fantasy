@@ -2,6 +2,7 @@ import './signup.scss';
 import Component from '../../framework/Component';
 import API_SERVICE from '../../api/api-service';
 import Message from '../Message/Message';
+import { formDataToObject } from '../../utils/helpers';
 
 class Signup extends Component {
   constructor() {
@@ -28,7 +29,10 @@ class Signup extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    API_SERVICE.signupUser(new FormData(event.target))
+    const formData = new FormData(event.target);
+    const userData = formDataToObject(formData);
+    userData['store_id'] = parseInt(userData['store_id']);
+    API_SERVICE.signupUser(userData)
       .then(response => {
         if (response.success) {
           this.handleSuccess(response);
@@ -46,22 +50,22 @@ class Signup extends Component {
     form.className = 'signup-form';
     form.innerHTML = `
       <div class="input-container">
-        <input type="text" name="username" minlength="2" maxlength="24" placeholder=" " required>
+        <input type="text" name="username" id="username" class="text-input" minlength="2" maxlength="24" placeholder=" " required>
         <label for="username" data-error="Must contain at least 2 characters">Username</label>
       </div>
      
       <div class="input-container">
-        <input type="password" name="password" minlength="8" placeholder=" " required>
+        <input type="password" name="password" id="password" class="text-input" minlength="8" placeholder=" " required>
         <label for="password" data-error="Must contain at least 8 characters">Password</label>
       </div>
      
       <div class="input-container">
-        <input type="password" name="password_repeat" placeholder=" " required>
+        <input type="password" name="password_repeat" id="confirm_password" class="text-input" placeholder=" " required>
         <label for="confirm_password" data-error="Passwords must be equal">Confirm password</label>
       </div>
      
       <div class="input-container">
-        <input type="email" name="email" placeholder=" " required>
+        <input type="email" name="email" id="email" class="text-input" placeholder=" " required>
         <label for="email" data-error="Must contain @ symbol">Email</label>
       </div>
      
@@ -73,7 +77,7 @@ class Signup extends Component {
       </p>
      
       <div class="input-container">
-        <input type="password" name="store_password" minlength="8" placeholder=" " required>
+        <input type="password" name="store_password" id="store_password" class="text-input" minlength="8" placeholder=" " required>
         <label for="store_password" data-error="Must contain at least 8 characters">Store password</label>
       </div>
      

@@ -6,10 +6,12 @@
   @extend %flex-centered;
 
   form {
-    @extend %auth_forms;
+    width: 350px;
+    @extend %forms;
   }
 
   button {
+    width: 100%;
     color: #fff;
     background-color: $pomegranate;
     box-shadow: 0 2px 5px $silver-chalice;

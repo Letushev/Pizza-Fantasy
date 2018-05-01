@@ -7,7 +7,7 @@ class Component {
 
   update(props) {
     this.beforeUpdate(props);
-    this.props = props;
+    this.props = Object.assign({}, this.props, props);
     return this._render();
   }
 

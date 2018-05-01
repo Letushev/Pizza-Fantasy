@@ -4,14 +4,12 @@
   align-items: center;
 }
 
-%auth_forms {
-  width: 350px;
+%forms {
   padding: 40px;
-  
   background-color: #fff;
   box-shadow: 0 3px 12px $silver-chalice;
 
-  input, select, button {
+  input.text-input, select, textarea {
     width: 100%;
   }
 

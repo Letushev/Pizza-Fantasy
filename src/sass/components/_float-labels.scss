@@ -14,7 +14,9 @@
   }
 
   input:not(:placeholder-shown) + label,
-  input:focus + label {
+  input:focus + label,
+  textarea:not(:placeholder-shown) + label,
+  textarea:focus + label {
     top: -10px;
     color: $gray;
     font-size: $small-font-size;

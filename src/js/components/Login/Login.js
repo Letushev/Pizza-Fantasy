@@ -3,6 +3,7 @@ import pizzaGuy from '../../../images/pizza-guy.svg';
 import Component from '../../framework/Component';
 import AUTH_SERVICE from '../../api/auth-service';
 import Message from '../Message/Message';
+import { formDataToObject } from '../../utils/helpers';
 
 class Login extends Component {
   constructor() {
@@ -27,12 +28,12 @@ class Login extends Component {
     const form = document.createElement('form');
     form.innerHTML = `
       <div class="input-container">
-        <input type="text" name="username" minlength="2" maxlength="24" placeholder=" " required>
+        <input type="text" name="username" id="username" class="text-input" minlength="2" maxlength="24" placeholder=" " required>
         <label for="username" data-error="Must contain at least 2 characters">Username</label>
       </div>
 
       <div class="input-container">
-        <input type="password" name="password" minlength="8" placeholder=" " required>
+        <input type="password" name="password" id="password" class="text-input" minlength="8" placeholder=" " required>
         <label for="password" data-error="Must contain at least 8 characters">Password</label>
       </div>
 
@@ -48,7 +49,7 @@ class Login extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    AUTH_SERVICE.login(new FormData(event.target))
+    AUTH_SERVICE.login(formDataToObject(new FormData(event.target)))
       .then(response => {
         if (response.success) {
           this.handleSuccess(response);

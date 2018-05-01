@@ -10,7 +10,8 @@ class ApiService {
 			userLogin: '/user/login',
       userInfo: '/user/my_info',
       ingredientList: '/ingredient/list',
-      tagList: '/tag/list'
+      tagList: '/tag/list',
+      pizzaCreate: '/pizza/create'
 		};
   }
 
@@ -34,6 +35,10 @@ class ApiService {
     return this.post(this.urlPaths.userLogin, userData);
   }
 
+  createPizza(pizzaData) {
+    return this.post(this.urlPaths.pizzaCreate, pizzaData, AUTH_SERVICE.token);
+  }
+
   get(path, token) {
     const headers = new Headers();
     headers.append('content-type', 'application/json');
@@ -48,23 +53,17 @@ class ApiService {
     }).then(response => response.json());
   }
 
-  post(path, userData) {
+  post(path, userData, token) {
     const headers = new Headers();
-    headers.append('content-type', 'application/json');
+    // headers.append('content-type', 'application/json');
 
-    const body = {};
-    for (const [key, value] of userData) {
-      body[key] = value;
-    }
-    
-    // store_id value must be integer
-    if (body.hasOwnProperty('store_id')) {
-      body.store_id = parseInt(body.store_id);
+    if (token) {
+			headers.append('Authorization', `Bearer ${ token }`);
     }
 
     return fetch(this.baseUrl + path, {
       method: 'POST',
-      body: JSON.stringify(body),
+      body: JSON.stringify(userData),
       headers
     }).then(response => response.json());
     

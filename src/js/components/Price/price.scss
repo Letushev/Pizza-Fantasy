@@ -1,0 +1,17 @@
+@import '../../../sass/base/variables';
+
+.price-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+
+  .price-label {
+    color: $jelly-bean;
+  }
+
+  .price {
+    font-size: $big-font-size;
+    color: $pomegranate;
+  }
+}

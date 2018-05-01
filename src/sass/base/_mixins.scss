@@ -1,0 +1,53 @@
+@import './extends';
+
+@mixin selection-button($type, $color, $activeColor) {
+  @extend %hidden-widget;
+
+  & + label {
+    position: relative;
+    margin-left: 25px;
+    cursor: pointer;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: -25px;
+      width: 15px;
+      height: 15px;
+      border: 2px solid $color;
+      
+      @if $type == 'radio' {
+        border-radius: 50%;
+      }
+    }
+  }
+
+  &:checked {
+    & + label {
+      color: $activeColor;
+
+      &::after {
+        position: absolute;
+
+        @if $type == 'radio' {
+          content: '';
+          top: 4px;
+          left: -21px;
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background-color: $activeColor;
+        } @else { 
+          content: '\2714';
+          top: -2px;
+          left: -23px;
+          color: $activeColor;
+        }
+      }
+      
+      &::before {
+        border-color: $activeColor;
+      }
+    }
+  }
+}
