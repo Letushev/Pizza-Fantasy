@@ -35,4 +35,9 @@
       margin-right: 15px;
     }
   }
+
+  .ingredients-message {
+    grid-column: span 2;
+    color: $pomegranate;
+  }
 }

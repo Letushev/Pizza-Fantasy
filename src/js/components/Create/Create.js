@@ -8,7 +8,6 @@ import PIZZA_SERVICE from '../../api/pizza-service';
 import EVENT_EMITTER from '../../framework/EventEmitter';
 import API_SERVICE from '../../api/api-service';
 import { canvasToBlob } from '../../utils/helpers';
-import AUTH_SERVICE from '../../api/auth-service';
 
 class Create extends Component {
   constructor() {
@@ -46,9 +45,15 @@ class Create extends Component {
     canvasToBlob(canvas)
       .then(blob => {
         description.append('image', blob);
-        return AUTH_SERVICE.createPizza(description);
+        return API_SERVICE.createPizza(description);
       })
-      .then(console.log);
+      .then(response => {
+        if (response.success) {
+          console.log(response);
+        } else {
+          this._ingredients.update({ message: response });
+        }
+      });
   }
 
   render() {

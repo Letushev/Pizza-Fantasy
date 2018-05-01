@@ -6,6 +6,10 @@ import PIZZA_SERVICE from '../../api/pizza-service';
 class Ingredients extends Component {
   constructor() {
     super();
+
+    this.state = {
+      message: null
+    };
     
     this.MAXIngredientsNumber = 6;
 
@@ -40,13 +44,12 @@ class Ingredients extends Component {
   }
 
   render() {
-    const { ingredients } = this.props;
-    console.log(ingredients);
+    const { ingredients, message } = this.props;
     const form = document.createElement('form');
     form.className = 'ingredients-form';
     form.addEventListener('change', event => {
       this.handleChange(event.target);
-    })
+    });
 
     for (const ingr in ingredients) {
       const label = document.createElement('label');
@@ -54,12 +57,19 @@ class Ingredients extends Component {
       const name = document.createTextNode(ingr);
 
       form.innerHTML += `
-        <input type="checkbox" name="ingredient" value="${ ingredients[ingr].id }" id="${ ingr }"> `;
+        <input type="checkbox" name="ingredient" value="${ ingredients[ingr].id }" id="${ ingr }" required> `;
       label.setAttribute('for', ingr);
       image.setAttribute('alt', ingredients[ingr].description);
       
       label.append(image, name);
       form.appendChild(label);
+    }
+
+    if (!!message) {
+      const validations = message.validations.reduce((validations, val) => {
+        return `<p class="ingredients-message">${ val }</p>`;
+      }, '');
+      form.insertAdjacentHTML('afterbegin', validations);
     }
 
     return form;

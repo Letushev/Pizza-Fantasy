@@ -28,11 +28,11 @@ class ApiService {
   }
 
   signupUser(userData) {
-    return this.post(this.urlPaths.userCreate, userData);
+    return this.post(this.urlPaths.userCreate, JSON.stringify(userData));
   }
 
   loginUser(userData) {
-    return this.post(this.urlPaths.userLogin, userData);
+    return this.post(this.urlPaths.userLogin, JSON.stringify(userData));
   }
 
   createPizza(pizzaData) {
@@ -55,7 +55,6 @@ class ApiService {
 
   post(path, userData, token) {
     const headers = new Headers();
-    // headers.append('content-type', 'application/json');
 
     if (token) {
 			headers.append('Authorization', `Bearer ${ token }`);
@@ -63,7 +62,7 @@ class ApiService {
 
     return fetch(this.baseUrl + path, {
       method: 'POST',
-      body: JSON.stringify(userData),
+      body: userData,
       headers
     }).then(response => response.json());
     
