@@ -2,18 +2,13 @@
 
 .create-container {
   flex: 1;
-
   width: 90%;
+  position: relative;
   margin: 0 auto 50px auto;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(320px, 480px));
-  grid-template-rows: 80px 1fr;
-  grid-column-gap: 50px;
-  align-items: center;
 
   .create-heading {
-    grid-column: span 3;
-    justify-self: center;
+    padding: 25px 0;
+    text-align: center;
     color: $mosque;
     font-size: $heading-font-size;
   }

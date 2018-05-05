@@ -1,6 +1,6 @@
 import './description.scss';
 import Component from '../../framework/Component';
-import { makeAutoResizable } from '../../utils/autoResizable';
+import { makeAutoResizable } from '../../utils/helpers';
 import EVENT_EMITTER from '../../framework/EventEmitter';
 import Price from '../Price/Price';
 
@@ -12,19 +12,23 @@ class Description extends Component {
     this.host.className = 'description-container';
 
     this._price = new Price();
-
-    EVENT_EMITTER.subscribe('ingredients-change', this.handleIngredientsChange.bind(this));
   }
 
   render() {
+    const { ingredients, tags } = this.props;
+
     const form = document.createElement('form');
-    const { tags } = this.props;
-    const tagsCheckboxes = this.getTagsCheckboxes(tags);
+    const detailsContainer = document.createElement('div');
+    const ingredientsContainer = document.createElement('div');
 
     form.className = 'description-form';
-    form.addEventListener('change', this.handleSizeChange.bind(this));
-    form.addEventListener('submit', this.handleSubmit);
-    form.innerHTML = `
+    detailsContainer.className = 'details-container';
+    ingredientsContainer.className = 'ingredients-container';
+
+    form.addEventListener('change', this.handleChange.bind(this));
+    form.addEventListener('submit', this.handleSubmit.bind(this));
+
+    detailsContainer.innerHTML = `
       <div class="input-container">
         <input type="text" name="name" id="pizza-name" class="text-input" minlength="3" maxlength="24" placeholder=" " required>
         <label for="pizza-name" data-error="Must contain at least 3 characters">Pizza name *</label>
@@ -53,24 +57,42 @@ class Description extends Component {
 
       <p class="selection-name">Tags</p>
       <div class="checkboxes-wrapper">
-        ${ tagsCheckboxes } 
+        ${ this.getTagsCheckboxes(tags) } 
       </div> 
       
       <button type="submit">Order</button> `;
 
-    const textArea = form.querySelector('textarea');
-    makeAutoResizable(textArea);
-    form.insertAdjacentElement('afterbegin', this._price.update({ size: 60 }));
+    for (const ingr in ingredients) {
+      const label = document.createElement('label');
+      const image = ingredients[ingr].image;
+      const name = document.createTextNode(ingr);
+  
+      ingredientsContainer.innerHTML += `
+        <input type="checkbox" name="ingredient" value="${ ingredients[ingr].id }" id="${ ingr }" required> `;
+      label.setAttribute('for', ingr);
+      image.setAttribute('alt', ingredients[ingr].description);
+        
+      label.append(image, name);
+      ingredientsContainer.appendChild(label);
+    }
 
+    const textArea = detailsContainer.querySelector('textarea');
+    makeAutoResizable(textArea);
+    detailsContainer.insertAdjacentElement('afterbegin', this._price.update({ size: 60 }));
+
+    form.append(detailsContainer, ingredientsContainer);
     return form;
   }
 
-  handleSizeChange(event) {
+  handleChange(event) {
+    const { ingredients } = this.props;
     const target = event.target;
-    if (target.matches('[type=radio]')) {
-      this._price.update({ size: target.value })
-      EVENT_EMITTER.emit('size-changed', target.value / 30); // canvas state size is 1, 1.5 or 2
-                                                             // that`s why division by 30
+
+    if (target.matches('[name=ingridient]')) {
+      EVENT_EMITTER.emit('ingredients-change', ingredients[target.id]);
+    } else if (target.matches('[name=size]')) {
+      EVENT_EMITTER.emit('size-change', target.value / 30); // canvas state size is 1, 1.5 or 2
+                                                            // that`s why division by 30
     }
   }
 
@@ -81,10 +103,6 @@ class Description extends Component {
     formData.delete('tag');
     formData.append('tags', JSON.stringify(tags)); 
     EVENT_EMITTER.emit('order-submit', formData);
-  }
-
-  handleIngredientsChange(newIngredients) {
-    this._price.update({ ingredients: newIngredients})
   }
 
   getTagsCheckboxes(tags) {

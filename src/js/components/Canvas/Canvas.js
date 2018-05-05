@@ -17,7 +17,7 @@ class Canvas extends Component {
     this.host.className = 'canvas-container';
 
     EVENT_EMITTER.subscribe('ingredients-change', this.handleIngredientsChange.bind(this));
-    EVENT_EMITTER.subscribe('size-changed', this.handleSizeChange.bind(this));
+    EVENT_EMITTER.subscribe('size-change', this.handleSizeChange.bind(this));
   }
 
   fillCircles() {

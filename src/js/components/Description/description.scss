@@ -3,52 +3,95 @@
 @import '../../../sass/base/mixins';
 
 .description-form {
-  @extend %forms;
-
-  input.text-input:focus,
-  textarea:focus {
-    border-bottom-color: $jaffa;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   
-    & + label {
-      color: $jaffa;
+  .details-container {
+    width: 320px;
+    @extend %forms;
+  
+    input.text-input:focus,
+    textarea:focus {
+      border-bottom-color: $jaffa;
+  
+      & + label {
+        color: $jaffa;
+      }
+    }
+
+    .selection-name {
+      color: $jelly-bean;
+      font-size: $big-font-size;
+    }
+
+    .radios-wrapper {
+      margin: 15px 0;
+      display: flex;
+
+      .radio-container {
+        flex: 1;
+        text-align: center;
+      }
+    }
+
+    .checkboxes-wrapper {
+      margin: 15px 0;
+
+      .checkbox-container {
+        margin: 5px 0;
+      }
+    }
+
+    input[type=radio] {
+      @include selection-button('radio', $gray, $jaffa);
+    }
+
+    input[type=checkbox] {
+      @include selection-button('checkbox', $gray, $jaffa);
+    }
+
+    button {
+      width: 100%;
+      color: #fff;
+      background-color: $jaffa;
+      box-shadow: 0 2px 5px $silver-chalice;
     }
   }
 
-  .selection-name {
-    color: $jelly-bean;
-    font-size: $big-font-size;
-  }
-
-  .radios-wrapper {
-    margin: 15px 0;
-    display: flex;
-
-    .radio-container {
-      flex: 1;
-      text-align: center;
+  .ingredients-container {
+    width: 320px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 15px;
+  
+    input[type=checkbox] {
+      @extend %hidden-widget;
+  
+      &:checked + label {
+        border: 2px solid $forest-green;
+        color: $forest-green;
+        box-shadow: none;
+      }
+  
+      &:disabled + label {
+        background-color: $gallery;
+      }
     }
-  }
-
-  .checkboxes-wrapper {
-    margin: 15px 0;
-
-    .checkbox-container {
-      margin: 5px 0;
+  
+    label {
+      padding: 10px;
+      display: flex;
+      align-items: center;
+  
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 3px 12px $silver-chalice;
+      border: 2px solid transparent;
+  
+      img {
+        margin-right: 15px;
+      }
     }
-  }
-
-  input[type=radio] {
-    @include selection-button('radio', $gray, $jaffa);
-  }
-
-  input[type=checkbox] {
-    @include selection-button('checkbox', $gray, $jaffa);
-  }
-
-  button {
-    width: 100%;
-    color: #fff;
-    background-color: $jaffa;
-    box-shadow: 0 2px 5px $silver-chalice;
   }
 }
