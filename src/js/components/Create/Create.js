@@ -3,7 +3,6 @@ import Component from '../../framework/Component';
 import Canvas from '../Canvas/Canvas';
 import Description from '../Description/Description';
 import PIZZA_SERVICE from '../../api/pizza-service';
-import EVENT_EMITTER from '../../framework/EventEmitter';
 import API_SERVICE from '../../api/api-service';
 import { canvasToBlob } from '../../utils/helpers';
 
@@ -23,11 +22,32 @@ class Create extends Component {
       .then(() => {
         const { ingredients, tags, crust_image } = PIZZA_SERVICE;
         this.host.append(
-          this._description.update({ ingredients, tags }),
-          this._canvas.update({ crust_image })
+          this._canvas.update({ crust_image }),
+          this._description.update({ 
+            ingredients, 
+            tags,
+            onFormSubmit: this.createPizza.bind(this) 
+          })
         );
       });
   }
+
+  createPizza(formData) {
+    const canvas = document.querySelector('canvas');
+    canvasToBlob(canvas)
+      .then(blob => {
+        formData.append('image', blob);
+        API_SERVICE.createPizza(formData)
+          .then(response => {
+            this._description.update({ message: response });
+            if(response.success) {
+              console.log(response);
+            }
+          });
+      });
+  }
+
+
 
   render() {
     const heading = document.createElement('h1');

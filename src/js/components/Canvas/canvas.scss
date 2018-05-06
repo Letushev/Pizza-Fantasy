@@ -1,6 +1,30 @@
+@import '../../../sass/base/variables';
+
 .canvas-container {
+  text-align: center;
+  position: relative;
+
+  @media screen and (min-width: 1200px) {
+    position: absolute;
+    top: 150px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.price {
+  width: 100px;
+  padding: 5px 0;
+
   position: absolute;
-  top: 50%;
+  bottom: -50px;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
+
+  background: #fff;
+  box-shadow: 0px 2px 5px $silver-chalice;
+ 
+  text-align: center;
+  font-size: $big-font-size;
+  color: $pomegranate;
 }

@@ -22,6 +22,11 @@
     }
   }
 
+  &:hover + label, 
+  &:focus + label {
+    color: $meteor;
+  }
+
   &:checked {
     & + label {
       color: $activeColor;

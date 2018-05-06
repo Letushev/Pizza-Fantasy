@@ -4,8 +4,10 @@
 
 .description-form {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  margin: 100px auto 0 auto;
   
   .details-container {
     width: 320px;
@@ -56,11 +58,17 @@
       color: #fff;
       background-color: $jaffa;
       box-shadow: 0 2px 5px $silver-chalice;
+
+      &:hover, 
+      &:focus {
+        background-color: $meteor;
+      }
     }
   }
 
   .ingredients-container {
     width: 320px;
+    margin-bottom: 25px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 15px;
@@ -77,6 +85,11 @@
       &:disabled + label {
         background-color: $gallery;
       }
+
+      &:hover + label,
+      &:focus + label {
+        color: $meteor;
+      }
     }
   
     label {
@@ -88,10 +101,30 @@
       border-radius: 5px;
       box-shadow: 0 3px 12px $silver-chalice;
       border: 2px solid transparent;
+
+      cursor: pointer;
   
       img {
         margin-right: 15px;
       }
+    }
+  }
+
+  @media screen and (min-width: 800px) {
+    width: 700px;
+    flex-direction: row;
+
+    .details-container {
+      order: -1;
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    width: 100%;
+    margin: 0;
+
+    .ingredients-container {
+      margin-bottom: 0;
     }
   }
 }

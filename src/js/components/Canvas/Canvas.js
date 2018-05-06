@@ -1,14 +1,14 @@
 import './canvas.scss';
 import Component from '../../framework/Component';
 import EVENT_EMITTER from '../../framework/EventEmitter';
-import { findDifference, getRandomNumber } from '../../utils/helpers';
+import { removeArrayElement, getRandomNumber } from '../../utils/helpers';
 
 class Canvas extends Component {
   constructor() {
     super();
 
     this.state = {
-      size: 2,
+      size: 60,
       ingredients: [],
       circles: this.fillCircles()
     };
@@ -61,21 +61,22 @@ class Canvas extends Component {
     })
   }
 
-  handleIngredientsChange(changedIngredients) {
+  handleIngredientsChange(ingr) {
     const { ingredients, circles } = this.state;
-    const id = findDifference(changedIngredients, ingredients).id;
-
-    if (changedIngredients.length > ingredients.length) {
-      this.spreadIngridient(id, circles);
-    } else { 
-      this.removeIngridient(id, circles);
+    
+    if (ingredients.includes(ingr)) {
+      removeArrayElement(ingr, ingredients);
+      this.removeIngridient(ingr.id, circles);
+    } else {
+      ingredients.push(ingr); 
+      this.spreadIngridient(ingr.id, circles);
     }
 
-    this.updateState({ ingredients: changedIngredients, circles });
+    this.updateState({ ingredients, circles });
   }
 
-  handleSizeChange(newSize) {
-    this.updateState({ size: newSize});
+  handleSizeChange(size) {
+    this.updateState({ size });
   }
 
   spreadIngridient(id, circles) { 
@@ -121,22 +122,31 @@ class Canvas extends Component {
     })
   }
 
+  calculatePrice() {
+    const { ingredients, size } = this.state;
+    return ingredients.reduce((sum, ingr) => (sum + ingr.price), size / 5).toFixed(2);
+  }
+
   render() {
     const { crust_image } = this.props;
     const { size } = this.state;
     const canvas = document.createElement('canvas');
+    const price = document.createElement('span');
     const ctx = canvas.getContext('2d');
-    const ingridientWidth = 12 * size;
-    const ingridientHeight = 12 * size;
+    const ingridientWidth = 12 * (size / 30);
+    const ingridientHeight = 12 * (size / 30);
     
-    canvas.width = 160 * size;
-    canvas.height = 160 * size;
+    canvas.width = 160 * (size / 30);
+    canvas.height = 160 * (size / 30);
+    
+    price.className = 'price';
+    price.textContent = `${ this.calculatePrice() } $`;
 
     requestAnimationFrame(() => {
       this.startAnimation(ctx, crust_image, ingridientWidth, ingridientHeight);
     });
 
-    return canvas;
+    return [canvas, price];
   }
 }
 

@@ -2,20 +2,26 @@ import './description.scss';
 import Component from '../../framework/Component';
 import { makeAutoResizable } from '../../utils/helpers';
 import EVENT_EMITTER from '../../framework/EventEmitter';
-import Price from '../Price/Price';
+import Message from '../Message/Message';
 
 class Description extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      message: null
+    };
 
     this.host = document.createElement('div');
     this.host.className = 'description-container';
 
-    this._price = new Price();
+    this._message = new Message('Create');
+
+    this.MAXIngredientsNumber = 6;
   }
 
   render() {
-    const { ingredients, tags } = this.props;
+    const { ingredients, tags, message } = this.props;
 
     const form = document.createElement('form');
     const detailsContainer = document.createElement('div');
@@ -68,7 +74,7 @@ class Description extends Component {
       const name = document.createTextNode(ingr);
   
       ingredientsContainer.innerHTML += `
-        <input type="checkbox" name="ingredient" value="${ ingredients[ingr].id }" id="${ ingr }" required> `;
+        <input type="checkbox" name="ingredient" value="${ ingredients[ingr].id }" id="${ ingr }"> `;
       label.setAttribute('for', ingr);
       image.setAttribute('alt', ingredients[ingr].description);
         
@@ -78,9 +84,12 @@ class Description extends Component {
 
     const textArea = detailsContainer.querySelector('textarea');
     makeAutoResizable(textArea);
-    detailsContainer.insertAdjacentElement('afterbegin', this._price.update({ size: 60 }));
 
-    form.append(detailsContainer, ingredientsContainer);
+    if (message) {
+      detailsContainer.insertAdjacentElement('afterbegin', this._message.update(message));
+    }
+
+    form.append(ingredientsContainer, detailsContainer);
     return form;
   }
 
@@ -88,21 +97,44 @@ class Description extends Component {
     const { ingredients } = this.props;
     const target = event.target;
 
-    if (target.matches('[name=ingridient]')) {
+    if (target.matches('[name=ingredient]')) {
+      this.checkIngredients();
       EVENT_EMITTER.emit('ingredients-change', ingredients[target.id]);
     } else if (target.matches('[name=size]')) {
-      EVENT_EMITTER.emit('size-change', target.value / 30); // canvas state size is 1, 1.5 or 2
-                                                            // that`s why division by 30
+      EVENT_EMITTER.emit('size-change', target.value);
+    }
+  }
+
+  checkIngredients() {
+    const addedElements = document.querySelectorAll('[name=ingredient]:checked');
+    const notAddedElements = document.querySelectorAll('[name=ingredient]:not(:checked)');
+
+    if (addedElements.length === this.MAXIngredientsNumber) {
+      notAddedElements.forEach(checkbox => {
+        checkbox.disabled = true;
+      })
+    } else {
+      notAddedElements.forEach(checkbox => {
+        checkbox.disabled = false;
+      })
     }
   }
 
   handleSubmit(event) {
     event.preventDefault();
+
     const formData = new FormData(event.target);
+
     const tags = formData.getAll('tag').map(Number);
+    const ingredients = formData.getAll('ingredient').map(Number);
+
     formData.delete('tag');
-    formData.append('tags', JSON.stringify(tags)); 
-    EVENT_EMITTER.emit('order-submit', formData);
+    formData.delete('ingredient');
+
+    formData.append('tags', JSON.stringify(tags));
+    formData.append('ingredients', JSON.stringify(ingredients)); 
+  
+    this.props.onFormSubmit(formData);
   }
 
   getTagsCheckboxes(tags) {

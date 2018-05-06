@@ -4,12 +4,11 @@ export const getRandomNumber = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-export const findDifference = (arr1, arr2) => {
-  if (arr1.length < arr2.length) {
-    [arr1, arr2] = [arr2, arr1];
+export const removeArrayElement = (el, arr) => {
+  const index = arr.indexOf(el);
+  if (index !== -1) {
+    arr.splice(index, 1);
   }
-
-  return arr1.filter(x => !arr2.includes(x))[0];
 }
 
 export const formDataToObject = formData => {
