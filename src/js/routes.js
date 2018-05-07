@@ -2,6 +2,7 @@ import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
 import Order from './Order';
 import Queue from './Queue';
+import Profile from './Profile';
 import AUTH_SERVICE from './api/auth-service';
 
 const routes = [
@@ -35,6 +36,12 @@ const routes = [
   {
     href: '/queue',
     component: Queue,
+    isAuthorized: AUTH_SERVICE.isAuthorized
+  }, 
+
+  {
+    href: '/profile',
+    component: Profile,
     isAuthorized: AUTH_SERVICE.isAuthorized
   }
   

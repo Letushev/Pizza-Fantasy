@@ -23,6 +23,10 @@ class ApiService {
     return this.get(this.urlPaths.ingredientList, AUTH_SERVICE.token);
   }
 
+  getUserInfo() {
+    return this.get(this.urlPaths.userInfo, AUTH_SERVICE.token);
+  }
+
   getTagList() {
     return this.get(this.urlPaths.tagList, AUTH_SERVICE.token);
   }
