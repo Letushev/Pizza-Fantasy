@@ -99,8 +99,6 @@ module.exports = {
         { family: 'Ubuntu Mono'},
         { family: 'Dancing Script'}
       ]
-    }),
-
-    new webpack.optimize.UglifyJsPlugin()
+    })
   ]
 };
