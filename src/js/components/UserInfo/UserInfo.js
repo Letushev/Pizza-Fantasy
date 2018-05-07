@@ -14,10 +14,28 @@ class UserInfo extends Component {
     const table = document.createElement('table');
 
     if (!!userInfo) {
-      console.log(userInfo);  
+      userInfo.created_at = this.renderDate(userInfo.created_at);
+      userInfo.last_login = this.renderDate(userInfo.last_login);
+
+      for (const key in userInfo) {
+        table.innerHTML += `
+          <tr>
+            <th>${ key.replace('_', ' ') }</th>
+            <td>${ userInfo[key] }</td>
+          </tr>`;
+      } 
     }
 
     return table;
+  }
+
+  renderDate(date) {
+    const dateObj = new Date(date);
+    return [
+      dateObj.getDate(), 
+      dateObj.getMonth(), 
+      dateObj.getFullYear()
+    ].map(n => `${ n }`.padStart(2, '0')).join('.');
   }
 }
 

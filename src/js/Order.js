@@ -56,7 +56,7 @@ class Order extends Component {
 
 
   render() {
-    this.main.innerHTML = '<h1 class="create-heading">Create and order your pizza"</h1>';
+    this.main.innerHTML = '<h1 class="create-heading">Create and order your pizza</h1>';
 
     return [
       this._header.update({ activeLink: 'order' }),
