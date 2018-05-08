@@ -4,6 +4,7 @@ class ApiService {
   constructor() {
     this.domain = 'https://pizza-tele.ga';
     this.baseUrl = this.domain + '/api/v1';
+    
     this.urlPaths = {
 			storeList: '/store/list',
 			userCreate: '/user/create',
@@ -11,7 +12,8 @@ class ApiService {
       userInfo: '/user/my_info',
       ingredientList: '/ingredient/list',
       tagList: '/tag/list',
-      pizzaCreate: '/pizza/create'
+      pizzaCreate: '/pizza/create',
+      wsTicket: '/ws/ticket'
 		};
   }
 
@@ -29,6 +31,10 @@ class ApiService {
 
   getTagList() {
     return this.get(this.urlPaths.tagList, AUTH_SERVICE.token);
+  }
+
+  getTicket() {
+    return this.get(this.urlPaths.wsTicket, AUTH_SERVICE.token);
   }
 
   signupUser(userData) {

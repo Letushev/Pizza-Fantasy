@@ -33,7 +33,7 @@ class UserInfo extends Component {
     const dateObj = new Date(date);
     return [
       dateObj.getDate(), 
-      dateObj.getMonth(), 
+      dateObj.getMonth() + 1, 
       dateObj.getFullYear()
     ].map(n => `${ n }`.padStart(2, '0')).join('.');
   }

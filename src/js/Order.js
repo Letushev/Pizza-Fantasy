@@ -25,8 +25,10 @@ class Order extends Component {
 
   beforeUpdate() {
     PIZZA_SERVICE.preloadPizzaData()
-      .then(() => {
+      .then(setTimeout(() => {
         const { ingredients, tags, crust_image } = PIZZA_SERVICE;
+        this.main.classList.add('show-slow');
+        this.main.innerHTML = '<h1 class="create-heading">Create and order your pizza</h1>';
         this.main.append(
           this._canvas.update({ crust_image }),
           this._description.update({ 
@@ -35,7 +37,7 @@ class Order extends Component {
             onFormSubmit: this.createPizza.bind(this) 
           })
         );
-      });
+      }, 500));
   }
 
   createPizza(formData) {
@@ -56,7 +58,9 @@ class Order extends Component {
 
 
   render() {
-    this.main.innerHTML = '<h1 class="create-heading">Create and order your pizza</h1>';
+    const loader = document.createElement('div');
+    loader.className = 'loader';
+    this.main.append(loader);
 
     return [
       this._header.update({ activeLink: 'order' }),
