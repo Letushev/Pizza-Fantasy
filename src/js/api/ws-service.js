@@ -25,14 +25,14 @@ class WsService {
     if (event.code === 4001) {
       window.location.hash = '/login';
     } else {
-      setTimeout(this.establish.bind(this), 1000); 
+      setTimeout(() => this.establish, 1000); 
     }
   }
 
   handshake(token) {
     this.ws = new WebSocket(`${ this.wsUrl }?key=${ token }`);
     this.ws.onmessage = event => this.onmessage(event.data);
-    this.ws.onclose = this.onclose;
+    this.ws.onclose = () => this.onclose;
   }
 }
 

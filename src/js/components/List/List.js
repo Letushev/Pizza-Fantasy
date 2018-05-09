@@ -69,15 +69,21 @@ class List extends Component {
     }
 
     pizzas.forEach((pizza, index) => {
+      console.log(pizza);
       list.innerHTML += `
         <article class="pizza">
           <div class="order-info">
             <span class="price">$${ pizza.price }</span>
             <span class="order-number">${ index + 1 }</span>
           </div>
-          
-          <img src="${ API_SERVICE.domain }/${ pizza.img_url }" 
-               alt="${ pizza.description }">
+
+          <p class="pizza-name">${ pizza.name }</p>
+
+          <div class="pizza-img-wrapper">
+            <img src="${ API_SERVICE.domain }/${ pizza.img_url }" 
+                 alt="${ pizza.description }"
+                 width="${ pizza.size / 60 * 100 }%">
+          </div>
 
           <div class="time-info">
             <time class="time-of-order">12:32:43</time>

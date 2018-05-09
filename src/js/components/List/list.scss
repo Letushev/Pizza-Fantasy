@@ -1,4 +1,5 @@
 @import '../../../sass/base/variables';
+@import '../../../sass/base/extends';
 
 .list-container {
   flex: 1;
@@ -7,34 +8,46 @@
 
   .pizzas-list {
     display: grid;
-    grid-gap: 50px;
+    grid-gap: 40px;
     grid-template-columns: repeat(auto-fill, minmax(200px, auto));
 
     .pizza {
+      display: flex;
+      flex-direction: column;
       background-color: #fff;
       box-shadow: 0 3px 12px $silver-chalice;
-      text-align: center;
       color: #fff;
-
-      img {
-        max-width: 90%;
-        margin: 10px 0;
+ 
+      .pizza-img-wrapper {
+        flex: 1;
+        width: 200px;
+        height: 200px;
+        padding: 10px;
+        margin: 0 auto;
+        @extend %flex-centered;
       }
 
-      .order-info {
+      .order-info, .time-info {
         display: flex;
-        justify-content: space-between;
         padding: 10px 15px;
-        background: $pomegranate;
+        background: $tundora;
       }
 
       .time-info {
-        display: flex;
         flex-direction: column;
         align-items: flex-start;
-        padding: 10px 15px;
-        background: $mine-shaft;
         line-height: 1.5rem;
+      }
+
+      .order-info {
+        justify-content: space-between;
+      }
+
+      .pizza-name {
+        text-align: center;
+        color: $mosque;
+        font-size: $big-font-size;
+        margin-top: 10px;
       }
     }
   }
