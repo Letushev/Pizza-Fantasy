@@ -139,7 +139,7 @@ class Canvas extends Component {
     canvas.width = 160 * (size / 30);
     canvas.height = 160 * (size / 30);
     
-    price.className = 'price';
+    price.className = 'total-price';
     price.textContent = `${ this.calculatePrice() } $`;
 
     requestAnimationFrame(() => {

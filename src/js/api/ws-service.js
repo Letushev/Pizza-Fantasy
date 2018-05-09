@@ -1,4 +1,5 @@
 import API_SERVICE from './api-service';
+import EVENT_EMITTER from '../framework/EventEmitter';
 
 class WsService {
   constructor() {
@@ -15,9 +16,23 @@ class WsService {
       });
   }
 
+  onmessage(message) {
+    message = JSON.parse(message);
+    EVENT_EMITTER.emit(message.event_name, message.data);
+  }
+
+  onclose(event) {
+    if (event.code === 4001) {
+      window.location.hash = '/login';
+    } else {
+      setTimeout(this.establish.bind(this), 1000); 
+    }
+  }
+
   handshake(token) {
     this.ws = new WebSocket(`${ this.wsUrl }?key=${ token }`);
-    this.ws.onopen = () => console.log;
+    this.ws.onmessage = event => this.onmessage(event.data);
+    this.ws.onclose = this.onclose;
   }
 }
 

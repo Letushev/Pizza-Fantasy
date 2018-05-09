@@ -25,7 +25,7 @@ class Order extends Component {
 
   beforeUpdate() {
     PIZZA_SERVICE.preloadPizzaData()
-      .then(setTimeout(() => {
+      .then(() => setTimeout(() => {
         const { ingredients, tags, crust_image } = PIZZA_SERVICE;
         this.main.classList.add('show-slow');
         this.main.innerHTML = '<h1 class="create-heading">Create and order your pizza</h1>';

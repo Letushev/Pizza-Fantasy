@@ -13,7 +13,8 @@ class ApiService {
       ingredientList: '/ingredient/list',
       tagList: '/tag/list',
       pizzaCreate: '/pizza/create',
-      wsTicket: '/ws/ticket'
+      wsTicket: '/ws/ticket',
+      pizzaList: '/pizza/list'
 		};
   }
 
@@ -35,6 +36,10 @@ class ApiService {
 
   getTicket() {
     return this.get(this.urlPaths.wsTicket, AUTH_SERVICE.token);
+  }
+  
+  getPizzaList() {
+    return this.get(this.urlPaths.pizzaList, AUTH_SERVICE.token);
   }
 
   signupUser(userData) {
