@@ -1,10 +1,12 @@
 @import '../../../sass/base/variables';
 @import '../../../sass/base/extends';
+@import '../../../sass/special/animations';
 
 .list-container {
   flex: 1;
   width: 90%;
-  margin: 50px auto;
+  margin: 50px auto 100px auto;
+  position: relative;
 
   .pizzas-list {
     display: grid;
@@ -37,6 +39,11 @@
         flex-direction: column;
         align-items: flex-start;
         line-height: 1.5rem;
+
+        .ready {
+          color: $forest-green;
+          font-size: $big-font-size;
+        }
       }
 
       .order-info {
@@ -58,5 +65,25 @@
 
   img {
     margin: 50px 0 25px 0;
+  }
+}
+
+.twinkle {
+  animation: twinkle 2s infinite;
+}
+
+.show-more {
+  position: absolute;
+  bottom: -75px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 3px;
+  box-shadow: 0 2px 5px $silver-chalice;
+  background-color: $forest-green;
+  color: #fff;
+
+  &:hover,
+  &:focus {
+    background-color: $japanese-laurel;
   }
 }

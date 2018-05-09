@@ -31,3 +31,7 @@ export const makeAutoResizable = element => {
     element.style.height = `${ element.scrollHeight }px`;
   });
 }
+
+export const diffBetweenDates = (date1, date2) => {
+  return (date2.getTime() - date1.getTime());
+}

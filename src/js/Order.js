@@ -49,7 +49,9 @@ class Order extends Component {
           .then(response => {
             this._description.update({ message: response });
             if(response.success) {
-              console.log(response);
+              setTimeout(() => {
+                window.location.hash = '/queue';
+              }, 1000);
             }
           });
       });

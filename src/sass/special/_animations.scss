@@ -1,0 +1,33 @@
+@keyframes spin {
+  0% { 
+    transform: rotate(0deg); 
+  }
+  100% { 
+    transform: rotate(360deg); 
+  }
+}
+
+@keyframes showSlowly { 
+  from { 
+    left: -100px; 
+    opacity: 0;
+  } 
+  to { 
+    left: 0; 
+    opacity: 1;
+  }
+}
+
+@keyframes twinkle {
+  0% {
+    box-shadow: 0 0 10px $forest-green;
+  }
+
+  50% {
+    box-shadow: 0 0 50px $forest-green;
+  }
+
+  100% {
+    box-shadow: 0 0 10px $forest-green;
+  }
+}

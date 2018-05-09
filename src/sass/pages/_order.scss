@@ -19,15 +19,3 @@
 .show-slow {
   animation: showSlowly .8s;
 }
-
-
-@keyframes showSlowly { 
-  from { 
-    left: -100px; 
-    opacity: 0;
-  } 
-  to { 
-    left: 0; 
-    opacity: 1;
-  }
-}

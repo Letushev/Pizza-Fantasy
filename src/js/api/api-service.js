@@ -38,8 +38,8 @@ class ApiService {
     return this.get(this.urlPaths.wsTicket, AUTH_SERVICE.token);
   }
   
-  getPizzaList() {
-    return this.get(this.urlPaths.pizzaList, AUTH_SERVICE.token);
+  getPizzaList(offset = 0) {
+    return this.get(`${ this.urlPaths.pizzaList }?offset=${ offset }&limit=15`, AUTH_SERVICE.token);
   }
 
   signupUser(userData) {
