@@ -70,6 +70,10 @@ class Order extends Component {
       this._footer.update()
     ];
   }
+
+  unmount() {
+    this._canvas.unmount();
+  }
 }
 
 export default Order;

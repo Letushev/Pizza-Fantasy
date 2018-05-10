@@ -22,6 +22,10 @@ class Queue extends Component {
       this._footer.update()
     ]
   }
+
+  unmount() {
+    this._list.unmount();
+  }
 }
 
 export default Queue;

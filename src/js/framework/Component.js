@@ -5,6 +5,8 @@ class Component {
     this.host = null;
   }
 
+  beforeUpdate() {}
+
   update(props) {
     this.beforeUpdate(props);
     this.props = Object.assign({}, this.props, props);
@@ -15,6 +17,8 @@ class Component {
     this.state = Object.assign({}, this.state, state);
     this._render();
   }
+
+  unmount() {}
 
   _render() {
     const children = this.render();
@@ -30,7 +34,6 @@ class Component {
   }
 
   render() {}
-  beforeUpdate() {}
 }
 
 export default Component;

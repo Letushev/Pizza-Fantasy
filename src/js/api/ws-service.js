@@ -34,6 +34,11 @@ class WsService {
     this.ws.onmessage = event => this.onmessage(event.data);
     this.ws.onclose = () => this.onclose;
   }
+
+  close() {
+    this.ws.onclose = () => {};
+    this.ws.close();
+  }
 }
 
 const WS_SERVICE = new WsService();

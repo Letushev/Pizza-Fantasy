@@ -50,6 +50,12 @@ class Router extends Component {
 
   applyRoute(route) {
     const component = new route.component();
+    const { activeComponent } = this.state;
+
+    if (activeComponent) {
+      activeComponent.unmount();
+    }
+    
     this.updateState({ 
       activeRoute: route,
       activeComponent: component

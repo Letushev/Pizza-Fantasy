@@ -8,6 +8,11 @@ class EventEmitter {
       this.events[eventName] = [];
     }
     this.events[eventName].push(fn);
+
+    return () => {
+			this.events[eventName] = this.events[eventName].filter(eventFn =>
+				fn !== eventFn);
+		};
   }
   
   emit(eventName, data) {
@@ -16,14 +21,6 @@ class EventEmitter {
       event.forEach(fn => {
         fn.call(null, data);
       })
-    }
-  }
-
-  unsubscribe(eventName, fn) {
-    let event = this.events[eventName];
-    const index = event.indexOf(fn);
-    if (index != -1) {
-      event.splice(index, 1);
     }
   }
 }

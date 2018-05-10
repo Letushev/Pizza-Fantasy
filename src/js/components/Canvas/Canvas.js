@@ -16,8 +16,8 @@ class Canvas extends Component {
     this.host = document.createElement('div');
     this.host.className = 'canvas-container';
 
-    EVENT_EMITTER.subscribe('ingredients-change', this.handleIngredientsChange.bind(this));
-    EVENT_EMITTER.subscribe('size-change', this.handleSizeChange.bind(this));
+    this.unsubscribeIngr = EVENT_EMITTER.subscribe('ingredients-change', this.handleIngredientsChange.bind(this));
+    this.unsubscribeSize = EVENT_EMITTER.subscribe('size-change', this.handleSizeChange.bind(this));
   }
 
   fillCircles() {
@@ -147,6 +147,11 @@ class Canvas extends Component {
     });
 
     return [canvas, price];
+  }
+
+  unmount() {
+    this.unsubscribeIngr();
+    this.unsubscribeSize();
   }
 }
 

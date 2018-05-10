@@ -20,8 +20,8 @@ class List extends Component {
 
     WS_SERVICE.establish();
 
-    EVENT_EMITTER.subscribe('CREATE_PIZZA', this.addPizza.bind(this));
-    EVENT_EMITTER.subscribe('ACCEPT_PIZZA', this.acceptPizzas.bind(this));
+    this.unsubscribeCreate = EVENT_EMITTER.subscribe('CREATE_PIZZA', this.addPizza.bind(this));
+    this.unsubscribeAccept = EVENT_EMITTER.subscribe('ACCEPT_PIZZA', this.acceptPizzas.bind(this));
 
     this.getList();
   }
@@ -75,7 +75,6 @@ class List extends Component {
     
     this.sortPizzas(pizzas);
     pizzas.forEach((pizza, index) => {
-      console.log(pizza);
       const card = document.createElement('article');
       const timeDiff = diffBetweenDates(new Date(), new Date(pizza.time_prepared));
       card.className = 'pizza';
@@ -165,6 +164,12 @@ class List extends Component {
       });
     });
     return button;
+  }
+
+  unmount() {
+    this.unsubscribeCreate();
+    this.unsubscribeAccept();
+    WS_SERVICE.close();
   }
 }
 
