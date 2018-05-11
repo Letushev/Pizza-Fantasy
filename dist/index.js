@@ -746,6 +746,8 @@ var _routes2 = _interopRequireDefault(_routes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+__webpack_require__(34);
+
 var rootEl = document.getElementById('root');
 var ROUTER = new _Router2.default(rootEl, _routes2.default);
 
@@ -2431,6 +2433,12 @@ exports.default = UserInfo;
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "favicon.ico";
 
 /***/ })
 /******/ ]);

@@ -1,5 +1,7 @@
 'use strict';
 
+require('../images/favicon.ico');
+
 import '../sass/main.scss';
 
 import Router from './framework/Router';
