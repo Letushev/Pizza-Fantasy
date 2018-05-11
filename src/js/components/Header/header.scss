@@ -8,8 +8,7 @@ header {
 
   .header-wrapper {
     width: 90%;
-    // TODO 
-    // max-width:
+    max-width: 1200px;
     height: 100%;
     margin: 0 auto;
 
@@ -22,6 +21,7 @@ header {
       color: $pomegranate;
       font-size: $logo-font-size;
       font-family: $logo-font-family;
+      user-select: none;
     }
 
     #hamburger-checkbox {

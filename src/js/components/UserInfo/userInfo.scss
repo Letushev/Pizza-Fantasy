@@ -25,5 +25,10 @@
     tr:hover {
       background-color: rgba($forest-green, .1);
     }
+
+    @media screen and (max-width: 500px) {
+      background-color: transparent;
+      box-shadow: none;
+    }
   }
 }

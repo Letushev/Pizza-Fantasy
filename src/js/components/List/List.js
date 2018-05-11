@@ -16,7 +16,7 @@ class List extends Component {
     };
 
     this.host = document.createElement('main');
-    this.host.className = 'list-container';
+    this.host.className = 'list-container show-slow';
 
     WS_SERVICE.establish();
 
@@ -38,7 +38,7 @@ class List extends Component {
 
   addPizza(pizza) {
     const { pizzas, count } = this.state;
-    pizzas.unshift(pizza);
+    pizzas.push(pizza);
     this.updateState({ pizzas, count: count + 1});
   }
 
@@ -49,7 +49,7 @@ class List extends Component {
       pizzas.splice(index, 1);
     })
     
-    this.updateState({ pizzas, count: count - uuids.length });
+    this.updateState({ pizzas, count: (count - uuids.length) });
   }
 
   render() {
@@ -72,7 +72,6 @@ class List extends Component {
       return waitingContainer;
     }
     
-    this.sortPizzas(pizzas);
     pizzas.forEach((pizza, index) => {
       const card = document.createElement('article');
       const timeDiff = diffBetweenDates(new Date(), new Date(pizza.time_prepared));
@@ -115,12 +114,6 @@ class List extends Component {
     }
 
     return list;
-  }
-
-  sortPizzas(pizzas) {
-    pizzas.sort((a, b) => {
-      return a.time_prepared > b.time_prepared;
-    })
   }
 
   setReady(card) {

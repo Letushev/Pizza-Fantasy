@@ -4,10 +4,11 @@ input.text-input, select, textarea {
 
   border: none;
   border-bottom: 1px solid $gray;
+  background-color: transparent;
   
   color: $mine-shaft;
   font-size: $main-font-size;
-  font-family: $main-font-size;
+  font-family: $main-font-family;
 
   outline: none;
 }

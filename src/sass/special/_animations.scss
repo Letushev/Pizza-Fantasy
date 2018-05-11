@@ -9,11 +9,11 @@
 
 @keyframes showSlowly { 
   from { 
-    left: -100px; 
+    bottom: -100px; 
     opacity: 0;
   } 
   to { 
-    left: 0; 
+    bottom: 0; 
     opacity: 1;
   }
 }
@@ -30,4 +30,8 @@
   100% {
     box-shadow: 0 0 10px $forest-green;
   }
+}
+
+.show-slow {
+  animation: showSlowly .8s;
 }

@@ -4,6 +4,7 @@
   .create-container {
     flex: 1;
     width: 90%;
+    max-width: 1200px;
     position: relative;
     margin: 0 auto 50px auto;
   
@@ -13,9 +14,9 @@
       color: $mosque;
       font-size: $heading-font-size;
     }
-  }
-}
 
-.show-slow {
-  animation: showSlowly .8s;
+    @media screen and (max-width: 400px) {
+      width: 100%;
+    }
+  }
 }
