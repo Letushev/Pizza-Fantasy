@@ -90,6 +90,9 @@ var Component = function () {
   }
 
   _createClass(Component, [{
+    key: 'beforeUpdate',
+    value: function beforeUpdate() {}
+  }, {
     key: 'update',
     value: function update(props) {
       this.beforeUpdate(props);
@@ -102,6 +105,9 @@ var Component = function () {
       this.state = Object.assign({}, this.state, state);
       this._render();
     }
+  }, {
+    key: 'unmount',
+    value: function unmount() {}
   }, {
     key: '_render',
     value: function _render() {
@@ -121,9 +127,6 @@ var Component = function () {
   }, {
     key: 'render',
     value: function render() {}
-  }, {
-    key: 'beforeUpdate',
-    value: function beforeUpdate() {}
   }]);
 
   return Component;
@@ -466,10 +469,18 @@ var EventEmitter = function () {
   _createClass(EventEmitter, [{
     key: "subscribe",
     value: function subscribe(eventName, fn) {
+      var _this = this;
+
       if (!this.events.hasOwnProperty(eventName)) {
         this.events[eventName] = [];
       }
       this.events[eventName].push(fn);
+
+      return function () {
+        _this.events[eventName] = _this.events[eventName].filter(function (eventFn) {
+          return fn !== eventFn;
+        });
+      };
     }
   }, {
     key: "emit",
@@ -479,15 +490,6 @@ var EventEmitter = function () {
         event.forEach(function (fn) {
           fn.call(null, data);
         });
-      }
-    }
-  }, {
-    key: "unsubscribe",
-    value: function unsubscribe(eventName, fn) {
-      var event = this.events[eventName];
-      var index = event.indexOf(fn);
-      if (index != -1) {
-        event.splice(index, 1);
       }
     }
   }]);
@@ -640,8 +642,11 @@ var Header = function (_Component) {
       });
 
       this.setActiveLink(navigationEl, this.props.activeLink);
+
       navigationEl.appendChild(logoutButton);
-      headerWrapper.append(logoLink, navigationEl);
+      headerWrapper.appendChild(logoLink);
+      headerWrapper.innerHTML += '\n      <input type="checkbox" id="hamburger-checkbox">\n      <label for="hamburger-checkbox">\n        <span></span>\n        <span></span>\n        <span></span>\n      </label> ';
+      headerWrapper.appendChild(navigationEl);
 
       return headerWrapper;
     }
@@ -834,6 +839,13 @@ var Router = function (_Component) {
     key: 'applyRoute',
     value: function applyRoute(route) {
       var component = new route.component();
+      var activeComponent = this.state.activeComponent;
+
+
+      if (activeComponent) {
+        activeComponent.unmount();
+      }
+
       this.updateState({
         activeRoute: route,
         activeComponent: component
@@ -1324,6 +1336,11 @@ var Order = function (_Component) {
 
       return [this._header.update({ activeLink: 'order' }), this.main, this._footer.update()];
     }
+  }, {
+    key: 'unmount',
+    value: function unmount() {
+      this._canvas.unmount();
+    }
   }]);
 
   return Order;
@@ -1393,8 +1410,8 @@ var Canvas = function (_Component) {
     _this.host = document.createElement('div');
     _this.host.className = 'canvas-container';
 
-    _EventEmitter2.default.subscribe('ingredients-change', _this.handleIngredientsChange.bind(_this));
-    _EventEmitter2.default.subscribe('size-change', _this.handleSizeChange.bind(_this));
+    _this.unsubscribeIngr = _EventEmitter2.default.subscribe('ingredients-change', _this.handleIngredientsChange.bind(_this));
+    _this.unsubscribeSize = _EventEmitter2.default.subscribe('size-change', _this.handleSizeChange.bind(_this));
     return _this;
   }
 
@@ -1558,6 +1575,12 @@ var Canvas = function (_Component) {
       });
 
       return [canvas, price];
+    }
+  }, {
+    key: 'unmount',
+    value: function unmount() {
+      this.unsubscribeIngr();
+      this.unsubscribeSize();
     }
   }]);
 
@@ -1910,6 +1933,11 @@ var Queue = function (_Component) {
     value: function render() {
       return [this._header.update({ activeLink: 'queue' }), this._list.update(), this._footer.update()];
     }
+  }, {
+    key: 'unmount',
+    value: function unmount() {
+      this._list.unmount();
+    }
   }]);
 
   return Queue;
@@ -1976,12 +2004,12 @@ var List = function (_Component) {
     };
 
     _this.host = document.createElement('main');
-    _this.host.className = 'list-container';
+    _this.host.className = 'list-container show-slow';
 
     _wsService2.default.establish();
 
-    _EventEmitter2.default.subscribe('CREATE_PIZZA', _this.addPizza.bind(_this));
-    _EventEmitter2.default.subscribe('ACCEPT_PIZZA', _this.acceptPizzas.bind(_this));
+    _this.unsubscribeCreate = _EventEmitter2.default.subscribe('CREATE_PIZZA', _this.addPizza.bind(_this));
+    _this.unsubscribeAccept = _EventEmitter2.default.subscribe('ACCEPT_PIZZA', _this.acceptPizzas.bind(_this));
 
     _this.getList();
     return _this;
@@ -1993,7 +2021,6 @@ var List = function (_Component) {
       var _this2 = this;
 
       _apiService2.default.getPizzaList().then(function (data) {
-        console.log(data);
         _this2.updateState({
           pizzas: data.results,
           count: data.count
@@ -2007,7 +2034,7 @@ var List = function (_Component) {
           pizzas = _state.pizzas,
           count = _state.count;
 
-      pizzas.unshift(pizza);
+      pizzas.push(pizza);
       this.updateState({ pizzas: pizzas, count: count + 1 });
     }
   }, {
@@ -2051,9 +2078,7 @@ var List = function (_Component) {
         return waitingContainer;
       }
 
-      this.sortPizzas(pizzas);
       pizzas.forEach(function (pizza, index) {
-        console.log(pizza);
         var card = document.createElement('article');
         var timeDiff = (0, _helpers.diffBetweenDates)(new Date(), new Date(pizza.time_prepared));
         card.className = 'pizza';
@@ -2076,13 +2101,6 @@ var List = function (_Component) {
       }
 
       return list;
-    }
-  }, {
-    key: 'sortPizzas',
-    value: function sortPizzas(pizzas) {
-      pizzas.sort(function (a, b) {
-        return a.time_prepared > b.time_prepared;
-      });
     }
   }, {
     key: 'setReady',
@@ -2130,6 +2148,13 @@ var List = function (_Component) {
         });
       });
       return button;
+    }
+  }, {
+    key: 'unmount',
+    value: function unmount() {
+      this.unsubscribeCreate();
+      this.unsubscribeAccept();
+      _wsService2.default.close();
     }
   }]);
 
@@ -2225,6 +2250,12 @@ var WsService = function () {
       this.ws.onclose = function () {
         return _this3.onclose;
       };
+    }
+  }, {
+    key: 'close',
+    value: function close() {
+      this.ws.onclose = function () {};
+      this.ws.close();
     }
   }]);
 
