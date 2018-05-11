@@ -29,7 +29,6 @@ class List extends Component {
   getList() {
     API_SERVICE.getPizzaList()
       .then((data) => {
-        console.log(data);
         this.updateState({ 
           pizzas: data.results,
           count: data.count

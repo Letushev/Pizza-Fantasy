@@ -33,8 +33,17 @@ class Header extends Component {
     });
     
     this.setActiveLink(navigationEl, this.props.activeLink);
+    
     navigationEl.appendChild(logoutButton);
-    headerWrapper.append(logoLink, navigationEl);
+    headerWrapper.appendChild(logoLink);
+    headerWrapper.innerHTML += `
+      <input type="checkbox" id="hamburger-checkbox">
+      <label for="hamburger-checkbox">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label> `;
+    headerWrapper.appendChild(navigationEl);
 
     return headerWrapper;
   }

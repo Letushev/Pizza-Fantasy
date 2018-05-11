@@ -4,6 +4,7 @@ header {
   height: 60px;
   background-color: #fff;
   box-shadow: 0 2px 5px $silver-chalice;
+  position: relative;
 
   .header-wrapper {
     width: 90%;
@@ -23,42 +24,95 @@ header {
       font-family: $logo-font-family;
     }
 
-    nav a {
-      font-size: $big-font-size;
-
-      &:not(:last-child) {
-        margin-right: 25px;
-
-        &:hover,
-        &:focus {
-          color: $guardsman-red;
-        }
+    #hamburger-checkbox {
+      label {
+        display: block;
       }
 
-      &.active {
-        position: relative;
+      &:checked ~ nav {
+        transform: none;
+      }
+    }
 
-        &::after {
-          content: '';
-          position: absolute;
-          top: -21px;
-          left: 0;
-          right: 0;
-          height: 5px;
+    nav {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 60px;
+      z-index: 1;
+      padding: 10px 0;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      
+      background-color: #fff;
+      border-top: 2px solid $pomegranate;
+      border-bottom: 2px solid $pomegranate;
+  
+      transform-origin: 0% 0%;
+      transform: translate(-100%, 0);
+  
+      transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+
+      a {
+        font-size: $big-font-size;
+
+        &:not(:last-child) {
+          padding: 5px;
+
+          &:hover,
+          &:focus {
+            color: $guardsman-red;
+          }
+        }
+
+        &.logout {
           background-color: $pomegranate;
+          border-radius: 3px;
+          box-shadow: 0 2px 5px $silver-chalice;
+  
+          color: #fff;
+  
+          &:hover,
+          &:focus {
+            background-color: $guardsman-red;
+          }
         }
       }
+    }
 
-      &.logout {
-        background-color: $pomegranate;
-        border-radius: 3px;
-        box-shadow: 0 2px 5px $silver-chalice;
+    @media screen and (min-width: 600px) {
+      #hamburger-checkbox + label {
+        display: none;
+      }
+
+      nav {
+        position: relative;
+        border: none;
+        flex-direction: row;
+        background-color: transparent;
+        transform: none;
+        top: 0;
+
+        a {
+          &:not(:last-child) {
+            margin-right: 25px;
+          }
+          
+          &.active {
+            position: relative;
   
-        color: #fff;
-  
-        &:hover,
-        &:focus {
-          background-color: $guardsman-red;
+            &::after {
+              content: '';
+              position: absolute;
+              top: -16px;
+              left: 0;
+              right: 0;
+              height: 5px;
+              background-color: $pomegranate;
+            }
+          }
         }
       }
     }
