@@ -20,6 +20,10 @@
   @media screen and (max-width: 400px) {
     background-color: transparent;
     box-shadow: none;
+
+    input.text-input:-webkit-autofill {
+      box-shadow: 0 0 0 100px $gallery inset;
+    }
   }
 }
 
